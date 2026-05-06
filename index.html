@@ -189,7 +189,7 @@ footer a:hover{text-decoration:underline;}
 }
 .age-nav-brand {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 15px;
+  font-size: 24px;
   letter-spacing: .06em;
   color: var(--muted);
   margin-right: 8px;
@@ -198,17 +198,17 @@ footer a:hover{text-decoration:underline;}
 }
 .age-tab {
   cursor: pointer;
-  padding: 16px 16px;
+  padding: 20px 20px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
+  font-size: 36px;
   letter-spacing: .06em;
   color: var(--muted);
   border-bottom: 3px solid transparent;
   transition: all .2s;
 }
-@media (max-width: 420px) {
-  .age-tab { padding: 14px 10px; font-size: 20px; }
-  .age-nav-brand { font-size: 13px; margin-right: 4px; letter-spacing: .04em; }
+@media (max-width: 480px) {
+  .age-tab { padding: 18px 14px; font-size: 32px; }
+  .age-nav-brand { font-size: 20px; margin-right: 6px; letter-spacing: .04em; }
   .age-nav-inner { padding: 0 8px; }
 }
 .age-tab:hover { color: var(--text); }
@@ -5873,7 +5873,7 @@ function renderSummary() {
   }
 
   const today = new Date();
-  const cutoff = new Date(today); cutoff.setDate(today.getDate() + 2);
+  const cutoff = new Date(today); cutoff.setDate(today.getDate() + 1);
   const todayKey  = (today.getMonth()+1)*100  + today.getDate();
   const cutoffKey = (cutoff.getMonth()+1)*100 + cutoff.getDate();
   function inWindow(dateStr) {
@@ -6083,22 +6083,27 @@ function renderSummary() {
   }
   html += '</div>';
 
-  // ── Playoff Results (at bottom) ──────────────────────────────────────
+  // ── Playoff Results (at bottom, grouped by age) ────────────────────
   html += '<div class="summary-section"><div class="summary-section-title">🏆 Playoff Results</div>';
   if (playoffPlayed.length === 0) {
     html += '<div class="summary-empty">No playoff games played yet.</div>';
   } else {
-    playoffPlayed.slice().reverse().forEach(r => {
-      const w1 = r.s1 > r.s2, w2 = r.s2 > r.s1;
-      html += `<div class="summary-game-row">
-        ${ageBadge(r.age)}${chip(r.bracket)}
-        <span class="summary-teams">
-          <span style="${w1?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t1}</span>
-          <span style="color:var(--muted);margin:0 4px">vs</span>
-          <span style="${w2?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t2}</span>
-        </span>
-        <span class="summary-score ${w1?'W':w2?'L':'T'}">${r.s1}–${r.s2}</span>
-      </div>`;
+    ['6U','7U','8U'].forEach(age => {
+      const ageGames = playoffPlayed.filter(r => r.age === age);
+      if (!ageGames.length) return;
+      html += `<div style="font-size:11px;color:${AGE_COLORS[age]};font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${age}</div>`;
+      ageGames.slice().reverse().forEach(r => {
+        const w1 = r.s1 > r.s2, w2 = r.s2 > r.s1;
+        html += `<div class="summary-game-row">
+          ${chip(r.bracket)}
+          <span class="summary-teams">
+            <span style="${w1?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t1}</span>
+            <span style="color:var(--muted);margin:0 4px">vs</span>
+            <span style="${w2?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t2}</span>
+          </span>
+          <span class="summary-score ${w1?'W':w2?'L':'T'}">${r.s1}–${r.s2}</span>
+        </div>`;
+      });
     });
   }
   html += '</div>';
