@@ -14,12 +14,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(255,94,108,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(79,195,216,.10) 0%,transparent 60%);pointer-events:none;z-index:0;}
 body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;}
 .wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
-header{padding:48px 0 32px;text-align:center;}
+header{padding:12px 0 8px;text-align:center;}
 .league-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;padding:6px 18px;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
 .league-badge .dot{width:6px;height:6px;background:var(--coral);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,86px);line-height:.9;letter-spacing:.02em;margin-bottom:12px;}
 h1 .line1{color:var(--text);}
-h1 .line2{background:linear-gradient(90deg,var(--coral),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#age-pane-6u h1 .line2{background:linear-gradient(90deg,#ff5e6c,#ff8a80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#age-pane-7u h1 .line2{background:linear-gradient(90deg,#a78bfa,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#age-pane-8u h1 .line2{background:linear-gradient(90deg,var(--sky),#93e4f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .subtitle{font-size:14px;color:var(--muted);letter-spacing:.05em;margin-bottom:32px;}
 .stat-strip{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 4px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.03em;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);}
 .stat-strip span{white-space:nowrap;}
@@ -381,7 +383,7 @@ footer a:hover{text-decoration:underline;}
 <body>
 <nav class="age-nav">
   <div class="age-nav-inner">
-    <div class="age-nav-brand age-tab active-home" id="age-tab-home" onclick="switchAge('home')">Spring '26</div>
+    <div class="age-nav-brand age-tab active-home" id="age-tab-home" onclick="switchAge('home')">SBMSA SPRING 2026</div>
     <div class="age-tab" id="age-tab-6u" onclick="switchAge('6u')">6U</div>
     <div class="age-tab" id="age-tab-7u" onclick="switchAge('7u')">7U</div>
     <div class="age-tab" id="age-tab-8u" onclick="switchAge('8u')">8U</div>
@@ -391,9 +393,7 @@ footer a:hover{text-decoration:underline;}
 <div class="age-pane" id="age-pane-6u"><div class="wrapper">
 
 <header>
-  <div class="league-badge"><span class="dot"></span> Live Standings</div>
   <h1><div class="line1">6U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 6U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
@@ -536,9 +536,7 @@ footer a:hover{text-decoration:underline;}
 <div class="age-pane" id="age-pane-7u"><div class="wrapper">
 
 <header>
-  <div class="league-badge"><span class="dot"></span> Live Standings</div>
   <h1><div class="line1">7U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 7U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
@@ -724,9 +722,7 @@ footer a:hover{text-decoration:underline;}
 <div class="age-pane" id="age-pane-8u"><div class="wrapper">
 
 <header>
-  <div class="league-badge"><span class="dot"></span> Live Standings</div>
   <h1><div class="line1">8U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 8U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
@@ -6072,7 +6068,7 @@ function renderSummary() {
   const elim6 = window._6u_elim, elim7 = window._7u_elim, elim8 = window._8u_elim;
   const elimFns = { '6U': elim6, '7U': elim7, '8U': elim8 };
 
-  html += '<div class="summary-section"><div class="summary-section-title">🏅 Bracket Status</div>';
+  html += '<div class="summary-section"><div class="summary-section-title">🏆 Bracket Champions</div>';
   html += '<div style="display:flex;flex-direction:column;gap:8px;">';
 
   ['6U','7U','8U'].forEach(age => {
