@@ -8,143 +8,156 @@ A single-file fan dashboard for the **Spring 2026 SBMSA Girls Softball** season,
 
 | Age | Divisions | Teams | Playoff Brackets |
 |-----|-----------|-------|-----------------|
-| **6U** | Alo · Finch · Chamberlain | 37 | 🥇 Gold (DE) · 🥈 Silver · 🥉 Bronze · 🟤 Copper |
-| **7U** | Abbott · Fernandez | 22 | 🥇 Gold (DE) · 🥈 Silver · 🥉 Bronze |
-| **8U** | Finch · Osterman | 22 | 🥇 Gold (DE) · 🥈 Silver · 🥉 Bronze |
+| **6U** | Alo · Finch · Chamberlain | 37 | 🥇 Gold (DE9) · 🥈 Silver (SE9) · 🥉 Bronze (SE9) · 🟤 Copper (SE10) |
+| **7U** | Abbott · Fernandez | 22 | 🥇 Gold (DE6) · 🥈 Silver (SE8) · 🥉 Bronze (SE8) |
+| **8U** | Finch · Osterman | 22 | 🥇 Gold (DE6) · 🥈 Silver (SE8) · 🥉 Bronze (SE8) |
+
+---
+
+## Navigation
+
+The site has four tabs at the top:
+
+| Tab | Description |
+|-----|-------------|
+| **SBMSA SPRING 2026** | Summary — bracket champions, upcoming playoffs, playoff results |
+| **6U** | Full 6U standings, schedules, and playoff brackets |
+| **7U** | Full 7U standings, schedules, season simulator, and playoff brackets |
+| **8U** | Full 8U standings, schedules, season simulator, and playoff brackets |
+
+The site opens to the **SBMSA SPRING 2026** summary tab by default.
 
 ---
 
 ## Features
 
-### Standings
-- Combined view ranks all teams across divisions by winning percentage
-- Per-division views show full standings with W/L/T, GB, PCT, current streak, and coach
-- Colored row accents indicate each team's playoff bracket placement
-- Playoff probability bar shows each team's projected bracket destination
+### Summary Tab (SBMSA SPRING 2026)
+- **🏆 Bracket Champions** — shows each bracket's champion once determined, or the number of teams still competing across all ages
+- **📅 Upcoming Playoffs** — games scheduled within the next 2 days, grouped by date, with resolved team names, time, and field location
+- **🏆 Playoff Results** — all completed playoff games across all ages, grouped by age (6U → 7U → 8U), most recent first
 
-### Schedules
-- Expandable per-division schedule (click **Show Schedule** under any standings table)
-- Completed games show final scores with win/loss color coding
-- Upcoming games show date, time, and a map link to the field location
-- Click any team name in the standings to open a **team card modal** with their full game log and upcoming schedule
+### Standings
+- Combined view ranks all teams by PCT with full tiebreaking (head-to-head → best win → worst loss)
+- Per-division views with W/L/T, GB, PCT, streak, coach, and playoff probability bar
+- **Playoff %** column — multi-segment bar showing gold/silver/bronze/copper probabilities from a 2,000-run Monte Carlo simulation
+- Click any team name in standings **or the bracket** to open a team card modal
+
+### Team Card Modal
+- Full game log with scores, opponent records, and result coloring
+- Upcoming games with projected scores, win/loss outlook, and field location links
+- **Playoffs section** at the bottom with completed playoff results
+- Bracket label, coach, and division shown in meta row
 
 ### Playoff Brackets
-- SVG bracket diagrams with connector lines for each round
-- Date, time, and field location displayed under each matchup
-- **Projected outcomes** — a Poisson Monte Carlo model (2,000 simulations) uses each team's regular-season runs-scored and runs-allowed averages to project a score and win probability (e.g. `↳ Proj: Aggies 11–8 (64%)`) for every matchup where both teams are known
-- Resolved slots update automatically as results are entered — projected outcomes disappear once a game has a real result
-- Eliminated teams are shown struck-through in the seedings legend
+- SVG bracket diagrams for all tiers (DE9, DE6, SE8, SE9, SE10)
+- Completed game scores shown in bracket slots; winner highlighted
+- **Projected outcomes** (Poisson Monte Carlo, 2,000 sims) — disappear once a real result is entered
+- Eliminated teams struck through in the seedings legend
+- Click any team slot to open their team card modal
 
-### Season Simulator *(7U and 8U)*
-- Pick winners for all remaining regular-season games and watch standings update live
-- Auto-pick favorites based on current records
-- Progress bar tracks how many picks have been made
+### Season Simulator *(7U and 8U only — 6U regular season is complete)*
+- Pick winners for remaining games; standings and bracket probabilities update live
+- Auto-pick favorites, reset picks, and track progress
 
 ---
 
-## Source Files
+## Output File
 
 | File | Description |
 |------|-------------|
-| `softball-2026.html` | The complete site — a single self-contained HTML file |
-| `6u-index.html` | Original 6U source page |
-| `7u-index.html` | Original 7U source page |
-| `8u-index.html` | Original 8U source page |
+| `index.html` | Complete site — single self-contained HTML file (~420KB) |
+| `README.md` | This file |
 
 ---
 
 ## Updating the Data
 
-All data lives in JavaScript objects at the top of the `<script>` block inside `softball-2026.html`. Open the file in any text editor and search for the section you want to update.
+All data lives in JavaScript inside `index.html`. Open in any text editor and search for the section to update.
 
 ### Regular-season scores
 
-Find the `DATA` object for the relevant age and division. Each game entry looks like:
+Find `DATA` for the relevant age/division. Each game entry:
 
 ```js
 { date:"Sat 4/25", time:"2:00 PM", home:"Aggies", hs:14, away:"Storm", as:7,
   loc:"SWMS Field 1", url:"https://..." }
 ```
 
-Update `hs` (home score) and `as` (away score) with the final result. Leave them as `null` for unplayed games.
+Set `hs` / `as` to final scores. Leave `null` for unplayed games.
 
 ### Standings
 
-Standings are stored separately from the schedule and need to be updated to match results:
+Each entry in `DATA[div].standings`:
 
 ```js
 { place:1, name:"Aggies", w:10, l:0, t:0, gp:10, gb:"--", pct:1.000,
   streak:"Won 10", coach:"Collado" }
 ```
 
-Fields: `w` = wins, `l` = losses, `t` = ties, `gp` = games played, `gb` = games behind leader, `pct` = win percentage (0–1), `streak` = current streak text.
+Update `w`, `l`, `t`, `gp`, `gb`, `pct`, `streak` after each week.
 
-### Playoff results (6U)
+### Playoff results (all ages)
 
-Find `PLAYOFF_RESULTS` near the top of the 6U script block. Add completed games using the game number as the key:
+Find `PLAYOFF_RESULTS` in the relevant age's script block and add completed games:
 
 ```js
+// 6U (uses var):
 var PLAYOFF_RESULTS = {
-  gold: {
-    G1: { t1:"Aggies", s1:12, t2:"Comets", s2:8 },
-  },
-  silver: { ... },
-  bronze: { ... },
-  copper: { ... },
+  gold:   { G1: { t1:"Aggies", s1:12, t2:"Comets", s2:8 } },
+  silver: { G1: { t1:"Dragons", s1:11, t2:"Angels", s2:17 } },
+  bronze: {},
+  copper: {},
+};
+
+// 7U / 8U (uses const):
+const PLAYOFF_RESULTS = {
+  gold:   { G1: { t1:"Cyclones", s1:11, t2:"Thunder", s2:10 } },
+  silver: {},
+  bronze: {},
 };
 ```
 
-`t1` / `t2` must exactly match the team names in `PLAYOFF_SEEDS`. The higher score determines the winner automatically — the bracket advances the team and marks the loser as eliminated.
+Team names must exactly match seeds. Higher score wins — brackets, elimination, projected outcomes, and the summary tab all update automatically.
 
-### Playoff results (7U / 8U)
+### Playoff seeds (6U only)
 
-Same structure — find `PLAYOFF_RESULTS` (or `BRACKET_RESULTS`) in the 7U or 8U script block and add game results the same way.
-
-### Playoff seeds
-
-`PLAYOFF_SEEDS` maps each bracket tier to an ordered list of seeded teams. Update seeds only if the seeding changes before playoffs begin:
+`PLAYOFF_SEEDS` — update only if seeding changes:
 
 ```js
 var PLAYOFF_SEEDS = {
   gold: [
-    { seed:1, name:"Aggies",    div:"alo", w:10, l:0, t:0, pct:1.000 },
-    { seed:2, name:"Comets",    div:"alo", w:8,  l:2, t:0, pct:.800  },
+    { seed:1, name:"Aggies", div:"alo", w:10, l:0, t:0, pct:1.000 },
     ...
   ],
-  ...
 };
 ```
 
 ### Playoff schedule
 
-`PLAYOFF_SCHEDULES` holds the date, time, and location for each playoff game:
+`PLAYOFF_SCHEDULES` holds date/time/location per game:
 
 ```js
-var PLAYOFF_SCHEDULES = {
-  gold: {
-    G1: { date:"Tue 5/5", time:"5:45 PM", loc:"SWMS Field 3",
-          url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd" },
-    ...
-  },
-};
+G3: { date:"Wed 5/6", time:"6:00 PM", loc:"SWMS Field 2",
+      url:"http://maps.google.com/..." }
 ```
 
 ---
 
 ## Technical Notes
 
-- **Single file, no dependencies** — the entire site is one `.html` file. It requires an internet connection only to load the Google Fonts stylesheet; all logic and data are inline.
-- **Lazy initialization** — the 7U and 8U scripts don't execute until their tab is first clicked, keeping initial load fast.
-- **Projected outcomes** use a Poisson model: for each team, runs-per-game (RPG) and runs-allowed-per-game (RAPG) are computed from the regular-season schedule data. Expected runs for a matchup are `(RPG_A + RAPG_B) / 2` for team A and vice versa. 2,000 simulated games determine win probability and projected score. Results are cached after the first calculation.
-- The site is **read-only** — there is no backend. All updates require editing the HTML file directly and re-deploying or re-sharing it.
+- **Single file, no dependencies** — ~420–500KB including embedded logo. Requires internet only for Google Fonts.
+- **Lazy initialization** — 7U and 8U scripts run only when their tab is first visited (or when the summary tab loads). Initial load runs only 6U and the summary.
+- **Playoff probability** — Monte Carlo (2,000 runs) weights win probability by PCT, applies tiebreaker logic to distribute bracket placements. 6U uses explicit `PLAYOFF_SEEDS`; 7U/8U derive bracket from final standings rank.
+- **Projected scores** — Poisson model: expected runs `= (RPG_A + RAPG_B) / 2`. 2,000 simulated games yield win probability and projected score, cached after first calculation.
+- **Background image** — SBMSA softball logo embedded as base64 PNG (transparent background) at 10% opacity, centered and fixed behind all content.
+- **Read-only** — no backend. All updates require editing `index.html` directly.
 
 ---
 
 ## Data Sources
 
-- Regular-season schedules and scores: [sbmsa.net/schedules](https://sbmsa.net/schedules)
-  - [6U Alo](https://sbmsa.net/sites/sbmsa/schedule/674695/6U-Alo) · [6U Finch](https://sbmsa.net/sites/sbmsa/schedule/674696/6U-Finch) · [6U Chamberlain](https://sbmsa.net/sites/sbmsa/schedule/674697/6U-Chamberlain)
-  - [7U Abbott](https://sbmsa.net/sites/sbmsa/schedule/674701/7U-Abbott) · [7U Fernandez](https://sbmsa.net/sites/sbmsa/schedule/674702/7U-Fernandez)
-  - [8U Finch](https://sbmsa.net/sites/sbmsa/schedule/674707/8U-Finch) · [8U Osterman](https://sbmsa.net/sites/sbmsa/schedule/674706/8U-Osterman)
+- [6U Alo](https://sbmsa.net/sites/sbmsa/schedule/674695/6U-Alo) · [6U Finch](https://sbmsa.net/sites/sbmsa/schedule/674696/6U-Finch) · [6U Chamberlain](https://sbmsa.net/sites/sbmsa/schedule/674697/6U-Chamberlain)
+- [7U Abbott](https://sbmsa.net/sites/sbmsa/schedule/674701/7U-Abbott) · [7U Fernandez](https://sbmsa.net/sites/sbmsa/schedule/674702/7U-Fernandez)
+- [8U Finch](https://sbmsa.net/sites/sbmsa/schedule/674707/8U-Finch) · [8U Osterman](https://sbmsa.net/sites/sbmsa/schedule/674706/8U-Osterman)
 
 *Last data update: 6U — May 4, 2026 · 7U — May 5, 2026 · 8U — April 29, 2026*
