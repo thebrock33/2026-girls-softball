@@ -2558,7 +2558,7 @@ function openTeamCard(teamName, divKey) {
 })();
 
   window.ts6=toggleSchedule;window.cm6=closeModal;window.ctm6=function(){document.getElementById('s6-teamModal').classList.add('hidden');};window.otc6=openTeamCard;
-  window._6u_DATA=DATA;window._6u_PR=PLAYOFF_RESULTS;window._6u_PS=PLAYOFF_SCHEDULES;window._6u_BL=_bracketLookup;window._6u_SEEDS=PLAYOFF_SEEDS;
+  window._6u_DATA=DATA;window._6u_PR=PLAYOFF_RESULTS;window._6u_PS=PLAYOFF_SCHEDULES;window._6u_BL=_bracketLookup;window._6u_SEEDS=PLAYOFF_SEEDS;window._6u_elim=getEliminated;
 })();
 function _7u_init(){
 // =====================================================================
@@ -4095,7 +4095,7 @@ document.getElementById('age-pane-7u').querySelectorAll('.tab').forEach(t => {
 
 
   window.ts7=toggleSchedule;window.cm7=closeModal;window.ctm7=function(){document.getElementById('s7-teamModal').classList.add('hidden');};window.otc7=openTeamCard;window.sf7=simFavorites;window.sr7=simReset;window.spw7=simPickWinner;
-  window._7u_DATA=DATA;window._7u_PR=PLAYOFF_RESULTS;window._7u_PS=PLAYOFF_SCHEDULES;
+  window._7u_DATA=DATA;window._7u_PR=PLAYOFF_RESULTS;window._7u_PS=PLAYOFF_SCHEDULES;window._7u_elim=getEliminated;
 }
 function _8u_init(){
 // =====================================================================
@@ -5854,7 +5854,7 @@ document.getElementById('age-pane-8u').querySelectorAll('.tab').forEach(t => {
 
 
   window.ts8=toggleSchedule;window.cm8=closeModal;window.ctm8=function(){document.getElementById('s8-teamModal').classList.add('hidden');};window.otc8=openTeamCard;window.sf8=simFavorites;window.sr8=simReset;window.spw8=simPickWinner;
-  window._8u_DATA=DATA;window._8u_PR=PLAYOFF_RESULTS;window._8u_PS=PLAYOFF_SCHEDULES;
+  window._8u_DATA=DATA;window._8u_PR=PLAYOFF_RESULTS;window._8u_PS=PLAYOFF_SCHEDULES;window._8u_elim=getEliminated;
 }
 renderSummary();
 _ageInited['home']=true;
@@ -6061,6 +6061,70 @@ function renderSummary() {
   }
 
   let html = '';
+
+  // ── Bracket standings (champion or teams remaining) ─────────────────
+  const BRACKET_TOTALS = {
+    '6U': { gold:9, silver:9, bronze:9, copper:10 },
+    '7U': { gold:6, silver:8, bronze:8 },
+    '8U': { gold:6, silver:8, bronze:8 },
+  };
+  const BRACKET_LABELS_DISP = { gold:'🥇 Gold', silver:'🥈 Silver', bronze:'🥉 Bronze', copper:'🟤 Copper' };
+  const elim6 = window._6u_elim, elim7 = window._7u_elim, elim8 = window._8u_elim;
+  const elimFns = { '6U': elim6, '7U': elim7, '8U': elim8 };
+
+  html += '<div class="summary-section"><div class="summary-section-title">🏅 Bracket Status</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+
+  ['6U','7U','8U'].forEach(age => {
+    const totals = BRACKET_TOTALS[age];
+    const elimFn = elimFns[age];
+    if (!elimFn || !totals) return;
+
+    html += `<div style="background:var(--card);border-radius:8px;overflow:hidden;">`;
+    html += `<div style="padding:6px 12px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.14em;color:${AGE_COLORS[age]};border-bottom:1px solid rgba(255,255,255,.06)">${age}</div>`;
+    html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
+
+    Object.keys(totals).forEach(tier => {
+      const total = totals[tier];
+      const eliminated = elimFn(tier);
+      const elimCount = Object.keys(eliminated).length;
+      const remaining = total - elimCount;
+      const bColor = { gold:'var(--gold)', silver:'var(--silver)', bronze:'var(--bronze)', copper:'#c87941' }[tier];
+
+      let statusHTML;
+      if (remaining === 1) {
+        // Find the champion — the one seed not eliminated
+        const seeds = (age === '6U' && window._6u_SEEDS) ? window._6u_SEEDS[tier] || [] :
+                      (age === '7U') ? ({
+                        gold:   [{name:'Lightning'},{name:'Aliens'},{name:'Sliders'},{name:'Cyclones'},{name:'Thunder'},{name:'Comets'}],
+                        silver: [{name:'Frogs'},{name:'Wildcats'},{name:'Panthers'},{name:'Typhoon'},{name:'Storm'},{name:'Dragons'},{name:'Force'},{name:'Hurricanes'}],
+                        bronze: [{name:'Oilers'},{name:'Venom'},{name:'Tornadoes'},{name:'Crush'},{name:'Diamonds'},{name:'Angels'},{name:'Space Cowgirls'},{name:'Land Sharks'}],
+                      }[tier] || []) :
+                      ({
+                        gold:   [{name:'Diamonds'},{name:'Thunder'},{name:'Space Cowgirls'},{name:'Typhoon'},{name:'Aggies'},{name:'Magic'}],
+                        silver: [{name:'Hurricanes'},{name:'Sliders'},{name:'Blaze'},{name:'Storm'},{name:'Lightning'},{name:'Sparks'},{name:'Angels'},{name:'Panthers'}],
+                        bronze: [{name:'Bombers'},{name:'Firecrackers'},{name:'Voodoo'},{name:'Land Sharks'},{name:'Cobras'},{name:'Spring Spirit'},{name:'Chargers'},{name:'Venom'}],
+                      }[tier] || []);
+        const champ = seeds.find(s => !eliminated[s.name]);
+        statusHTML = champ
+          ? `<span style="font-weight:700;color:var(--text)">${champ.name}</span> <span style="font-size:10px;color:var(--gold)">🏆 Champion</span>`
+          : `<span style="color:var(--text)">Champion</span>`;
+      } else if (remaining === 0) {
+        statusHTML = `<span style="color:var(--muted);font-size:11px">Complete</span>`;
+      } else {
+        statusHTML = `<span style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--text)">${remaining}</span><span style="font-size:10px;color:var(--muted);margin-left:3px">remaining</span>`;
+      }
+
+      html += `<div style="flex:1;min-width:80px;padding:10px 12px;border-right:1px solid rgba(255,255,255,.06);">
+        <div style="font-size:10px;color:${bColor};font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin-bottom:4px">${BRACKET_LABELS_DISP[tier]}</div>
+        <div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap">${statusHTML}</div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  html += '</div></div>';
 
   // ── Upcoming Playoffs ────────────────────────────────────────────────
   html += '<div class="summary-section"><div class="summary-section-title">📅 Upcoming Playoffs</div>';
