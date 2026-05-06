@@ -7,7 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <style>
 
-:root{--coral:#ff5e6c;--peach:#ffb347;--sky:#4fc3d8;--navy:#0d1b2a;--card:#1e3450;--border:rgba(255,255,255,0.08);--text:#e8f4f8;--muted:#7a9bb5;--alo:#ff5e6c;--finch:#4fc3d8;--chamberlain:#a78bfa;--gold:#f5c842;--silver:#b0bec5;--bronze:#c87941;--copper:#6b3d1e;}
+:root{--coral:#ff5e6c;--peach:#ffb347;--sky:#4fc3d8;--navy:#0d1b2a;--card:#1e3450;--border:rgba(255,255,255,0.08);--text:#e8f4f8;--muted:#7a9bb5;--alo:#ff5e6c;--finch:#4fc3d8;--chamberlain:#a78bfa;--gold:#f5c842;--silver:#b0bec5;--bronze:#c87941;--copper:#6b3d1e;--osterman:#4fc3d8;}
+/* 8U: finch=coral, osterman=teal (matches original per-age colors) */#age-pane-8u{--finch:#ff5e6c;--osterman:#4fc3d8;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(255,94,108,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(79,195,216,.10) 0%,transparent 60%);pointer-events:none;z-index:0;}
@@ -29,6 +30,7 @@ h1 .line2{background:linear-gradient(90deg,var(--coral),var(--peach));-webkit-ba
 .tab[data-div="all"].active,.tab[data-div="all"]:hover{border-color:var(--peach);color:var(--peach);}
 .tab[data-div="alo"].active,.tab[data-div="alo"]:hover{border-color:var(--alo);color:var(--alo);}
 .tab[data-div="finch"].active,.tab[data-div="finch"]:hover{border-color:var(--finch);color:var(--finch);}
+.tab[data-div="osterman"].active,.tab[data-div="osterman"]:hover{border-color:var(--osterman);color:var(--osterman);}
 .tab[data-div="chamberlain"].active,.tab[data-div="chamberlain"]:hover{border-color:var(--chamberlain);color:var(--chamberlain);}
 .tab[data-div="gold"].active,.tab[data-div="gold"]:hover{border-color:var(--gold);color:var(--gold);}
 .tab[data-div="silver"].active,.tab[data-div="silver"]:hover{border-color:var(--silver);color:var(--silver);}
@@ -129,6 +131,8 @@ tr.copper-row td:first-child{border-left:3px solid var(--copper);}
 .bk-seed-div{font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px;}
 .bk-seed-div.alo{background:rgba(255,94,108,.15);color:var(--alo);}
 .bk-seed-div.finch{background:rgba(79,195,216,.15);color:var(--finch);}
+.tb-badge.osterman{background:rgba(79,195,216,.2);color:var(--osterman);}
+.bk-seed-div.osterman{background:rgba(79,195,216,.15);color:var(--osterman);}
 .bk-seed-div.chamberlain{background:rgba(167,139,250,.15);color:var(--chamberlain);}
 .bk-seed-rec{font-size:12px;color:var(--muted);}
 .bk-seed-row.eliminated{opacity:.45;}
@@ -185,29 +189,90 @@ footer a:hover{text-decoration:underline;}
 }
 .age-nav-brand {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px;
-  letter-spacing: .12em;
+  font-size: 15px;
+  letter-spacing: .06em;
   color: var(--muted);
-  margin-right: 16px;
+  margin-right: 8px;
   padding: 14px 0;
   white-space: nowrap;
 }
 .age-tab {
   cursor: pointer;
-  padding: 16px 24px;
+  padding: 16px 16px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 24px;
+  font-size: 22px;
   letter-spacing: .06em;
   color: var(--muted);
   border-bottom: 3px solid transparent;
   transition: all .2s;
 }
+@media (max-width: 420px) {
+  .age-tab { padding: 14px 10px; font-size: 20px; }
+  .age-nav-brand { font-size: 13px; margin-right: 4px; letter-spacing: .04em; }
+  .age-nav-inner { padding: 0 8px; }
+}
 .age-tab:hover { color: var(--text); }
 .age-tab.active-6u { color: var(--coral); border-bottom-color: var(--coral); }
 .age-tab.active-7u { color: #a78bfa; border-bottom-color: #a78bfa; }
 .age-tab.active-8u { color: var(--sky); border-bottom-color: var(--sky); }
+.age-tab.active-home { color: #f0e6c8; border-bottom-color: #f0e6c8; }
+.age-nav-brand { cursor: pointer; }
+.summary-section { margin-bottom: 28px; }
+.summary-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: .12em;
+  color: var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(245,200,66,.2);
+}
+.summary-age-block { margin-bottom: 20px; }
+.summary-age-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.summary-game-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--card);
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  border-left: 3px solid transparent;
+}
+.summary-game-row.result-W { border-left-color: #4ade80; }
+.summary-game-row.result-L { border-left-color: var(--coral); }
+.summary-game-row.result-T { border-left-color: var(--peach); }
+.summary-game-row.upcoming  { border-left-color: rgba(255,255,255,.15); }
+.summary-bracket-chip {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: .1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.summary-bracket-chip.gold   { background: rgba(245,200,66,.15); color: var(--gold); }
+.summary-bracket-chip.silver { background: rgba(176,190,197,.15); color: var(--silver); }
+.summary-bracket-chip.bronze { background: rgba(200,121,65,.15);  color: var(--bronze); }
+.summary-bracket-chip.copper { background: rgba(107,61,30,.3);    color: #c87941; }
+.summary-teams { flex: 1; font-weight: 500; }
+.summary-score { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: .05em; margin-left: auto; white-space: nowrap; }
+.summary-score.W { color: #4ade80; }
+.summary-score.L { color: var(--coral); }
+.summary-score.T { color: var(--peach); }
+.summary-time  { font-size: 11px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+.summary-empty { color: var(--muted); font-size: 13px; font-style: italic; padding: 8px 0; }
 .age-pane { display: none; }
 .age-pane.active { display: block; }
+
 
 
 
@@ -240,15 +305,15 @@ footer a:hover{text-decoration:underline;}
 .div-chip.div1{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3);}
 .div-chip.div2{background:rgba(52,211,153,.15);color:#34d399;border:1px solid rgba(52,211,153,.3);}
 .div-chip.playoffs{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.3);}
-.div-chip.osterman{background:rgba(79,195,216,.15);color:#4fc3d8;border:1px solid rgba(79,195,216,.3);}
+.div-chip.osterman{background:rgba(79,195,216,.15);color:var(--osterman);border:1px solid rgba(79,195,216,.3);}
 .tb-badge.div1{background:rgba(167,139,250,.2);color:#a78bfa;}
 .tb-badge.div2{background:rgba(52,211,153,.2);color:#34d399;}
-.tb-badge.osterman{background:rgba(79,195,216,.2);color:#4fc3d8;}
+.tb-badge.osterman{background:rgba(79,195,216,.2);color:var(--osterman);}
 .bk-seed-div.div1{background:rgba(167,139,250,.15);color:#a78bfa;}
 .bk-seed-div.div2{background:rgba(52,211,153,.15);color:#34d399;}
 .div-tag.div1{background:rgba(167,139,250,.15);color:#a78bfa;}
 .div-tag.div2{background:rgba(52,211,153,.15);color:#34d399;}
-.div-tag.osterman{background:rgba(79,195,216,.15);color:#4fc3d8;}
+.div-tag.osterman{background:rgba(79,195,216,.15);color:var(--osterman);}
 .prob-bg{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
 .prob-fill{height:100%;border-radius:3px;}
 .prob-pct{font-size:11px;font-weight:700;min-width:30px;text-align:right;}
@@ -310,18 +375,20 @@ footer a:hover{text-decoration:underline;}
 
 
 
+
 </style>
 </head>
 <body>
 <nav class="age-nav">
   <div class="age-nav-inner">
-    <div class="age-nav-brand">SBMSA Spring '26</div>
-    <div class="age-tab active-6u" id="age-tab-6u" onclick="switchAge('6u')">6U</div>
+    <div class="age-nav-brand age-tab active-home" id="age-tab-home" onclick="switchAge('home')">Spring '26</div>
+    <div class="age-tab" id="age-tab-6u" onclick="switchAge('6u')">6U</div>
     <div class="age-tab" id="age-tab-7u" onclick="switchAge('7u')">7U</div>
     <div class="age-tab" id="age-tab-8u" onclick="switchAge('8u')">8U</div>
   </div>
 </nav>
-<div class="age-pane active" id="age-pane-6u"><div class="wrapper">
+<div class="age-pane active" id="age-pane-home"><div class="wrapper"><div id="summary-root" style="padding-top:8px"></div></div></div>
+<div class="age-pane" id="age-pane-6u"><div class="wrapper">
 
 <header>
   <div class="league-badge"><span class="dot"></span> Live Standings</div>
@@ -360,7 +427,7 @@ footer a:hover{text-decoration:underline;}
         <th>#</th><th>Team</th><th>Division</th>
         <th class="num">W</th><th class="num">L</th><th class="num">T</th>
         <th class="num">GP</th><th class="num">PCT</th>
-        <th>Streak</th><th>Bracket</th>
+        <th class="hide-mobile">Streak</th><th class="hide-mobile">Bracket</th><th>Playoff %</th>
       </tr></thead>
       <tbody id="s6-tbody-combined"></tbody>
     </table></div>
@@ -371,7 +438,7 @@ footer a:hover{text-decoration:underline;}
   <div class="section">
     <div class="section-header"><span class="div-chip alo">Alo</span><span class="section-title">Standings</span></div>
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th>Streak</th><th>Coach</th><th>Bracket</th></tr></thead>
+      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th class="hide-mobile">Streak</th><th class="hide-mobile">Coach</th><th>Playoff %</th></tr></thead>
       <tbody id="s6-tbody-alo"></tbody>
     </table></div>
     <button class="sched-btn" onclick="ts6('alo')">Show Schedule ▾</button>
@@ -383,7 +450,7 @@ footer a:hover{text-decoration:underline;}
   <div class="section">
     <div class="section-header"><span class="div-chip finch">Finch</span><span class="section-title">Standings</span></div>
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th>Streak</th><th>Coach</th><th>Bracket</th></tr></thead>
+      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th class="hide-mobile">Streak</th><th class="hide-mobile">Coach</th><th>Playoff %</th></tr></thead>
       <tbody id="s6-tbody-finch"></tbody>
     </table></div>
     <button class="sched-btn" onclick="ts6('finch')">Show Schedule ▾</button>
@@ -395,7 +462,7 @@ footer a:hover{text-decoration:underline;}
   <div class="section">
     <div class="section-header"><span class="div-chip chamberlain">Chamberlain</span><span class="section-title">Standings</span></div>
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th>Streak</th><th>Coach</th><th>Bracket</th></tr></thead>
+      <thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">T</th><th class="num">GP</th><th class="num">GB</th><th class="num">PCT</th><th class="hide-mobile">Streak</th><th class="hide-mobile">Coach</th><th>Playoff %</th></tr></thead>
       <tbody id="s6-tbody-chamberlain"></tbody>
     </table></div>
     <button class="sched-btn" onclick="ts6('chamberlain')">Show Schedule ▾</button>
@@ -856,16 +923,18 @@ footer a:hover{text-decoration:underline;}
 <script>
 var _ageInited={};
 function switchAge(age){
-  ['6u','7u','8u'].forEach(function(a){
+  ['home','6u','7u','8u'].forEach(function(a){
     document.getElementById('age-pane-'+a).classList.remove('active');
-    document.getElementById('age-tab-'+a).className='age-tab';
+    var t=document.getElementById('age-tab-'+a);
+    if(t) t.className = a==='home' ? 'age-nav-brand age-tab' : 'age-tab';
   });
   document.getElementById('age-pane-'+age).classList.add('active');
-  document.getElementById('age-tab-'+age).className='age-tab active-'+age;
+  var activeTab = document.getElementById('age-tab-'+age);
+  if(activeTab) activeTab.className = (age==='home' ? 'age-nav-brand age-tab' : 'age-tab') + ' active-'+age;
   window.scrollTo({top:0,behavior:'smooth'});
-  if(!_ageInited[age]){_ageInited[age]=true;if(age==='7u')_7u_init();if(age==='8u')_8u_init();}
+  if(!_ageInited[age]){_ageInited[age]=true;if(age==='7u')_7u_init();if(age==='8u')_8u_init();if(age==='home')renderSummary();}
 }
-(function(){{
+(function(){
 // =====================================================================
 // DATA
 // =====================================================================
@@ -1232,23 +1301,19 @@ var PLAYOFF_RESULTS = {
 
 // Returns a Set of team names eliminated from a given bracket tier
 function getEliminated(tierKey) {
-  var results = PLAYOFF_RESULTS[tierKey] || {};
-  var eliminated = {};
-
-  if (tierKey === "gold") {
-    // Double elimination: teams eliminated only after losing in LB
-    // WB losers drop to LB — not yet eliminated
-    // LB losers are out immediately
-    // LB game keys that eliminate on loss: G6,G7,G8,G11,G12,G14,G15
-    var lbGames = ["G6","G7","G8","G11","G12","G14","G15"];
-    lbGames.forEach(function(gk) {
-      var r = results[gk];
+  const results = PLAYOFF_RESULTS[tierKey] || {};
+  const eliminated = {};
+  if (tierKey === 'gold') {
+    // 9-team DE: LB losers are out; WB losers drop to LB (not yet out)
+    // LB elimination games: G6, G7, G8, G11, G12, G14, G15
+    ['G6','G7','G8','G11','G12','G14','G15'].forEach(gk => {
+      const r = results[gk];
       if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
     });
   } else {
-    // Single elimination: every loser is eliminated
-    Object.keys(results).forEach(function(gk) {
-      var r = results[gk];
+    // SE: every loser is eliminated
+    Object.keys(results).forEach(gk => {
+      const r = results[gk];
       if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
     });
   }
@@ -1315,14 +1380,8 @@ var DIV_LABELS = {alo:"Alo",finch:"Finch",chamberlain:"Chamberlain"};
 var BRACKET_COLORS = {gold:"var(--gold)",silver:"var(--silver)",bronze:"var(--bronze)",copper:"var(--copper)"};
 var BRACKET_LABELS = {gold:"🥇 Gold",silver:"🥈 Silver",bronze:"🥉 Bronze",copper:"🟤 Copper"};
 
-function bracketForRank(rank) {
-  if (rank <= 9)  return "gold";
-  if (rank <= 18) return "silver";
-  if (rank <= 27) return "bronze";
-  return "copper";
-}
-
 // Build name→bracket lookup from the authoritative PLAYOFF_SEEDS
+// (still used by bracketFor6u for the playoff bracket renderer)
 var _bracketLookup = (function() {
   var lookup = {};
   Object.keys(PLAYOFF_SEEDS).forEach(function(bk) {
@@ -1331,40 +1390,337 @@ var _bracketLookup = (function() {
   return lookup;
 })();
 
-function playoffProb(t, divKey) {
-  var bk = _bracketLookup[t.name] || "copper";
-  var r = {gold:0,silver:0,bronze:0,copper:0};
-  r[bk] = 100;
-  return r;
+// =====================================================================
+// PLAYOFF PROBABILITY — Monte Carlo simulation (matching 7U/8U)
+// =====================================================================
+var _probCache = {};
+
+function simulatePlayoffProbs(divKey, N=2000) {
+  const cacheKey = divKey + '|' + DATA[divKey].standings.map(t => t.w+'-'+t.l+'-'+t.t).join(',');
+  if (_probCache[cacheKey]) return _probCache[cacheKey];
+
+  const standings = DATA[divKey].standings;
+  const schedule  = DATA[divKey].schedule;
+
+  // Gather remaining (unscored) games for this division
+  const pending = [];
+  schedule.forEach(wk => wk.games.forEach(g => {
+    if (g.hs === null || g.hs === undefined) pending.push({home: g.home, away: g.away});
+  }));
+
+  // Tally: teamName → {gold:0, silver:0, bronze:0, copper:0}
+  const tally = {};
+  standings.forEach(t => { tally[t.name] = {gold:0, silver:0, bronze:0, copper:0}; });
+
+  // Build win probability for each matchup based on current PCT
+  // p(home wins) = homePCT / (homePCT + awayPCT), defaulting 0.5 if both 0
+  function winProb(homeName, awayName) {
+    const h = standings.find(t => t.name === homeName);
+    const a = standings.find(t => t.name === awayName);
+    if (!h || !a) return 0.5;
+    const hp = h.pct, ap = a.pct;
+    if (hp + ap === 0) return 0.5;
+    return hp / (hp + ap);
+  }
+
+  // Pre-compute win probs
+  const probs = pending.map(g => winProb(g.home, g.away));
+
+  for (let sim = 0; sim < N; sim++) {
+    // Copy current W/L/T/GP
+    const rec = {};
+    standings.forEach(t => { rec[t.name] = {w: t.w, l: t.l, t: t.t, gp: t.gp}; });
+
+    const simH2H = {};
+    const initH2H = (a, b) => {
+      if (!simH2H[a]) simH2H[a] = {};
+      if (!simH2H[b]) simH2H[b] = {};
+      if (!simH2H[a][b]) simH2H[a][b] = {aW:0,aL:0,aT:0};
+      if (!simH2H[b][a]) simH2H[b][a] = {aW:0,aL:0,aT:0};
+    };
+
+    // Build simH2H from real scored games
+    schedule.forEach(wk => wk.games.forEach(g => {
+      if (g.hs === null || g.hs === undefined) return;
+      initH2H(g.home, g.away);
+      if (g.hs > g.as) { simH2H[g.home][g.away].aW++; simH2H[g.away][g.home].aL++; }
+      else if (g.hs < g.as) { simH2H[g.home][g.away].aL++; simH2H[g.away][g.home].aW++; }
+      else { simH2H[g.home][g.away].aT++; simH2H[g.away][g.home].aT++; }
+    }));
+
+    pending.forEach((g, i) => {
+      initH2H(g.home, g.away);
+      const r = Math.random();
+      const p = probs[i];
+      if (r < p * 0.92) {
+        rec[g.home].w++; rec[g.home].gp++;
+        rec[g.away].l++; rec[g.away].gp++;
+        simH2H[g.home][g.away].aW++; simH2H[g.away][g.home].aL++;
+      } else if (r < p * 0.92 + (1-p) * 0.92) {
+        rec[g.away].w++; rec[g.away].gp++;
+        rec[g.home].l++; rec[g.home].gp++;
+        simH2H[g.home][g.away].aL++; simH2H[g.away][g.home].aW++;
+      } else {
+        rec[g.home].t++; rec[g.home].gp++;
+        rec[g.away].t++; rec[g.away].gp++;
+        simH2H[g.home][g.away].aT++; simH2H[g.away][g.home].aT++;
+      }
+    });
+
+    const simTeams = standings.map(t => ({
+      name: t.name,
+      w: rec[t.name].w, l: rec[t.name].l, t: rec[t.name].t, gp: rec[t.name].gp,
+      pct: rec[t.name].gp > 0 ? (rec[t.name].w + rec[t.name].t * 0.5) / rec[t.name].gp : 0
+    }));
+
+    const pctOrder = [...simTeams].sort((a,b) => b.pct - a.pct);
+    const rankOf = name => pctOrder.findIndex(t => t.name === name);
+
+    const sorted = [...simTeams].sort((a, b) => {
+      if (Math.abs(b.pct - a.pct) > 0.0001) return b.pct - a.pct;
+      const ah = simH2H[a.name]?.[b.name] || {aW:0,aL:0,aT:0};
+      const aH2H = ah.aW + ah.aT * 0.5, bH2H = ah.aL + ah.aT * 0.5;
+      if (aH2H !== bH2H) return bH2H - aH2H;
+      const aBest = simTeams.reduce((best, opp) => {
+        if (opp.name === a.name) return best;
+        const r2 = simH2H[a.name]?.[opp.name] || {aW:0};
+        return r2.aW > 0 ? Math.min(best, rankOf(opp.name)+1) : best;
+      }, 999);
+      const bBest = simTeams.reduce((best, opp) => {
+        if (opp.name === b.name) return best;
+        const r2 = simH2H[b.name]?.[opp.name] || {aW:0};
+        return r2.aW > 0 ? Math.min(best, rankOf(opp.name)+1) : best;
+      }, 999);
+      if (aBest !== bBest) return aBest - bBest;
+      const aWorst = simTeams.reduce((worst, opp) => {
+        if (opp.name === a.name) return worst;
+        const r2 = simH2H[a.name]?.[opp.name] || {aL:0};
+        return r2.aL > 0 ? Math.max(worst, rankOf(opp.name)+1) : worst;
+      }, 0);
+      const bWorst = simTeams.reduce((worst, opp) => {
+        if (opp.name === b.name) return worst;
+        const r2 = simH2H[b.name]?.[opp.name] || {aL:0};
+        return r2.aL > 0 ? Math.max(worst, rankOf(opp.name)+1) : worst;
+      }, 0);
+      if (aWorst !== bWorst) return bWorst - aWorst;
+      return Math.random() < 0.5 ? -1 : 1;
+    });
+
+    sorted.forEach((t, i) => {
+      const place = i + 1;
+      const bracket = _bracketLookup[t.name] || 'copper';
+      tally[t.name][bracket]++;
+    });
+  }
+
+  const result = {};
+  standings.forEach(t => {
+    result[t.name] = {
+      gold:   Math.round(tally[t.name].gold   / N * 100),
+      silver: Math.round(tally[t.name].silver / N * 100),
+      bronze: Math.round(tally[t.name].bronze / N * 100),
+      copper: Math.round(tally[t.name].copper / N * 100),
+    };
+    const sum = result[t.name].gold + result[t.name].silver + result[t.name].bronze + result[t.name].copper;
+    if (sum !== 100) {
+      const diff = 100 - sum;
+      const buckets = ['gold','silver','bronze','copper'].sort((a,b) => result[t.name][b] - result[t.name][a]);
+      result[t.name][buckets[0]] += diff;
+    }
+    ['gold','silver','bronze','copper'].forEach(b => {
+      result[t.name][b] = Math.max(0, Math.min(100, result[t.name][b]));
+    });
+  });
+
+  _probCache[cacheKey] = result;
+  return result;
+}
+
+function playoffProb(team, divKey) {
+  const allProbs = simulatePlayoffProbs(divKey);
+  return allProbs[team.name] || {gold:0, silver:0, bronze:0, copper:0};
+}
+
+// =====================================================================
+// TIEBREAKER ENGINE (matching 7U/8U)
+// =====================================================================
+function h2hRecord(aName, bName, divKey) {
+  let aW=0, aL=0, aT=0;
+  DATA[divKey].schedule.forEach(wk => wk.games.forEach(g => {
+    if (g.hs === null || g.hs === undefined) return;
+    const aHome = g.home===aName && g.away===bName;
+    const aAway = g.away===aName && g.home===bName;
+    if (!aHome && !aAway) return;
+    const aScore = aHome ? g.hs : g.as;
+    const bScore = aHome ? g.as : g.hs;
+    if (aScore > bScore) aW++;
+    else if (aScore < bScore) aL++;
+    else aT++;
+  }));
+  return {aW, aL, aT};
+}
+
+
+function remainingGames(divKey, name) {
+  let n = 0;
+  DATA[divKey].schedule.forEach(wk => wk.games.forEach(g => {
+    if ((g.hs === null || g.hs === undefined) && (g.home === name || g.away === name)) n++;
+  }));
+  return n;
+}
+
+
+function bestWinRank(teamName, divKey, standings) {
+  const pctOrder = [...standings].sort((a,b) => b.pct-a.pct);
+  const rankOf = name => pctOrder.findIndex(t => t.name===name)+1;
+  return standings.reduce((best, opp) => {
+    if (opp.name === teamName) return best;
+    const r = h2hRecord(teamName, opp.name, divKey);
+    return r.aW > 0 ? Math.min(best, rankOf(opp.name)) : best;
+  }, 999);
+}
+
+function worstLossRank(teamName, divKey, standings) {
+  const pctOrder = [...standings].sort((a,b) => b.pct-a.pct);
+  const rankOf = name => pctOrder.findIndex(t => t.name===name)+1;
+  return standings.reduce((worst, opp) => {
+    if (opp.name === teamName) return worst;
+    const r = h2hRecord(teamName, opp.name, divKey);
+    return r.aL > 0 ? Math.max(worst, rankOf(opp.name)) : worst;
+  }, 0);
+}
+
+function tiebreakSort(teams, divKey) {
+  // Pre-compute PCT rank order ONCE outside the comparator (avoids mutation bug)
+  const pctOrder = [...teams].sort((a, b) => b.pct - a.pct);
+  const rankOf = name => pctOrder.findIndex(t => t.name === name) + 1;
+
+  return [...teams].sort((a, b) => {
+    if (Math.abs(b.pct - a.pct) > 0.0001) return b.pct - a.pct;
+
+    // 1. Head-to-head
+    const h2h = h2hRecord(a.name, b.name, divKey);
+    const aH2H = h2h.aW + h2h.aT * 0.5;
+    const bH2H = h2h.aL + h2h.aT * 0.5;
+    if (aH2H !== bH2H) return bH2H - aH2H;
+
+    // 2. Best win — lowest ranked (by PCT) opponent beaten
+    const aBestWin = teams.reduce((best, opp) => {
+      if (opp.name === a.name) return best;
+      const r = h2hRecord(a.name, opp.name, divKey);
+      return r.aW > 0 ? Math.min(best, rankOf(opp.name)) : best;
+    }, 999);
+    const bBestWin = teams.reduce((best, opp) => {
+      if (opp.name === b.name) return best;
+      const r = h2hRecord(b.name, opp.name, divKey);
+      return r.aW > 0 ? Math.min(best, rankOf(opp.name)) : best;
+    }, 999);
+    if (aBestWin !== bBestWin) return aBestWin - bBestWin;
+
+    // 3. Worst loss — highest ranked (by PCT) opponent lost to
+    const aWorstLoss = teams.reduce((worst, opp) => {
+      if (opp.name === a.name) return worst;
+      const r = h2hRecord(a.name, opp.name, divKey);
+      return r.aL > 0 ? Math.max(worst, rankOf(opp.name)) : worst;
+    }, 0);
+    const bWorstLoss = teams.reduce((worst, opp) => {
+      if (opp.name === b.name) return worst;
+      const r = h2hRecord(b.name, opp.name, divKey);
+      return r.aL > 0 ? Math.max(worst, rankOf(opp.name)) : worst;
+    }, 0);
+    if (aWorstLoss !== bWorstLoss) return bWorstLoss - aWorstLoss;
+
+    // 4. Coin flip — return 0 (caller assigns same place)
+    return 0;
+  });
+}
+
+function assignPlaces(sorted) {
+  // Assign places, giving tied teams (coin flip) the same place number
+  // When a tiebreaker resolves the tie, increment the place counter
+  const divKey = (sorted[0] || {})._divKey || sorted[0]?.div || 'alo';
+  const places = [];
+  let currentPlace = 1;
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && Math.abs(sorted[i].pct - sorted[i-1].pct) < 0.0001) {
+      const prev = sorted[i-1];
+      const curr = sorted[i];
+      const h2h = h2hRecord(curr.name, prev.name, divKey);
+      const aH2H = h2h.aW + h2h.aT * 0.5;
+      const bH2H = h2h.aL + h2h.aT * 0.5;
+      if (aH2H === bH2H) {
+        // H2H tied — check best win / worst loss via t.place set in DATA
+        // If DATA places are equal it's a true coin flip → same place number
+        const prevPlace = prev.place || places[i-1];
+        const currPlace = curr.place || (i + 1);
+        if (prevPlace === currPlace) {
+          places.push(places[i-1]); // true coin flip → same place
+        } else {
+          currentPlace++;
+          places.push(currentPlace);
+        }
+      } else {
+        currentPlace++;
+        places.push(currentPlace);
+      }
+    } else {
+      currentPlace = i + 1;
+      places.push(currentPlace);
+    }
+  }
+  return places;
 }
 
 // =====================================================================
 // RENDER COMBINED
 // =====================================================================
 function renderCombined() {
-  var tbody = document.getElementById("s6-tbody-combined");
-  var allTeams = [];
-  ["alo","finch","chamberlain"].forEach(function(div) {
-    DATA[div].standings.forEach(function(t) { allTeams.push(Object.assign({},t,{div:div})); });
-  });
-  allTeams.sort(function(a,b){ return b.pct - a.pct || (b.w-b.l)-(a.w-a.l); });
-  var html = "";
-  allTeams.forEach(function(t, i) {
-    var rank = i + 1;
-    var probs = playoffProb(t, t.div);
-    var bracket = Object.keys(probs).find(function(k){ return probs[k]===100; }) || "copper";
-    var bColor = BRACKET_COLORS[bracket];
-    var strClass = t.streak.startsWith("Won") ? "streak-win" : t.streak.startsWith("Tied") ? "streak-tie" : "streak-loss";
-    html += "<tr class=\"" + bracket + "-row\">" +
-      "<td style=\"color:" + bColor + ";font-size:12px;font-weight:700\">" + rank + "</td>" +
-      "<td class=\"team-name\" style=\"cursor:pointer\" onclick=\"otc6('" + t.name.replace(/'/g,"\\'") + "','" + t.div + "')\">" + t.name + "</td>" +
-      "<td><span class=\"div-tag " + t.div + "\">" + DIV_LABELS[t.div] + "</span></td>" +
-      "<td class=\"num\">" + t.w + "</td><td class=\"num\">" + t.l + "</td><td class=\"num\">" + t.t + "</td>" +
-      "<td class=\"num\">" + t.gp + "</td>" +
-      "<td class=\"num\" style=\"font-weight:700\">" + t.pct.toFixed(3) + "</td>" +
-      "<td><span class=\"" + strClass + "\">" + t.streak + "</span></td>" +
-      "<td style=\"color:" + bColor + ";font-weight:700;font-size:12px\">" + BRACKET_LABELS[bracket] + "</td>" +
-      "</tr>";
+  const tbody = document.getElementById('s6-tbody-combined');
+
+  const aloSorted = tiebreakSort([...DATA.alo.standings].map(t=>({...t,div:'alo',_divKey:'alo'})), 'alo');
+  const aloPlaces = assignPlaces(aloSorted);
+  aloSorted.forEach((t,i) => { t.place=aloPlaces[i]; DATA.alo.standings.find(s=>s.name===t.name).place=aloPlaces[i]; });
+
+  const finchSorted = tiebreakSort([...DATA.finch.standings].map(t=>({...t,div:'finch',_divKey:'finch'})), 'finch');
+  const finchPlaces = assignPlaces(finchSorted);
+  finchSorted.forEach((t,i) => { t.place=finchPlaces[i]; DATA.finch.standings.find(s=>s.name===t.name).place=finchPlaces[i]; });
+
+  const chamSorted = tiebreakSort([...DATA.chamberlain.standings].map(t=>({...t,div:'chamberlain',_divKey:'chamberlain'})), 'chamberlain');
+  const chamPlaces = assignPlaces(chamSorted);
+  chamSorted.forEach((t,i) => { t.place=chamPlaces[i]; DATA.chamberlain.standings.find(s=>s.name===t.name).place=chamPlaces[i]; });
+
+  const allTeams = [...aloSorted, ...finchSorted, ...chamSorted]
+    .sort((a,b) => b.pct - a.pct || (b.w-b.l) - (a.w-a.l));
+
+  let overallRank = 0;
+  let html = '';
+  allTeams.forEach(t => {
+    overallRank++;
+    const bracket = _bracketLookup[t.name] || 'copper';
+    const bColor  = BRACKET_COLORS[bracket];
+    const strClass = t.streak.startsWith('Won') ? 'streak-win' : t.streak.startsWith('Tied') ? 'streak-tie' : 'streak-loss';
+    const probs   = playoffProb(t, t.div);
+    html += `<tr class="${bracket}-row">
+      <td style="color:${bColor};font-size:12px;font-weight:700">${overallRank}</td>
+      <td class="team-name" style="cursor:pointer" onclick="otc6('${t.name.replace(/'/g,"\\'")}','${t.div}')">${t.name}</td>
+      <td><span class="div-tag ${t.div}">${DIV_LABELS[t.div]}</span></td>
+      <td class="num">${t.w}</td><td class="num">${t.l}</td><td class="num">${t.t}</td>
+      <td class="num">${t.gp}</td>
+      <td class="num" style="font-weight:700">${t.pct.toFixed(3)}</td>
+      <td class="hide-mobile"><span class="${strClass}">${t.streak}</span></td>
+      <td class="hide-mobile" style="color:${bColor};font-weight:700;font-size:12px">${BRACKET_LABELS[bracket]}</td>
+      <td><div class="prob-wrap"><div class="prob-bar-multi">
+        ${probs.gold>0?`<div class="prob-bar-seg" style="width:${probs.gold}%;background:var(--gold)"></div>`:''}
+        ${probs.silver>0?`<div class="prob-bar-seg" style="width:${probs.silver}%;background:var(--silver)"></div>`:''}
+        ${probs.bronze>0?`<div class="prob-bar-seg" style="width:${probs.bronze}%;background:var(--bronze)"></div>`:''}
+        ${probs.copper>0?`<div class="prob-bar-seg" style="width:${probs.copper}%;background:var(--copper)"></div>`:''}
+      </div><div class="prob-labels">
+        <span class="prob-lbl gold ${probs.gold===0?'zero':''}">${probs.gold}%</span>
+        <span class="prob-lbl silver ${probs.silver===0?'zero':''}">${probs.silver}%</span>
+        <span class="prob-lbl bronze ${probs.bronze===0?'zero':''}">${probs.bronze}%</span>
+        <span class="prob-lbl copper ${probs.copper===0?'zero':''}">${probs.copper}%</span>
+      </div></div></td>
+    </tr>`;
   });
   tbody.innerHTML = html;
 }
@@ -1373,32 +1729,43 @@ function renderCombined() {
 // RENDER DIVISION STANDINGS
 // =====================================================================
 function renderStandings(divKey, tbodyId) {
-  var tbody = document.getElementById(tbodyId);
+  const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
-  var color = DIV_COLORS[divKey];
-  var html = "";
-  DATA[divKey].standings.forEach(function(t) {
-    var place = t.place;
-    var probs = playoffProb(t, divKey);
-    var bracket = Object.keys(probs).find(function(k){ return probs[k]===100; }) || "copper";
-    var bColor = BRACKET_COLORS[bracket];
-    var bLabel = BRACKET_LABELS[bracket];
-    var strClass = t.streak.startsWith("Won") ? "streak-win" : t.streak.startsWith("Tied") ? "streak-tie" : "streak-loss";
-    var pctW = Math.round(t.pct*100);
-    html += "<tr class=\"" + bracket + "-row\">" +
-      "<td style=\"color:" + bColor + ";font-size:12px;font-weight:700\">" + place + "</td>" +
-      "<td class=\"team-name\" style=\"cursor:pointer\" onclick=\"otc6('" + t.name.replace(/'/g,"\\'") + "','" + divKey + "')\">" + t.name + "</td>" +
-      "<td class=\"num\">" + t.w + "</td><td class=\"num\">" + t.l + "</td><td class=\"num\">" + t.t + "</td>" +
-      "<td class=\"num\">" + t.gp + "</td>" +
-      "<td class=\"num\" style=\"color:var(--muted)\">" + t.gb + "</td>" +
-      "<td class=\"num\" style=\"font-weight:700\">" + t.pct.toFixed(3) +
-        "<span class=\"pct-bar\" style=\"width:" + (pctW*.42) + "px;background:" + color + "\"></span></td>" +
-      "<td><span class=\"" + strClass + "\">" + t.streak + "</span></td>" +
-      "<td style=\"color:var(--muted);font-size:12px\">" + t.coach + "</td>" +
-      "<td style=\"color:" + bColor + ";font-weight:700;font-size:12px\">" + bLabel + "</td>" +
-      "</tr>";
-  });
-  tbody.innerHTML = html;
+  const color = DIV_COLORS[divKey];
+
+  const sorted = tiebreakSort([...DATA[divKey].standings].map(t=>({...t,_divKey:divKey})), divKey);
+  const places = assignPlaces(sorted);
+  tbody.innerHTML = sorted.map((t, i) => {
+    const place = places[i];
+    const placeColor = place===1?'var(--gold)':place===2?'var(--silver)':place===3?'var(--bronze)':'var(--muted)';
+    const probs  = playoffProb(t, divKey);
+    const bracket = _bracketLookup[t.name] || 'copper';
+    const bColor = BRACKET_COLORS[bracket];
+    const strClass = t.streak.startsWith('Won') ? 'streak-win' : t.streak.startsWith('Tied') ? 'streak-tie' : 'streak-loss';
+    const pctW = Math.round(t.pct*100);
+    return `<tr class="${bracket}-row">
+      <td style="color:${placeColor};font-size:12px;font-weight:700">${place}</td>
+      <td class="team-name" style="cursor:pointer" onclick="otc6('${t.name.replace(/'/g,"\\'")}','${divKey}')">${t.name}</td>
+      <td class="num">${t.w}</td><td class="num">${t.l}</td><td class="num">${t.t}</td>
+      <td class="num">${t.gp}</td>
+      <td class="num" style="color:var(--muted)">${t.gb}</td>
+      <td class="num" style="font-weight:700">${t.pct.toFixed(3)}
+        <span class="pct-bar" style="width:${pctW*.42}px;background:${color}"></span></td>
+      <td class="hide-mobile"><span class="${strClass}">${t.streak}</span></td>
+      <td class="hide-mobile" style="color:var(--muted);font-size:12px">${t.coach}</td>
+      <td><div class="prob-wrap"><div class="prob-bar-multi">
+        ${probs.gold>0?`<div class="prob-bar-seg" style="width:${probs.gold}%;background:var(--gold)"></div>`:''}
+        ${probs.silver>0?`<div class="prob-bar-seg" style="width:${probs.silver}%;background:var(--silver)"></div>`:''}
+        ${probs.bronze>0?`<div class="prob-bar-seg" style="width:${probs.bronze}%;background:var(--bronze)"></div>`:''}
+        ${probs.copper>0?`<div class="prob-bar-seg" style="width:${probs.copper}%;background:var(--copper)"></div>`:''}
+      </div><div class="prob-labels">
+        <span class="prob-lbl gold ${probs.gold===0?'zero':''}">${probs.gold}%</span>
+        <span class="prob-lbl silver ${probs.silver===0?'zero':''}">${probs.silver}%</span>
+        <span class="prob-lbl bronze ${probs.bronze===0?'zero':''}">${probs.bronze}%</span>
+        <span class="prob-lbl copper ${probs.copper===0?'zero':''}">${probs.copper}%</span>
+      </div></div></td>
+    </tr>`;
+  }).join('');
 }
 
 // =====================================================================
@@ -1418,7 +1785,12 @@ function renderPlayoffs() {
     var tbd    = isUnknown ? " tbd" : "";
     var adv    = advanced ? " advanced" : "";
     var seedEl = seed ? "<span class=\"tb-seed\" style=\"background:" + hex + ";color:#0d1b2a\">" + seed + "</span>" : "";
-    var rec    = team ? "<span class=\"tb-rec\">" + team.w + "-" + team.l + (team.t ? "-"+team.t : "") + "</span>" : "";
+    var rec = '';
+    if (team) {
+      var pr6 = getPlayoffRecord(team.name);
+      var pw = team.w + pr6.w, pl = team.l + pr6.l;
+      rec = '<span class="tb-rec">' + pw + '-' + pl + (team.t ? '-'+team.t : '') + (pr6.w+pr6.l>0 ? ' <span style="opacity:.55;font-size:9px">PO</span>' : '') + '</span>';
+    }
     var dlabels = {alo:"Alo",finch:"Fin",chamberlain:"Cha"};
     var badge  = div ? "<span class=\"tb-badge " + div + "\">" + (dlabels[div]||div) + "</span>" : "";
     var scoreEl = (score !== undefined && score !== null)
@@ -1549,8 +1921,11 @@ function renderPlayoffs() {
     return result;
   }
 
-  function projected(x, y, teamA, teamB, hex) {
+
+
+  function projected(x, y, teamA, teamB, hex, tierKey, gameKey) {
     if (!teamA || !teamB || !teamA.name || !teamB.name) return "";
+    if (tierKey && gameKey && PLAYOFF_RESULTS[tierKey] && PLAYOFF_RESULTS[tierKey][gameKey]) return "";
     if (teamA.name.indexOf("Winner")===0 || teamB.name.indexOf("Winner")===0 ||
         teamA.name.indexOf("Loser")===0  || teamB.name.indexOf("Loser")===0  ||
         teamA.name.indexOf("TBD")===0    || teamB.name.indexOf("TBD")===0    ||
@@ -1581,7 +1956,7 @@ function renderPlayoffs() {
     els += colHdr(cx[1],0,"Round 1",hex);
     els += colHdr(cx[2],0,"Semifinals",hex);
     els += colHdr(cx[3],0,"🏆 Final",hex);
-    els += mLbl(cx[0],g1y,"G1"); els += slotR(cx[0],g1y,byS(8),hex,false,null,tierKey,"G1","t1"); els += slotR(cx[0],g1y+TH,byS(9),hex,false,null,tierKey,"G1","t2"); els += gameInfo(cx[0],g1y+2*TH+2,tierKey,"G1"); els += projected(cx[0],g1y+2*TH+22,byS(8),byS(9),hex);
+    els += mLbl(cx[0],g1y,"G1"); els += slotR(cx[0],g1y,byS(8),hex,false,null,tierKey,"G1","t1"); els += slotR(cx[0],g1y+TH,byS(9),hex,false,null,tierKey,"G1","t2"); els += gameInfo(cx[0],g1y+2*TH+2,tierKey,"G1"); els += projected(cx[0],g1y+2*TH+22,byS(8),byS(9),hex,tierKey,"G1");
     els += mLbl(cx[1],m0,"G5"); els += slot(cx[1],m0,byS(1),hex,true); els += slotResolved(cx[1],m0+TH,hex,"Winner G1",tierKey,"G5","t2"); els += gameInfo(cx[1],m0+2*TH+2,tierKey,"G5"); els += projected(cx[1],m0+2*TH+22,byS(1),resolveTeam(tierKey,"Winner G1"),hex);
     els += mLbl(cx[1],m1,"G2"); els += slot(cx[1],m1,byS(4),hex); els += slot(cx[1],m1+TH,byS(5),hex); els += gameInfo(cx[1],m1+2*TH+2,tierKey,"G2"); els += projected(cx[1],m1+2*TH+22,byS(4),byS(5),hex);
     els += mLbl(cx[1],m2,"G3"); els += slotR(cx[1],m2,byS(2),hex,false,null,tierKey,"G3","t1"); els += slotR(cx[1],m2+TH,byS(7),hex,false,null,tierKey,"G3","t2"); els += gameInfo(cx[1],m2+2*TH+2,tierKey,"G3"); els += projected(cx[1],m2+2*TH+22,byS(2),byS(7),hex);
@@ -1732,59 +2107,59 @@ function renderPlayoffs() {
     els += slotR(cx_pi, g1y,    byS(8), hex, false, null, tierKey, "G1", "t1");
     els += slotR(cx_pi, g1y+TH, byS(9), hex, false, null, tierKey, "G1", "t2");
     els += gameInfo(cx_pi, g1y+2*TH+2, tierKey, "G1");
-    els += projected(cx_pi, g1y+2*TH+22, byS(8), byS(9), hex);
+    els += projected(cx_pi, g1y+2*TH+22, byS(8), byS(9), hex, tierKey, "G1");
 
     // ── WB R1: G5, G4, G3, G2 (top → bottom) ────────────────────────
     els += mLbl(cx_r1, r1_g5, "G5");
     els += slotR(cx_r1, r1_g5,    byS(1), hex, true, null, tierKey, "G5", "t1");
     els += slotResolved(cx_r1,r1_g5+TH,hex,"Winner G1",tierKey,"G5","t2");
     els += gameInfo(cx_r1, r1_g5+2*TH+2, tierKey, "G5");
-    els += projected(cx_r1, r1_g5+2*TH+22, byS(1), resolveTeam(tierKey,"Winner G1"), hex);
+    els += projected(cx_r1, r1_g5+2*TH+22, byS(1), resolveTeam(tierKey,"Winner G1"), hex, tierKey, "G5");
 
     els += mLbl(cx_r1, r1_g4, "G4");
     els += slotR(cx_r1, r1_g4,    byS(4), hex, false, null, tierKey, "G4", "t1");
     els += slotR(cx_r1, r1_g4+TH, byS(5), hex, false, null, tierKey, "G4", "t2");
     els += gameInfo(cx_r1, r1_g4+2*TH+2, tierKey, "G4");
-    els += projected(cx_r1, r1_g4+2*TH+22, byS(4), byS(5), hex);
+    els += projected(cx_r1, r1_g4+2*TH+22, byS(4), byS(5), hex, tierKey, "G4");
 
     els += mLbl(cx_r1, r1_g3, "G3");
     els += slotR(cx_r1, r1_g3,    byS(3), hex, false, null, tierKey, "G3", "t1");
     els += slotR(cx_r1, r1_g3+TH, byS(6), hex, false, null, tierKey, "G3", "t2");
     els += gameInfo(cx_r1, r1_g3+2*TH+2, tierKey, "G3");
-    els += projected(cx_r1, r1_g3+2*TH+22, byS(3), byS(6), hex);
+    els += projected(cx_r1, r1_g3+2*TH+22, byS(3), byS(6), hex, tierKey, "G3");
 
     els += mLbl(cx_r1, r1_g2, "G2");
     els += slotR(cx_r1, r1_g2,    byS(2), hex, false, null, tierKey, "G2", "t1");
     els += slotR(cx_r1, r1_g2+TH, byS(7), hex, false, null, tierKey, "G2", "t2");
     els += gameInfo(cx_r1, r1_g2+2*TH+2, tierKey, "G2");
-    els += projected(cx_r1, r1_g2+2*TH+22, byS(2), byS(7), hex);
+    els += projected(cx_r1, r1_g2+2*TH+22, byS(2), byS(7), hex, tierKey, "G2");
 
     // ── WB R2: G9=W(G5)vW(G4),  G10=W(G3)vW(G2) ────────────────────
     els += mLbl(cx_r2, r2_g9, "G9");
     els += slotResolved(cx_r2,r2_g9,hex,"Winner G5",tierKey,"G9","t1");
     els += slotResolved(cx_r2,r2_g9+TH,hex,"Winner G4",tierKey,"G9","t2");
     els += gameInfo(cx_r2, r2_g9+2*TH+2, tierKey, "G9");
-    els += projected(cx_r2, r2_g9+2*TH+22, resolveTeam(tierKey,"Winner G5"), resolveTeam(tierKey,"Winner G4"), hex);
+    els += projected(cx_r2, r2_g9+2*TH+22, resolveTeam(tierKey,"Winner G5"), resolveTeam(tierKey,"Winner G4"), hex, tierKey, "G9");
 
     els += mLbl(cx_r2, r2_g10, "G10");
     els += slotResolved(cx_r2,r2_g10,hex,"Winner G3",tierKey,"G10","t1");
     els += slotResolved(cx_r2,r2_g10+TH,hex,"Winner G2",tierKey,"G10","t2");
     els += gameInfo(cx_r2, r2_g10+2*TH+2, tierKey, "G10");
-    els += projected(cx_r2, r2_g10+2*TH+22, resolveTeam(tierKey,"Winner G3"), resolveTeam(tierKey,"Winner G2"), hex);
+    els += projected(cx_r2, r2_g10+2*TH+22, resolveTeam(tierKey,"Winner G3"), resolveTeam(tierKey,"Winner G2"), hex, tierKey, "G10");
 
     // ── WB Final: G13 ────────────────────────────────────────────────
     els += mLbl(cx_wbf, wbf_g13, "G13  WB Final");
     els += slotResolved(cx_wbf,wbf_g13,hex,"Winner G9",tierKey,"G13","t1");
     els += slotResolved(cx_wbf,wbf_g13+TH,hex,"Winner G10",tierKey,"G13","t2");
     els += gameInfo(cx_wbf, wbf_g13+2*TH+2, tierKey, "G13");
-    els += projected(cx_wbf, wbf_g13+2*TH+22, resolveTeam(tierKey,"Winner G9"), resolveTeam(tierKey,"Winner G10"), hex);
+    els += projected(cx_wbf, wbf_g13+2*TH+22, resolveTeam(tierKey,"Winner G9"), resolveTeam(tierKey,"Winner G10"), hex, tierKey, "G13");
 
     // ── Championship: G16 ────────────────────────────────────────────
     els += mLbl(cx_ch, champ_y, "G16  Championship");
     els += slotResolved(cx_ch,champ_y,hex,"Winner G13",tierKey,"G16","t1");
     els += slotResolved(cx_ch,champ_y+TH,hex,"Winner G15",tierKey,"G16","t2");
     els += gameInfo(cx_ch, champ_y+2*TH+2, tierKey, "G16");
-    els += projected(cx_ch, champ_y+2*TH+22, resolveTeam(tierKey,"Winner G13"), resolveTeam(tierKey,"Winner G15"), hex);
+    els += projected(cx_ch, champ_y+2*TH+22, resolveTeam(tierKey,"Winner G13"), resolveTeam(tierKey,"Winner G15"), hex, tierKey, "G16");
 
     // ── LB banner & headers ───────────────────────────────────────────
     els += "<div style=\"position:absolute;left:0;top:" + (LB_TOP+2) + "px;background:rgba(255,94,108,.1);color:#ff9aa3;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.14em;padding:2px 8px;border-radius:4px;\">Losers Bracket</div>";
@@ -1800,47 +2175,47 @@ function renderPlayoffs() {
     els += slotResolved(lb_cx[0],lb_g6,hex,"Loser G1",tierKey,"G6","t1");
     els += slotResolved(lb_cx[0],lb_g6+TH,hex,"Loser G2",tierKey,"G6","t2");
     els += gameInfo(lb_cx[0], lb_g6+2*TH+2, tierKey, "G6");
-    els += projected(lb_cx[0], lb_g6+2*TH+22, resolveTeam(tierKey,"Loser G1"), resolveTeam(tierKey,"Loser G2"), hex);
+    els += projected(lb_cx[0], lb_g6+2*TH+22, resolveTeam(tierKey,"Loser G1"), resolveTeam(tierKey,"Loser G2"), hex, tierKey, "G6");
 
     // ── LB R2: G7=L(G4)vL(G5) top,  G8=W(G6)vL(G3) bottom — col 1 ──
     els += mLbl(lb_cx[1], lb_g7, "G7");
     els += slotResolved(lb_cx[1],lb_g7,hex,"Loser G4",tierKey,"G7","t1");
     els += slotResolved(lb_cx[1],lb_g7+TH,hex,"Loser G5",tierKey,"G7","t2");
     els += gameInfo(lb_cx[1], lb_g7+2*TH+2, tierKey, "G7");
-    els += projected(lb_cx[1], lb_g7+2*TH+22, resolveTeam(tierKey,"Loser G4"), resolveTeam(tierKey,"Loser G5"), hex);
+    els += projected(lb_cx[1], lb_g7+2*TH+22, resolveTeam(tierKey,"Loser G4"), resolveTeam(tierKey,"Loser G5"), hex, tierKey, "G7");
 
     els += mLbl(lb_cx[1], lb_g8, "G8");
     els += slotResolved(lb_cx[1],lb_g8,hex,"Winner G6",tierKey,"G8","t1");
     els += slotResolved(lb_cx[1],lb_g8+TH,hex,"Loser G3",tierKey,"G8","t2");
     els += gameInfo(lb_cx[1], lb_g8+2*TH+2, tierKey, "G8");
-    els += projected(lb_cx[1], lb_g8+2*TH+22, resolveTeam(tierKey,"Winner G6"), resolveTeam(tierKey,"Loser G3"), hex);
+    els += projected(lb_cx[1], lb_g8+2*TH+22, resolveTeam(tierKey,"Winner G6"), resolveTeam(tierKey,"Loser G3"), hex, tierKey, "G8");
 
     // ── LB R3: G11=W(G7)vL(G9) top,  G12=W(G8)vL(G10) bottom — col 2
     els += mLbl(lb_cx[2], lb_g11, "G11");
     els += slotResolved(lb_cx[2],lb_g11,hex,"Winner G7",tierKey,"G11","t1");
     els += slotResolved(lb_cx[2],lb_g11+TH,hex,"Loser G9",tierKey,"G11","t2");
     els += gameInfo(lb_cx[2], lb_g11+2*TH+2, tierKey, "G11");
-    els += projected(lb_cx[2], lb_g11+2*TH+22, resolveTeam(tierKey,"Winner G7"), resolveTeam(tierKey,"Loser G9"), hex);
+    els += projected(lb_cx[2], lb_g11+2*TH+22, resolveTeam(tierKey,"Winner G7"), resolveTeam(tierKey,"Loser G9"), hex, tierKey, "G11");
 
     els += mLbl(lb_cx[2], lb_g12, "G12");
     els += slotResolved(lb_cx[2],lb_g12,hex,"Winner G8",tierKey,"G12","t1");
     els += slotResolved(lb_cx[2],lb_g12+TH,hex,"Loser G10",tierKey,"G12","t2");
     els += gameInfo(lb_cx[2], lb_g12+2*TH+2, tierKey, "G12");
-    els += projected(lb_cx[2], lb_g12+2*TH+22, resolveTeam(tierKey,"Winner G8"), resolveTeam(tierKey,"Loser G10"), hex);
+    els += projected(lb_cx[2], lb_g12+2*TH+22, resolveTeam(tierKey,"Winner G8"), resolveTeam(tierKey,"Loser G10"), hex, tierKey, "G12");
 
     // ── LB R4: G14=W(G11)vW(G12) — col 3, one game ──────────────────
     els += mLbl(lb_cx[3], lb_g14, "G14");
     els += slotResolved(lb_cx[3],lb_g14,hex,"Winner G11",tierKey,"G14","t1");
     els += slotResolved(lb_cx[3],lb_g14+TH,hex,"Winner G12",tierKey,"G14","t2");
     els += gameInfo(lb_cx[3], lb_g14+2*TH+2, tierKey, "G14");
-    els += projected(lb_cx[3], lb_g14+2*TH+22, resolveTeam(tierKey,"Winner G11"), resolveTeam(tierKey,"Winner G12"), hex);
+    els += projected(lb_cx[3], lb_g14+2*TH+22, resolveTeam(tierKey,"Winner G11"), resolveTeam(tierKey,"Winner G12"), hex, tierKey, "G14");
 
     // ── LB Final: G15=W(G14)vL(G13) — col 4, one game ───────────────
     els += mLbl(lb_cx[4], lb_g15, "G15  LB Final");
     els += slotResolved(lb_cx[4],lb_g15,hex,"Winner G14",tierKey,"G15","t1");
     els += slotResolved(lb_cx[4],lb_g15+TH,hex,"Loser G13",tierKey,"G15","t2");
     els += gameInfo(lb_cx[4], lb_g15+2*TH+2, tierKey, "G15");
-    els += projected(lb_cx[4], lb_g15+2*TH+22, resolveTeam(tierKey,"Winner G14"), resolveTeam(tierKey,"Loser G13"), hex);
+    els += projected(lb_cx[4], lb_g15+2*TH+22, resolveTeam(tierKey,"Winner G14"), resolveTeam(tierKey,"Loser G13"), hex, tierKey, "G15");
 
     // ── SVG connectors ────────────────────────────────────────────────
     // Play-In G1 → G5 bottom slot (horizontal — aligned)
@@ -1902,26 +2277,35 @@ function renderPlayoffs() {
 // SCHEDULE RENDERER
 // =====================================================================
 function renderSchedule(div) {
-  var el = document.getElementById("s6-sched-" + div);
-  var html = "";
-  DATA[div].schedule.forEach(function(wk){
-    html += "<div class=\"week-label\">Week " + wk.week + "</div>";
-    wk.games.forEach(function(g){
-      var hS, aS;
+  const el = document.getElementById('s6-sched-' + div);
+  let html = '';
+  DATA[div].schedule.forEach(wk => {
+    html += `<div class="week-label">Week ${wk.week}</div>`;
+    wk.games.forEach(g => {
+      let hS, aS;
       if (g.hs === null || g.hs === undefined) {
-        hS = "<span class=\"t-score pending\">TBD</span>";
-        aS = "<span class=\"t-score pending\">TBD</span>";
+        hS = `<span class="t-score pending">TBD</span>`;
+        aS = `<span class="t-score pending">TBD</span>`;
       } else {
-        var hc = g.hs===g.as ? "tie" : g.hs>g.as ? "win" : "loss";
-        var ac = g.hs===g.as ? "tie" : g.hs>g.as ? "loss" : "win";
-        hS = "<span class=\"t-score " + hc + "\">" + g.hs + "</span>";
-        aS = "<span class=\"t-score " + ac + "\">" + g.as + "</span>";
+        const hc = g.hs===g.as ? 'tie' : g.hs>g.as ? 'win' : 'loss';
+        const ac = g.hs===g.as ? 'tie' : g.hs>g.as ? 'loss' : 'win';
+        hS = `<span class="t-score ${hc}">${g.hs}</span>`;
+        aS = `<span class="t-score ${ac}">${g.as}</span>`;
       }
-      var homeRec = DATA[div].standings.find(function(t){ return t.name===g.home; });
-      var awayRec = DATA[div].standings.find(function(t){ return t.name===g.away; });
-      var hR = homeRec ? "<span class=\"t-rec\">" + homeRec.w + "-" + homeRec.l + (homeRec.t?"-"+homeRec.t:"") + "</span>" : "";
-      var aR = awayRec ? "<span class=\"t-rec\">" + awayRec.w + "-" + awayRec.l + (awayRec.t?"-"+awayRec.t:"") + "</span>" : "";
-      html += "<div class=\"game-row\"><span class=\"game-date\">" + g.date + "</span><span class=\"game-time\">" + g.time + "</span><div class=\"game-matchup\"><div class=\"team-score\"><span class=\"t-name\">" + g.home + "</span>" + hR + " " + hS + "</div><span class=\"vs\">vs</span><div class=\"team-score\"><span class=\"t-name\">" + g.away + "</span>" + aR + " " + aS + "</div></div><div class=\"game-loc\"><a href=\"" + g.url + "\" target=\"_blank\">📍 " + g.loc + "</a></div></div>";
+      const homeRec = DATA[div].standings.find(t => t.name===g.home);
+      const awayRec = DATA[div].standings.find(t => t.name===g.away);
+      const hR = homeRec ? `<span class="t-rec">${homeRec.w}-${homeRec.l}${homeRec.t?'-'+homeRec.t:''}</span>` : '';
+      const aR = awayRec ? `<span class="t-rec">${awayRec.w}-${awayRec.l}${awayRec.t?'-'+awayRec.t:''}</span>` : '';
+      html += `<div class="game-row">
+        <span class="game-date">${g.date}</span>
+        <span class="game-time">${g.time}</span>
+        <div class="game-matchup">
+          <div class="team-score"><span class="t-name">${g.home}</span>${hR} ${hS}</div>
+          <span class="vs">vs</span>
+          <div class="team-score"><span class="t-name">${g.away}</span>${aR} ${aS}</div>
+        </div>
+        <div class="game-loc"><a href="${g.url}" target="_blank">📍 ${g.loc}</a></div>
+      </div>`;
     });
   });
   el.innerHTML = html;
@@ -1932,104 +2316,251 @@ function renderSchedule(div) {
 // =====================================================================
 var VIEWS = ["all","alo","finch","chamberlain","gold","silver","bronze","copper"];
 function setTab(div) {
-  document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
-  document.getElementById('age-pane-6u').querySelector(".tab[data-div=\"" + div + "\"]").classList.add("active");
-  VIEWS.forEach(function(v){ document.getElementById("s6-view-"+v).style.display = v===div ? "" : "none"; });
+  document.getElementById('age-pane-6u').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('age-pane-6u').querySelector(`.tab[data-div="${div}"]`).classList.add('active');
+  VIEWS.forEach(v => document.getElementById('s6-view-'+v).style.display = v===div ? '' : 'none');
 }
-document.querySelectorAll(".tab").forEach(function(t){ t.addEventListener("click", function(){ setTab(t.dataset.div); }); });
+document.getElementById('age-pane-6u').querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.div)));
 
 function toggleSchedule(div) {
-  var el = document.getElementById("s6-sched-" + div);
-  var btn = el.previousElementSibling;
-  var showing = el.style.display !== "none";
-  el.style.display = showing ? "none" : "";
-  btn.textContent = showing ? "Show Schedule ▾" : "Hide Schedule ▴";
-  if (!showing && !el.dataset.rendered) { renderSchedule(div); el.dataset.rendered = "1"; }
+  const el  = document.getElementById('s6-sched-' + div);
+  const btn = el.previousElementSibling;
+  const showing = el.style.display !== 'none';
+  el.style.display = showing ? 'none' : '';
+  btn.textContent = showing ? 'Show Schedule ▾' : 'Hide Schedule ▴';
+  if (!showing && !el.dataset.rendered) { renderSchedule(div); el.dataset.rendered = '1'; }
 }
 
 // =====================================================================
 // MODAL
 // =====================================================================
+
+// ── Playoff helpers ───────────────────────────────────────────────────────
+function getPlayoffRecord(teamName) {
+  let w = 0, l = 0;
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      const winner = r.s1 > r.s2 ? r.t1 : r.t2;
+      const loser  = r.s1 > r.s2 ? r.t2 : r.t1;
+      if (winner === teamName) w++;
+      if (loser  === teamName) l++;
+    });
+  });
+  return {w, l};
+}
+
+function getPlayoffGames(teamName) {
+  const games = [];
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      if (r.t1 !== teamName && r.t2 !== teamName) return;
+      const myS  = r.t1 === teamName ? r.s1 : r.s2;
+      const oppS = r.t1 === teamName ? r.s2 : r.s1;
+      const opp  = r.t1 === teamName ? r.t2 : r.t1;
+      const res  = myS > oppS ? 'W' : myS < oppS ? 'L' : 'T';
+      const sched = PLAYOFF_SCHEDULES[tier]?.[gk];
+      games.push({tier:tierLabel, gk, date:sched?.date||'', opp, myS, oppS, res});
+    });
+  });
+  // Also include upcoming playoff games (in PLAYOFF_SCHEDULES but not in PLAYOFF_RESULTS)
+  Object.keys(PLAYOFF_SCHEDULES).forEach(tier => {
+    const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+    const seeds = PLAYOFF_SEEDS[tier] || [];
+    Object.keys(PLAYOFF_SCHEDULES[tier]).forEach(gk => {
+      if (PLAYOFF_RESULTS[tier]?.[gk]) return; // already played
+      const sched = PLAYOFF_SCHEDULES[tier][gk];
+      const inBracket = seeds.some(s => s.name === teamName);
+      if (!inBracket) return;
+      games.push({tier:tierLabel, gk, date:sched.date, time:sched.time, opp:null, myS:null, oppS:null, res:null, loc:sched.loc, url:sched.url});
+    });
+  });
+  return games;
+}
 function closeModal(e) {
-  if (e.target === document.getElementById("s6-teamModal"))
-    document.getElementById("s6-teamModal").classList.add("hidden");
+  if (e.target === document.getElementById('s6-teamModal'))
+    document.getElementById('s6-teamModal').classList.add('hidden');
 }
 
 function openTeamCard(teamName, divKey) {
-  var divData = DATA[divKey];
-  var standing = divData.standings.find(function(t){ return t.name===teamName; });
+  const divData = DATA[divKey];
+  const standing = divData.standings.find(t => t.name === teamName);
   if (!standing) return;
-  var divColor = DIV_COLORS[divKey];
-  var divLabel = DIV_LABELS[divKey];
-  var initials = teamName.split(" ").map(function(w){ return w[0]; }).join("").slice(0,2).toUpperCase();
-  var played = [], upcoming = [];
-  divData.schedule.forEach(function(wk){
-    wk.games.forEach(function(g){
-      var isHome = g.home===teamName, isAway = g.away===teamName;
+
+  const divColor = DIV_COLORS[divKey];
+  const divLabel = DIV_LABELS[divKey];
+  const bracket  = _bracketLookup[teamName] || 'copper';
+  const bColors  = {gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941', copper:'#b07040'};
+  const bColor   = bColors[bracket];
+  const pct      = standing.pct.toFixed(3);
+  const initials = teamName.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+
+  // Gather all games for this team from the schedule
+  const played = [], upcoming = [];
+  divData.schedule.forEach(wk => {
+    wk.games.forEach(g => {
+      const isHome = g.home === teamName;
+      const isAway = g.away === teamName;
       if (!isHome && !isAway) return;
-      var opp = isHome ? g.away : g.home;
-      var myS = isHome ? g.hs : g.as;
-      var oppS = isHome ? g.as : g.hs;
+
+      const opp  = isHome ? g.away : g.home;
+      const myS  = isHome ? g.hs   : g.as;
+      const oppS = isHome ? g.as   : g.hs;
+
       if (myS !== null && myS !== undefined) {
-        played.push({date:g.date,opp:opp,myS:myS,oppS:oppS,res:myS>oppS?"W":myS<oppS?"L":"T"});
+        // Played
+        const res = myS > oppS ? 'W' : myS < oppS ? 'L' : 'T';
+        played.push({date:g.date, opp, myS, oppS, res, loc:g.loc, url:g.url});
       } else {
-        upcoming.push({date:g.date,time:g.time,opp:opp});
+        // Upcoming — find opponent's standing for projection
+        const oppStanding = divData.standings.find(t => t.name === opp);
+        let proj = 'even';
+        let projScore = null;
+        if (oppStanding) {
+          const diff = standing.pct - oppStanding.pct;
+          if (diff > 0.15) proj = 'fav';
+          else if (diff < -0.15) proj = 'dog';
+
+          // Projected score: blend each team's avg runs scored & allowed
+          let myRsFor=0, myRsAgainst=0, myGP=0;
+          let oppRsFor=0, oppRsAgainst=0, oppGP=0;
+          divData.schedule.forEach(wk2 => wk2.games.forEach(g2 => {
+            if (g2.hs === null || g2.hs === undefined) return;
+            if (g2.home === teamName) { myRsFor+=g2.hs; myRsAgainst+=g2.as; myGP++; }
+            else if (g2.away === teamName) { myRsFor+=g2.as; myRsAgainst+=g2.hs; myGP++; }
+            if (g2.home === opp) { oppRsFor+=g2.hs; oppRsAgainst+=g2.as; oppGP++; }
+            else if (g2.away === opp) { oppRsFor+=g2.as; oppRsAgainst+=g2.hs; oppGP++; }
+          }));
+
+          if (myGP > 0 && oppGP > 0) {
+            // Projected runs = average of team's offense vs opponent's defense
+            const myProj  = Math.round((myRsFor/myGP   + oppRsAgainst/oppGP) / 2);
+            const oppProj = Math.round((oppRsFor/oppGP + myRsAgainst/myGP)   / 2);
+            projScore = {my: myProj, opp: oppProj};
+          }
+        }
+        upcoming.push({date:g.date, time:g.time, opp, proj, projScore, loc:g.loc, url:g.url});
       }
     });
   });
-  var rsFor=0, rsAgainst=0;
-  played.forEach(function(g){ rsFor+=g.myS; rsAgainst+=g.oppS; });
-  document.getElementById("s6-modalLogo").style.background = divColor+"22";
-  document.getElementById("s6-modalLogo").style.color = divColor;
-  document.getElementById("s6-modalLogo").style.border = "1px solid "+divColor+"44";
-  document.getElementById("s6-modalLogo").textContent = initials;
-  document.getElementById("s6-modalName").textContent = teamName;
-  document.getElementById("s6-modalMeta").innerHTML = "<span style=\"color:"+divColor+"\">"+divLabel+" Division</span><span>Place #"+standing.place+"</span>"+(standing.coach?"<span>Coach "+standing.coach+"</span>":"");
-  document.getElementById("s6-modalStats").innerHTML = "<div class=\"modal-stat\"><div class=\"v\" style=\"color:#4ade80\">"+standing.w+"</div><div class=\"l\">Wins</div></div><div class=\"modal-stat\"><div class=\"v\" style=\"color:var(--coral)\">"+standing.l+"</div><div class=\"l\">Losses</div></div><div class=\"modal-stat\"><div class=\"v\" style=\"color:var(--peach)\">"+standing.t+"</div><div class=\"l\">Ties</div></div><div class=\"modal-stat\"><div class=\"v\">"+standing.pct.toFixed(3)+"</div><div class=\"l\">PCT</div></div><div class=\"modal-stat\"><div class=\"v\" style=\"color:#4ade80\">"+rsFor+"</div><div class=\"l\">Runs For</div></div><div class=\"modal-stat\"><div class=\"v\" style=\"color:var(--coral)\">"+rsAgainst+"</div><div class=\"l\">Runs Agst</div></div>";
-  var bodyHTML = "";
+
+  // Runs scored / allowed
+  let rsFor = 0, rsAgainst = 0;
+  played.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
+
+  document.getElementById('s6-modalLogo').style.background = divColor + '22';
+  document.getElementById('s6-modalLogo').style.color      = divColor;
+  document.getElementById('s6-modalLogo').style.border     = `1px solid ${divColor}44`;
+  document.getElementById('s6-modalLogo').textContent      = initials;
+  document.getElementById('s6-modalName').textContent = teamName;
+  document.getElementById('s6-modalMeta').innerHTML = `
+    <span style="color:${divColor}">${divLabel} Division</span>
+    <span>Place #${standing.place}</span>
+    <span style="color:${bColor}">${BRACKET_LABELS[bracket]} Bracket</span>
+    ${standing.coach && standing.coach !== 'TBD' ? `<span>Coach ${standing.coach}</span>` : ''}
+  `;
+  document.getElementById('s6-modalStats').innerHTML = `
+    <div class="modal-stat"><div class="v" style="color:#4ade80">${standing.w}</div><div class="l">Wins</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--coral)">${standing.l}</div><div class="l">Losses</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--peach)">${standing.t}</div><div class="l">Ties</div></div>
+    <div class="modal-stat"><div class="v">${pct}</div><div class="l">PCT</div></div>
+    <div class="modal-stat"><div class="v" style="color:#4ade80">${rsFor}</div><div class="l">Runs For</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--coral)">${rsAgainst}</div><div class="l">Runs Agst</div></div>
+  `;
+
+  let bodyHTML = '';
+
+  // ── Results ──
   if (played.length) {
-    bodyHTML += "<div class=\"modal-section-title\">Results ("+played.length+" games)</div>";
-    played.forEach(function(g){
-      var oppS = divData.standings.find(function(t){ return t.name===g.opp; });
-      var oppRec = oppS ? "<span style=\"font-size:10px;color:var(--muted);font-weight:400;margin-left:4px;\">("+oppS.w+"-"+oppS.l+(oppS.t?"-"+oppS.t:"")+")</span>" : "";
-      bodyHTML += "<div class=\"modal-game-row\"><span class=\"mgr-date\">"+g.date+"</span><span class=\"mgr-matchup\">vs <span class=\"mgr-opp\">"+g.opp+"</span>"+oppRec+"</span><span class=\"mgr-result "+g.res+"\">"+g.res+" "+g.myS+"-"+g.oppS+"</span></div>";
+    bodyHTML += `<div class="modal-section-title">Results (${played.length} games)</div>`;
+    played.forEach(g => {
+      const scoreStr = `${g.myS}–${g.oppS}`;
+      const oppStanding = divData.standings.find(t => t.name === g.opp);
+      const oppRec = oppStanding ? `<span style="font-size:10px;color:var(--muted);font-weight:400;margin-left:4px;">(${oppStanding.w}-${oppStanding.l}${oppStanding.t?'-'+oppStanding.t:''}) </span>` : '';
+      bodyHTML += `<div class="modal-game-row">
+        <span class="mgr-date">${g.date}</span>
+        <span class="mgr-matchup">vs <span class="mgr-opp">${g.opp}</span>${oppRec}</span>
+        <span class="mgr-result ${g.res}">${g.res} ${scoreStr}</span>
+      </div>`;
     });
   }
+
+  // ── Upcoming ──
   if (upcoming.length) {
-    bodyHTML += "<div class=\"modal-section-title\" style=\"margin-top:16px\">Upcoming ("+upcoming.length+" games)</div>";
-    upcoming.forEach(function(g){
-      bodyHTML += "<div class=\"modal-game-row\"><span class=\"mgr-date\">"+g.date+"</span><span class=\"mgr-matchup\">vs <span class=\"mgr-opp\">"+g.opp+"</span></span><span style=\"font-size:11px;color:var(--muted);font-style:italic\">"+g.time+"</span></div>";
+    bodyHTML += `<div class="modal-section-title" style="margin-top:18px">Remaining (${upcoming.length} games)</div>`;
+    const projLabels = {fav:'Proj. Win', dog:'Proj. Loss', even:'Toss-up'};
+    upcoming.forEach(g => {
+      const scoreHTML = g.projScore
+        ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.03em;">${g.projScore.my}–${g.projScore.opp}</span>`
+        : `<span style="font-size:10px;color:var(--muted)">No data</span>`;
+      const projColor = g.proj==='fav' ? '#4ade80' : g.proj==='dog' ? 'var(--coral)' : 'var(--peach)';
+      const oppStanding = divData.standings.find(t => t.name === g.opp);
+      const oppRec = oppStanding ? `<span style="font-size:10px;color:var(--muted);font-weight:400;margin-left:4px;">(${oppStanding.w}-${oppStanding.l}${oppStanding.t?'-'+oppStanding.t:''}) </span>` : '';
+      bodyHTML += `<div class="modal-game-row">
+        <span class="mgr-date">${g.date}<br><span style="font-size:10px">${g.time}</span></span>
+        <span class="mgr-matchup">vs <span class="mgr-opp">${g.opp}</span>${oppRec}<br>
+          <a href="${g.url}" target="_blank" style="font-size:10px;color:var(--sky);text-decoration:none;">📍 ${g.loc}</a>
+        </span>
+        <span style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+          <span style="color:${projColor}">${scoreHTML}</span>
+          <span class="mgr-proj ${g.proj}">${projLabels[g.proj]}</span>
+        </span>
+      </div>`;
     });
   }
-  document.getElementById("s6-modalBody").innerHTML = bodyHTML;
-  document.getElementById("s6-teamModal").classList.remove("hidden");
+
+  if (!played.length && !upcoming.length) {
+    bodyHTML = `<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">No games found for this team.</p>`;
+  }
+
+  // ── Playoff games section ────────────────────────────────────────
+  const pgames = getPlayoffGames(teamName);
+  const played_po = pgames.filter(g => g.res !== null);
+  if (played_po.length) {
+    bodyHTML += `<div class="modal-section-title" style="margin-top:16px">Playoffs (${played_po.length} game${played_po.length!==1?'s':''})</div>`;
+    played_po.forEach(g => {
+      bodyHTML += `<div class="modal-game-row">
+        <span class="mgr-date">${g.date}<br><span style="font-size:10px;color:var(--gold);">${g.tier} ${g.gk}</span></span>
+        <span class="mgr-matchup">vs <span class="mgr-opp">${g.opp}</span></span>
+        <span class="mgr-result ${g.res}">${g.res} ${g.myS}–${g.oppS}</span>
+      </div>`;
+    });
+  }
+  document.getElementById('s6-modalBody').innerHTML = bodyHTML;
+  document.getElementById('s6-teamModal').classList.remove('hidden');
 }
 
 // =====================================================================
 // INIT
 // =====================================================================
 (function(){
-  var games=0, runs=0, lastDate="";
-  ["alo","finch","chamberlain"].forEach(function(div){
-    DATA[div].schedule.forEach(function(wk){
-      wk.games.forEach(function(g){
+  let games=0, runs=0, lastDate='';
+  ['alo','finch','chamberlain'].forEach(div => {
+    DATA[div].schedule.forEach(wk => {
+      wk.games.forEach(g => {
         if (g.hs !== null && g.hs !== undefined) { games++; runs+=g.hs+g.as; lastDate=g.date; }
       });
     });
   });
-  document.getElementById("s6-statGames").textContent = games;
-  document.getElementById("s6-statRuns").textContent = runs.toLocaleString();
-  document.getElementById("s6-statThrough").textContent = lastDate || "—";
+  document.getElementById('s6-statGames').textContent = games;
+  document.getElementById('s6-statRuns').textContent = runs.toLocaleString();
+  document.getElementById('s6-statThrough').textContent = lastDate || '—';
   renderCombined();
-  renderStandings("alo","s6-tbody-alo");
-  renderStandings("finch","s6-tbody-finch");
-  renderStandings("chamberlain","s6-tbody-chamberlain");
+  renderStandings('alo','s6-tbody-alo');
+  renderStandings('finch','s6-tbody-finch');
+  renderStandings('chamberlain','s6-tbody-chamberlain');
   renderPlayoffs();
+  setTab('gold');
 })();
 
   window.ts6=toggleSchedule;window.cm6=closeModal;window.ctm6=function(){document.getElementById('s6-teamModal').classList.add('hidden');};window.otc6=openTeamCard;
-}})();
-function _7u_init(){{
+  window._6u_DATA=DATA;window._6u_PR=PLAYOFF_RESULTS;window._6u_PS=PLAYOFF_SCHEDULES;window._6u_BL=_bracketLookup;window._6u_SEEDS=PLAYOFF_SEEDS;
+})();
+function _7u_init(){
 // =====================================================================
 // DATA — 7U Spring '26  (Abbott & Fernandez)
 // Source: sbmsa.net — updated May 5, 2026
@@ -2253,6 +2784,16 @@ const PLAYOFF_SCHEDULES = {
   },
 };
 
+
+const PLAYOFF_RESULTS = {
+  gold: {
+    G1: {t1:'Cyclones', s1:11, t2:'Thunder',  s2:10},
+    G2: {t1:'Sliders',  s1:16, t2:'Comets',   s2:11},
+  },
+  silver: {},
+  bronze: {},
+};
+
 // =====================================================================
 // HELPERS
 // =====================================================================
@@ -2428,7 +2969,29 @@ function h2hRecord(aName, bName, divKey) {
   return { aW, aL, aT };
 }
 
+
+function bestWinRank(teamName, divKey, standings) {
+  const pctOrder = [...standings].sort((a,b) => b.pct - a.pct);
+  const rankOf = name => pctOrder.findIndex(t => t.name === name) + 1;
+  return standings.reduce((best, opp) => {
+    if (opp.name === teamName) return best;
+    const r = h2hRecord(teamName, opp.name, divKey);
+    return r.aW > 0 ? Math.min(best, rankOf(opp.name)) : best;
+  }, 999);
+}
+
+function worstLossRank(teamName, divKey, standings) {
+  const pctOrder = [...standings].sort((a,b) => b.pct - a.pct);
+  const rankOf = name => pctOrder.findIndex(t => t.name === name) + 1;
+  return standings.reduce((worst, opp) => {
+    if (opp.name === teamName) return worst;
+    const r = h2hRecord(teamName, opp.name, divKey);
+    return r.aL > 0 ? Math.max(worst, rankOf(opp.name)) : worst;
+  }, 0);
+}
+
 function tiebreakSort(teams, divKey) {
+  // Pre-compute PCT rank order ONCE outside the comparator (avoids mutation bug)
   const pctOrder = [...teams].sort((a, b) => b.pct - a.pct);
   const rankOf = name => pctOrder.findIndex(t => t.name === name) + 1;
 
@@ -2438,8 +3001,10 @@ function tiebreakSort(teams, divKey) {
     const h2h = h2hRecord(a.name, b.name, divKey);
     const aH2H = h2h.aW + h2h.aT * 0.5;
     const bH2H = h2h.aL + h2h.aT * 0.5;
+    // 1. Head-to-head
     if (aH2H !== bH2H) return bH2H - aH2H;
 
+    // 2. Best win — lowest ranked (by PCT) opponent beaten
     const aBestWin = teams.reduce((best, opp) => {
       if (opp.name === a.name) return best;
       const r = h2hRecord(a.name, opp.name, divKey);
@@ -2452,6 +3017,7 @@ function tiebreakSort(teams, divKey) {
     }, 999);
     if (aBestWin !== bBestWin) return aBestWin - bBestWin;
 
+    // 3. Worst loss — highest ranked (by PCT) opponent lost to
     const aWorstLoss = teams.reduce((worst, opp) => {
       if (opp.name === a.name) return worst;
       const r = h2hRecord(a.name, opp.name, divKey);
@@ -2464,12 +3030,15 @@ function tiebreakSort(teams, divKey) {
     }, 0);
     if (aWorstLoss !== bWorstLoss) return bWorstLoss - aWorstLoss;
 
+    // 4. Coin flip — return 0 (caller assigns same place)
     return 0;
   });
 }
 
 function assignPlaces(sorted) {
-  const divKey = (sorted[0] || {})._divKey || sorted[0]?.div || 'div1';
+  // Assign places, giving tied teams (coin flip) the same place number
+  // When a tiebreaker resolves the tie, increment the place counter
+  const divKey = (sorted[0] || {})._divKey || sorted[0]?.div || 'div1'; // fallback divKey
   const places = [];
   let currentPlace = 1;
   for (let i = 0; i < sorted.length; i++) {
@@ -2501,6 +3070,7 @@ function assignPlaces(sorted) {
 }
 
 function bracketFor(place){
+  if(!place) return 'bronze';
   if(place<=3)return'gold';
   if(place<=7)return'silver';
   return'bronze';
@@ -2516,11 +3086,11 @@ function renderCombined() {
 
   const div1Sorted = tiebreakSort([...DATA.div1.standings].map(t=>({...t,div:'div1',_divKey:'div1'})), 'div1');
   const div1Places = assignPlaces(div1Sorted);
-  div1Sorted.forEach((t,i) => { t.place = div1Places[i]; });
+  div1Sorted.forEach((t,i) => { t.place = div1Places[i]; DATA.div1.standings.find(s=>s.name===t.name).place = div1Places[i]; });
 
   const div2Sorted = tiebreakSort([...DATA.div2.standings].map(t=>({...t,div:'div2',_divKey:'div2'})), 'div2');
   const div2Places = assignPlaces(div2Sorted);
-  div2Sorted.forEach((t,i) => { t.place = div2Places[i]; });
+  div2Sorted.forEach((t,i) => { t.place = div2Places[i]; DATA.div2.standings.find(s=>s.name===t.name).place = div2Places[i]; });
 
   const allTeams = [...div1Sorted, ...div2Sorted]
     .sort((a,b) => b.pct - a.pct || (b.w-b.l) - (a.w-a.l));
@@ -2619,12 +3189,33 @@ function renderStandings(divKey, tbodyId) {
 // =====================================================================
 // BRACKET RENDERER
 // =====================================================================
+// Returns eliminated team names for a bracket tier
+function getEliminated(tierKey) {
+  const results = PLAYOFF_RESULTS[tierKey] || {};
+  const eliminated = {};
+  if (tierKey === 'gold') {
+    // 6-team DE: LB losers are out; WB losers drop to LB (not yet out)
+    // LB elimination games: G5, G6, G8, G9
+    ['G5','G6','G8','G9'].forEach(gk => {
+      const r = results[gk];
+      if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
+    });
+  } else {
+    // SE: every loser is eliminated
+    Object.keys(results).forEach(gk => {
+      const r = results[gk];
+      if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
+    });
+  }
+  return eliminated;
+}
+
 function renderPlayoffs() {
 
   const tiers = [
-    {key:'gold',  medal:'🥇', title:'Gold Bracket',   sub:'Div. places 1–3 · 6 teams · Double Elimination', cssKey:'gold',   color:'var(--gold)',   hex:'#f5c842', slF:[0,3], slO:[0,3], eliminated:[]},
-    {key:'silver',medal:'🥈', title:'Silver Bracket',  sub:'Div. places 4–7 · 8 teams · Single Elimination', cssKey:'silver', color:'var(--silver)', hex:'#b0bec5', slF:[3,7], slO:[3,7], eliminated:[]},
-    {key:'bronze',medal:'🥉', title:'Bronze Bracket',  sub:'Div. places 8–11 · 8 teams · Single Elimination',cssKey:'bronze', color:'var(--bronze)', hex:'#c87941', slF:[7,11],slO:[7,11], eliminated:[]},
+    {key:'gold',  medal:'🥇', title:'Gold Bracket',   sub:'Div. places 1–3 · 6 teams · Double Elimination', cssKey:'gold',   color:'var(--gold)',   hex:'#f5c842', slF:[0,3], slO:[0,3]},
+    {key:'silver',medal:'🥈', title:'Silver Bracket',  sub:'Div. places 4–7 · 8 teams · Single Elimination', cssKey:'silver', color:'var(--silver)', hex:'#b0bec5', slF:[3,7], slO:[3,7]},
+    {key:'bronze',medal:'🥉', title:'Bronze Bracket',  sub:'Div. places 8–11 · 8 teams · Single Elimination',cssKey:'bronze', color:'var(--bronze)', hex:'#c87941', slF:[7,11],slO:[7,11]},
   ];
 
   const TH  = 30;
@@ -2643,7 +3234,7 @@ function renderPlayoffs() {
       ? `<span class="tb-seed" style="background:${hex};color:#0d1b2a">${team.seed}</span>
          <span class="tb-name">${team.name}</span>
          <span class="tb-badge ${team.div}">${team.div==='div1'?'A':'F'}</span>
-         <span class="tb-rec">${team.w}-${team.l}${team.t?'-'+team.t:''}</span>${scoreHTML}`
+         <span class="tb-rec">${(()=>{const pr=getPlayoffRecord(team.name);const pw=team.w+pr.w,pl=team.l+pr.l;return pw+'-'+pl+(team.t?'-'+team.t:'')+(pr.w+pr.l>0?' <span style="opacity:.55;font-size:9px">PO</span>':'');})()}</span>${scoreHTML}`
       : `<span class="tb-seed" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.3)">?</span>
          <span class="tb-name" style="color:rgba(255,255,255,.4);font-size:10px;font-style:italic;">${label||'TBD'}</span>`;
     const clickAttr = team ? ` onclick="otc7('${team.name.replace(/'/g,"\\'")}','${team.div}')" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;cursor:pointer"` : ` style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;"`;
@@ -2718,12 +3309,14 @@ function renderPlayoffs() {
     return result;
   }
 
-  function projected(x, y, teamA, teamB, hex) {
+  function projected(x, y, teamA, teamB, hex, tierKey, gameKey) {
     if (!teamA || !teamB || !teamA.name || !teamB.name) return '';
+    if (tierKey && gameKey && PLAYOFF_RESULTS[tierKey]?.[gameKey]) return '';
     if (teamA.name.startsWith('Winner') || teamB.name.startsWith('Winner') ||
         teamA.name.startsWith('Loser')  || teamB.name.startsWith('Loser')  ||
         teamA.name.startsWith('TBD')    || teamB.name.startsWith('TBD')    ||
         teamA.name === 'BYE'            || teamB.name === 'BYE') return '';
+
     const { probA, probB, projA, projB } = matchupMonteCarlo(teamA, teamB);
     const favTeam  = probA >= probB ? teamA  : teamB;
     const prob     = Math.max(probA, probB);
@@ -2731,6 +3324,7 @@ function renderPlayoffs() {
     const loScore  = Math.round(probA >= probB ? projB : projA);
     const scoreHi  = Math.max(hiScore, loScore);
     const scoreLo  = Math.min(hiScore, loScore);
+
     return `<div style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;padding:2px 8px;">
       <span style="font-size:9px;color:${hex};font-weight:700;opacity:.85;">↳ Proj: ${favTeam.name} ${scoreHi}–${scoreLo} <span style="opacity:.6;">(${prob}%)</span></span>
     </div>`;
@@ -2790,7 +3384,7 @@ function renderPlayoffs() {
       els += slot(cx[0], m[i],    top, hex);
       els += slot(cx[0], m[i]+TH, bot, hex);
       els += gameInfo(cx[0], m[i]+2*TH+2, tierKey, `G${gn}`);
-      els += projected(cx[0], m[i]+2*TH+22, top, bot, hex);
+      els += projected(cx[0], m[i]+2*TH+22, top, bot, hex, tierKey, `G${gn}`);
     });
 
     [[5,1,2],[6,3,4]].forEach(([gn,a,b], i) => {
@@ -2881,25 +3475,25 @@ function renderPlayoffs() {
     els += slot(cx[0], g1y,    byS(4), hex, false, '', 11);  // Cyclones 11 — advanced
     els += slot(cx[0], g1y+TH, byS(5), hex, false, '', 10); // Thunder 10
     els += gameInfo(cx[0], g1y+2*TH+2, tierKey, 'G1');
-    els += projected(cx[0], g1y+2*TH+22, byS(4), byS(5), hex);
+    els += projected(cx[0], g1y+2*TH+22, byS(4), byS(5), hex, tierKey, "G1");
 
     els += mLbl(cx[0], g2y, 'G2');
     els += slot(cx[0], g2y,    byS(3), hex, false, '', 16);  // Sliders 16 — advanced
     els += slot(cx[0], g2y+TH, byS(6), hex, false, '', 11); // Comets 11
     els += gameInfo(cx[0], g2y+2*TH+2, tierKey, 'G2');
-    els += projected(cx[0], g2y+2*TH+22, byS(3), byS(6), hex);
+    els += projected(cx[0], g2y+2*TH+22, byS(3), byS(6), hex, tierKey, "G2");
 
     els += mLbl(cx[1], g3y, 'G3');
     els += slot(cx[1], g3y,    byS(1), hex, true);
     els += slot(cx[1], g3y+TH, byS(4), hex, true, '');  // Cyclones — Winner G1
     els += gameInfo(cx[1], g3y+2*TH+2, tierKey, 'G3');
-    els += projected(cx[1], g3y+2*TH+22, byS(1), byS(4), hex);
+    els += projected(cx[1], g3y+2*TH+22, byS(1), byS(4), hex, tierKey, "G3");
 
     els += mLbl(cx[1], g4y, 'G4');
     els += slot(cx[1], g4y,    byS(2), hex, true);
     els += slot(cx[1], g4y+TH, byS(3), hex, true, '');  // Sliders — Winner G2
     els += gameInfo(cx[1], g4y+2*TH+2, tierKey, 'G4');
-    els += projected(cx[1], g4y+2*TH+22, byS(2), byS(3), hex);
+    els += projected(cx[1], g4y+2*TH+22, byS(2), byS(3), hex, tierKey, "G4");
 
     els += mLbl(cx[2], g7y, 'G7  WB Final');
     els += slot(cx[2], g7y,    null, hex, false, 'Winner G3');
@@ -2999,7 +3593,8 @@ function renderPlayoffs() {
     const bracketHTML = n===6 ? buildDEBracket(teams,hex,tier.key) : buildSEBracket(teams,hex,tier.key);
 
     const legend = teams.map(t => {
-      const out = tier.eliminated && tier.eliminated.includes(t.name);
+      const elim = getEliminated(tier.key);
+      const out = elim[t.name] === true;
       const nameStyle = out ? 'text-decoration:line-through;color:var(--muted);opacity:.5;' : '';
       const rowStyle  = out ? 'opacity:.6;' : '';
       return `<div class="bk-seed-row" style="cursor:pointer;${rowStyle}" onclick="otc7('${t.name}','${t.div}')">
@@ -3097,6 +3692,7 @@ function toggleSchedule(div){
   renderStandings('div1','s7-tbody-div1');
   renderStandings('div2','s7-tbody-div2');
   renderPlayoffs();
+  setTab('gold');
 })();
 
 // =====================================================================
@@ -3105,6 +3701,42 @@ function toggleSchedule(div){
 function closeModal(e) {
   if (e.target === document.getElementById('s7-teamModal'))
     document.getElementById('s7-teamModal').classList.add('hidden');
+}
+
+
+// ── Playoff helpers ───────────────────────────────────────────────────────
+function getPlayoffRecord(teamName) {
+  let w = 0, l = 0;
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      const winner = r.s1 > r.s2 ? r.t1 : r.t2;
+      const loser  = r.s1 > r.s2 ? r.t2 : r.t1;
+      if (winner === teamName) w++;
+      if (loser  === teamName) l++;
+    });
+  });
+  return {w, l};
+}
+
+function getPlayoffGames(teamName) {
+  const games = [];
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      if (r.t1 !== teamName && r.t2 !== teamName) return;
+      const myS  = r.t1 === teamName ? r.s1 : r.s2;
+      const oppS = r.t1 === teamName ? r.s2 : r.s1;
+      const opp  = r.t1 === teamName ? r.t2 : r.t1;
+      const res  = myS > oppS ? 'W' : myS < oppS ? 'L' : 'T';
+      const sched = PLAYOFF_SCHEDULES[tier]?.[gk];
+      games.push({tier:tierLabel, gk, date:sched?.date||'', opp, myS, oppS, res});
+    });
+  });
+  return games;
 }
 
 function openTeamCard(teamName, divKey) {
@@ -3175,7 +3807,7 @@ function openTeamCard(teamName, divKey) {
   document.getElementById('s7-modalLogo').textContent      = initials;
   document.getElementById('s7-modalName').textContent = teamName;
   document.getElementById('s7-modalMeta').innerHTML = `
-    <span style="color:${divColor}">${divLabel}</span>
+    <span style="color:${divColor}">${divLabel} Division</span>
     <span>Place #${standing.place}</span>
     <span style="color:${bColor}">${bLabels[bracket]} Bracket</span>
     ${standing.coach && standing.coach !== 'TBD' ? `<span>Coach ${standing.coach}</span>` : ''}
@@ -3227,6 +3859,19 @@ function openTeamCard(teamName, divKey) {
   }
   if (!played.length && !upcoming.length) {
     bodyHTML = `<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">No games found for this team.</p>`;
+  }
+  // ── Playoff games section ────────────────────────────────────────
+  const pgames = getPlayoffGames(teamName);
+  const played_po = pgames.filter(g => g.res !== null);
+  if (played_po.length) {
+    bodyHTML += `<div class="modal-section-title" style="margin-top:16px">Playoffs (${played_po.length} game${played_po.length!==1?'s':''})</div>`;
+    played_po.forEach(g => {
+      bodyHTML += `<div class="modal-game-row">
+        <span class="mgr-date">${g.date}<br><span style="font-size:10px;color:var(--gold);">${g.tier} ${g.gk}</span></span>
+        <span class="mgr-matchup">vs <span class="mgr-opp">${g.opp}</span></span>
+        <span class="mgr-result ${g.res}">${g.res} ${g.myS}–${g.oppS}</span>
+      </div>`;
+    });
   }
   document.getElementById('s7-modalBody').innerHTML = bodyHTML;
   document.getElementById('s7-teamModal').classList.remove('hidden');
@@ -3450,8 +4095,9 @@ document.getElementById('age-pane-7u').querySelectorAll('.tab').forEach(t => {
 
 
   window.ts7=toggleSchedule;window.cm7=closeModal;window.ctm7=function(){document.getElementById('s7-teamModal').classList.add('hidden');};window.otc7=openTeamCard;window.sf7=simFavorites;window.sr7=simReset;window.spw7=simPickWinner;
-}}
-function _8u_init(){{
+  window._7u_DATA=DATA;window._7u_PR=PLAYOFF_RESULTS;window._7u_PS=PLAYOFF_SCHEDULES;
+}
+function _8u_init(){
 // =====================================================================
 // DATA — updated Apr 26 2026 (Finch Week 9 scores added)
 // =====================================================================
@@ -3640,6 +4286,17 @@ const DATA = {
       ]},
     ]
   }
+};
+
+
+const PLAYOFF_RESULTS = {
+  gold: {
+    G1: {t1:'Typhoon',        s1:8,  t2:'Aggies',         s2:14},
+    G2: {t1:'Space Cowgirls', s1:13, t2:'Magic',           s2:14},
+    G3: {t1:'Diamonds',       s1:10, t2:'Aggies',          s2:3},
+  },
+  silver: {},
+  bronze: {},
 };
 
 // =====================================================================
@@ -3947,6 +4604,7 @@ function assignPlaces(sorted) {
 }
 
 function bracketFor(place){
+  if(!place) return 'bronze';
   if(place<=3)return'gold';
   if(place<=7)return'silver';
   return'bronze';
@@ -3964,11 +4622,11 @@ function renderCombined() {
   // Sort each division with tiebreakers, then merge for overall ranking
   const finchSorted = tiebreakSort([...DATA.finch.standings].map(t=>({...t,div:'finch',_divKey:'finch'})), 'finch');
   const finchPlaces = assignPlaces(finchSorted);
-  finchSorted.forEach((t,i) => { t.place = finchPlaces[i]; });
+  finchSorted.forEach((t,i) => { t.place = finchPlaces[i]; DATA.finch.standings.find(s=>s.name===t.name).place = finchPlaces[i]; });
 
   const ostSorted = tiebreakSort([...DATA.osterman.standings].map(t=>({...t,div:'osterman',_divKey:'osterman'})), 'osterman');
   const ostPlaces = assignPlaces(ostSorted);
-  ostSorted.forEach((t,i) => { t.place = ostPlaces[i]; });
+  ostSorted.forEach((t,i) => { t.place = ostPlaces[i]; DATA.osterman.standings.find(s=>s.name===t.name).place = ostPlaces[i]; });
 
   const allTeams = [...finchSorted, ...ostSorted]
     .sort((a,b) => b.pct - a.pct || (b.w-b.l) - (a.w-a.l));
@@ -4023,9 +4681,8 @@ function renderCombined() {
 // =====================================================================
 function renderStandings(divKey, tbodyId) {
   const tbody = document.getElementById(tbodyId);
-  if (!tbody) return; // guard against missing element
+  if (!tbody) return;
   const color = divKey==='finch'?'var(--finch)':'var(--osterman)';
-  const url = DATA[divKey].url;
 
   const sorted = tiebreakSort([...DATA[divKey].standings].map(t=>({...t,_divKey:divKey})), divKey);
   const places = assignPlaces(sorted);
@@ -4107,12 +4764,33 @@ const PLAYOFF_SCHEDULES = {
 // =====================================================================
 // BRACKET RENDERER — traditional format, SVG connector lines
 // =====================================================================
+// Returns eliminated team names for a bracket tier
+function getEliminated(tierKey) {
+  const results = PLAYOFF_RESULTS[tierKey] || {};
+  const eliminated = {};
+  if (tierKey === 'gold') {
+    // 6-team DE: LB losers are out; WB losers drop to LB (not yet out)
+    // LB elimination games: G5, G6, G8, G9
+    ['G5','G6','G8','G9'].forEach(gk => {
+      const r = results[gk];
+      if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
+    });
+  } else {
+    // SE: every loser is eliminated
+    Object.keys(results).forEach(gk => {
+      const r = results[gk];
+      if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
+    });
+  }
+  return eliminated;
+}
+
 function renderPlayoffs() {
 
   const tiers = [
-    {key:'gold',  medal:'🥇', title:'Gold Bracket',   sub:'Div. places 1–3 · 6 teams · Double Elimination', cssKey:'gold',   color:'var(--gold)',   hex:'#f5c842', slF:[0,3], slO:[0,3], eliminated:[]},
-    {key:'silver',medal:'🥈', title:'Silver Bracket',  sub:'Div. places 4–7 · 8 teams · Single Elimination', cssKey:'silver', color:'var(--silver)', hex:'#b0bec5', slF:[3,7], slO:[3,7], eliminated:[]},
-    {key:'bronze',medal:'🥉', title:'Bronze Bracket',  sub:'Div. places 8–11 · 8 teams · Single Elimination',cssKey:'bronze', color:'var(--bronze)', hex:'#c87941', slF:[7,11],slO:[7,11], eliminated:[]},
+    {key:'gold',  medal:'🥇', title:'Gold Bracket',   sub:'Div. places 1–3 · 6 teams · Double Elimination', cssKey:'gold',   color:'var(--gold)',   hex:'#f5c842', slF:[0,3], slO:[0,3]},
+    {key:'silver',medal:'🥈', title:'Silver Bracket',  sub:'Div. places 4–7 · 8 teams · Single Elimination', cssKey:'silver', color:'var(--silver)', hex:'#b0bec5', slF:[3,7], slO:[3,7]},
+    {key:'bronze',medal:'🥉', title:'Bronze Bracket',  sub:'Div. places 8–11 · 8 teams · Single Elimination',cssKey:'bronze', color:'var(--bronze)', hex:'#c87941', slF:[7,11],slO:[7,11]},
   ];
 
   // ── dimensions ──────────────────────────────────────────────────
@@ -4135,7 +4813,7 @@ function renderPlayoffs() {
       ? `<span class="tb-seed" style="background:${hex};color:#0d1b2a">${team.seed}</span>
          <span class="tb-name">${team.name}</span>
          <span class="tb-badge ${team.div}">${team.div==='finch'?'F':'O'}</span>
-         <span class="tb-rec">${team.w}-${team.l}${team.t?'-'+team.t:''}</span>${scoreHTML}`
+         <span class="tb-rec">${(()=>{const pr=getPlayoffRecord(team.name);const pw=team.w+pr.w,pl=team.l+pr.l;return pw+'-'+pl+(team.t?'-'+team.t:'')+(pr.w+pr.l>0?' <span style="opacity:.55;font-size:9px">PO</span>':'');})()}</span>${scoreHTML}`
       : `<span class="tb-seed" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.3)">?</span>
          <span class="tb-name" style="color:rgba(255,255,255,.4);font-size:10px;font-style:italic;">${label||'TBD'}</span>`;
     const clickAttr = team ? ` onclick="otc8('${team.name.replace(/'/g,"\\'")}','${team.div}')" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;cursor:pointer"` : ` style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;"`;
@@ -4232,8 +4910,11 @@ function renderPlayoffs() {
     return result;
   }
 
-  function projected(x, y, teamA, teamB, hex) {
+
+
+  function projected(x, y, teamA, teamB, hex, tierKey, gameKey) {
     if (!teamA || !teamB || !teamA.name || !teamB.name) return '';
+    if (tierKey && gameKey && PLAYOFF_RESULTS[tierKey]?.[gameKey]) return '';
     if (teamA.name.startsWith('Winner') || teamB.name.startsWith('Winner') ||
         teamA.name.startsWith('Loser')  || teamB.name.startsWith('Loser')  ||
         teamA.name.startsWith('TBD')    || teamB.name.startsWith('TBD')    ||
@@ -4346,7 +5027,7 @@ function renderPlayoffs() {
       els += slot(cx[0], m[i],    top, hex);
       els += slot(cx[0], m[i]+TH, bot, hex);
       els += gameInfo(cx[0], m[i]+2*TH+2, tierKey, `G${gn}`);
-      els += projected(cx[0], m[i]+2*TH+22, top, bot, hex);
+      els += projected(cx[0], m[i]+2*TH+22, top, bot, hex, tierKey, `G${gn}`);
     });
 
     // Semi slots — G5: W(G1) vs W(G2), G6: W(G3) vs W(G4)
@@ -4505,13 +5186,13 @@ function renderPlayoffs() {
     els += slot(cx[1], g3y,    byS(1), hex, true,  '', 10); // Diamonds 10 — advanced
     els += slot(cx[1], g3y+TH, byS(5), hex, false, '',  3); // Aggies 3
     els += gameInfo(cx[1], g3y+2*TH+2, tierKey, 'G3');
-    els += projected(cx[1], g3y+2*TH+22, byS(1), byS(5), hex);
+    els += projected(cx[1], g3y+2*TH+22, byS(1), byS(5), hex, tierKey, "G3");
     // G4: Seed2 (bye/advanced) vs W(G2) = Magic (seed 6)
     els += mLbl(cx[1], g4y, 'G4');
     els += slot(cx[1], g4y,    byS(2), hex, true);
     els += slot(cx[1], g4y+TH, byS(6), hex, false, '');
     els += gameInfo(cx[1], g4y+2*TH+2, tierKey, 'G4');
-    els += projected(cx[1], g4y+2*TH+22, byS(2), byS(6), hex);
+    els += projected(cx[1], g4y+2*TH+22, byS(2), byS(6), hex, tierKey, "G4");
 
     // ── WB Final ──────────────────────────────────────────────────────
     els += mLbl(cx[2], g7y, 'G7  WB Final');
@@ -4525,7 +5206,7 @@ function renderPlayoffs() {
     els += slot(cx[0], g5y,    byS(3), hex, false, '');  // Space Cowgirls — Loser G2
     els += slot(cx[0], g5y+TH, byS(5), hex, false, '');  // Aggies — Loser G3
     els += gameInfo(cx[0], g5y+2*TH+2, tierKey, 'G5');
-    els += projected(cx[0], g5y+2*TH+22, byS(3), byS(5), hex);
+    els += projected(cx[0], g5y+2*TH+22, byS(3), byS(5), hex, tierKey, "G5");
     // G6: L(G1)=Typhoon (seed 4) vs L(G4) (TBD)
     els += mLbl(cx[0], g6y, 'G6');
     els += slot(cx[0], g6y,    byS(4), hex, false, '');
@@ -4641,7 +5322,8 @@ function renderPlayoffs() {
 
     // Seedings legend
     const legend = teams.map(t => {
-      const out = tier.eliminated && tier.eliminated.includes(t.name);
+      const elim = getEliminated(tier.key);
+      const out = elim[t.name] === true;
       const nameStyle = out ? 'text-decoration:line-through;color:var(--muted);opacity:.5;' : '';
       const rowStyle  = out ? 'opacity:.6;' : '';
       return `<div class="bk-seed-row" style="cursor:pointer;${rowStyle}" onclick="otc8('${t.name}','${t.div}')">
@@ -4739,6 +5421,7 @@ function toggleSchedule(div){
   renderStandings('finch','s8-tbody-finch');
   renderStandings('osterman','s8-tbody-osterman');
   renderPlayoffs();
+  setTab('gold');
 })();
 
 // =====================================================================
@@ -4747,6 +5430,42 @@ function toggleSchedule(div){
 function closeModal(e) {
   if (e.target === document.getElementById('s8-teamModal'))
     document.getElementById('s8-teamModal').classList.add('hidden');
+}
+
+
+// ── Playoff helpers ───────────────────────────────────────────────────────
+function getPlayoffRecord(teamName) {
+  let w = 0, l = 0;
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      const winner = r.s1 > r.s2 ? r.t1 : r.t2;
+      const loser  = r.s1 > r.s2 ? r.t2 : r.t1;
+      if (winner === teamName) w++;
+      if (loser  === teamName) l++;
+    });
+  });
+  return {w, l};
+}
+
+function getPlayoffGames(teamName) {
+  const games = [];
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      if (r.t1 !== teamName && r.t2 !== teamName) return;
+      const myS  = r.t1 === teamName ? r.s1 : r.s2;
+      const oppS = r.t1 === teamName ? r.s2 : r.s1;
+      const opp  = r.t1 === teamName ? r.t2 : r.t1;
+      const res  = myS > oppS ? 'W' : myS < oppS ? 'L' : 'T';
+      const sched = PLAYOFF_SCHEDULES[tier]?.[gk];
+      games.push({tier:tierLabel, gk, date:sched?.date||'', opp, myS, oppS, res});
+    });
+  });
+  return games;
 }
 
 function openTeamCard(teamName, divKey) {
@@ -4833,7 +5552,7 @@ function openTeamCard(teamName, divKey) {
     <span style="color:${divColor}">${divLabel} Division</span>
     <span>Place #${standing.place}</span>
     <span style="color:${bColor}">${bLabels[bracket]} Bracket</span>
-    ${standing.coach ? `<span>Coach ${standing.coach}</span>` : ''}
+    ${standing.coach && standing.coach !== 'TBD' ? `<span>Coach ${standing.coach}</span>` : ''}
   `;
 
   document.getElementById('s8-modalStats').innerHTML = `
@@ -4890,6 +5609,19 @@ function openTeamCard(teamName, divKey) {
     bodyHTML = `<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">No games found for this team.</p>`;
   }
 
+  // ── Playoff games section ────────────────────────────────────────
+  const pgames = getPlayoffGames(teamName);
+  const played_po = pgames.filter(g => g.res !== null);
+  if (played_po.length) {
+    bodyHTML += `<div class="modal-section-title" style="margin-top:16px">Playoffs (${played_po.length} game${played_po.length!==1?'s':''})</div>`;
+    played_po.forEach(g => {
+      bodyHTML += `<div class="modal-game-row">
+        <span class="mgr-date">${g.date}<br><span style="font-size:10px;color:var(--gold);">${g.tier} ${g.gk}</span></span>
+        <span class="mgr-matchup">vs <span class="mgr-opp">${g.opp}</span></span>
+        <span class="mgr-result ${g.res}">${g.res} ${g.myS}–${g.oppS}</span>
+      </div>`;
+    });
+  }
   document.getElementById('s8-modalBody').innerHTML = bodyHTML;
   document.getElementById('s8-teamModal').classList.remove('hidden');
 }
@@ -5122,8 +5854,259 @@ document.getElementById('age-pane-8u').querySelectorAll('.tab').forEach(t => {
 
 
   window.ts8=toggleSchedule;window.cm8=closeModal;window.ctm8=function(){document.getElementById('s8-teamModal').classList.add('hidden');};window.otc8=openTeamCard;window.sf8=simFavorites;window.sr8=simReset;window.spw8=simPickWinner;
-}}
-_ageInited['6u']=true;
+  window._8u_DATA=DATA;window._8u_PR=PLAYOFF_RESULTS;window._8u_PS=PLAYOFF_SCHEDULES;
+}
+renderSummary();
+_ageInited['home']=true;
+function renderSummary() {
+  const root = document.getElementById('summary-root');
+  if (!root) return;
+
+  function chip(bracket) {
+    return `<span class="summary-bracket-chip ${bracket}">${bracket.charAt(0).toUpperCase()+bracket.slice(1)}</span>`;
+  }
+
+  function parseDate(str) {
+    if (!str) return 9999;
+    const m = str.match(/(\d+)\/(\d+)/);
+    return m ? parseInt(m[1])*100 + parseInt(m[2]) : 9999;
+  }
+
+  const today = new Date();
+  const cutoff = new Date(today); cutoff.setDate(today.getDate() + 2);
+  const todayKey  = (today.getMonth()+1)*100  + today.getDate();
+  const cutoffKey = (cutoff.getMonth()+1)*100 + cutoff.getDate();
+  function inWindow(dateStr) {
+    const d = parseDate(dateStr);
+    return d >= todayKey && d <= cutoffKey;
+  }
+
+  // Ensure all ages are initialized so their data is exported
+  if (!_ageInited['6u']) { /* 6U runs in IIFE at load, always ready */ }
+  if (!_ageInited['7u']) { _7u_init(); _ageInited['7u'] = true; }
+  if (!_ageInited['8u']) { _8u_init(); _ageInited['8u'] = true; }
+
+  const r6 = window._6u_PR,   r7 = window._7u_PR,   r8 = window._8u_PR;
+  const s6 = window._6u_PS,   s7 = window._7u_PS,   s8 = window._8u_PS;
+  const seeds6 = window._6u_SEEDS || {};
+
+  // ── Seed-based team name lookup ──────────────────────────────────────
+  // Returns {t1name, t2name} for a given bracket game, resolving known seed matchups
+  // and "Winner Gx / Loser Gx" chains via PLAYOFF_RESULTS.
+
+  // DE6 (6-team double elim) game structure:
+  // G1=S4vS5, G2=S3vS6, G3=S1vWG1, G4=S2vWG2
+  // G5=LG2vLG3, G6=LG1vLG4, G7=WB Final WG3vWG4
+  // G8=WG5vWG6, G9=LB Final LG7vWG8, G10=Champ WG7vWG9
+  const DE6_GAMES = {
+    G1:['S4','S5'],  G2:['S3','S6'],
+    G3:['S1','WG1'], G4:['S2','WG2'],
+    G5:['LG2','LG3'], G6:['LG1','LG4'],
+    G7:['WG3','WG4'], G8:['WG5','WG6'],
+    G9:['LG7','WG8'], G10:['WG7','WG9'],
+  };
+
+  // SE8 game structure: G1=S1vS8, G2=S4vS5, G3=S2vS7, G4=S3vS6
+  // G5=WG1vWG2, G6=WG3vWG4, G7=WG5vWG6
+  const SE8_GAMES = {
+    G1:['S1','S8'], G2:['S4','S5'], G3:['S2','S7'], G4:['S3','S6'],
+    G5:['WG1','WG2'], G6:['WG3','WG4'], G7:['WG5','WG6'],
+  };
+
+  // SE9 game structure (6U silver/bronze): G1=S8vS9 play-in, G5=S1vWG1, G2=S4vS5, G3=S2vS7, G4=S3vS6
+  // G6=WG5vWG2, G7=WG3vWG4, G8=WG6vWG7
+  const SE9_GAMES = {
+    G1:['S8','S9'], G2:['S4','S5'], G3:['S2','S7'], G4:['S3','S6'],
+    G5:['S1','WG1'], G6:['WG5','WG2'], G7:['WG3','WG4'], G8:['WG6','WG7'],
+  };
+
+  // SE10 game structure (6U copper): G1=S7vS10, G2=S8vS9
+  // G3=S4vS5, G4=S3vS6, G5=S1vWG1, G6=S2vWG2
+  // G7=WG3vWG5, G8=WG4vWG6, G9=WG7vWG8
+  const SE10_GAMES = {
+    G1:['S7','S10'], G2:['S8','S9'],
+    G3:['S4','S5'], G4:['S3','S6'], G5:['S1','WG1'], G6:['S2','WG2'],
+    G7:['WG3','WG5'], G8:['WG4','WG6'], G9:['WG7','WG8'],
+  };
+
+  // DE9 game structure (6U gold): G1=S8vS9, G2=S2vS7, G3=S3vS6, G4=S4vS5
+  // G5=S1vWG1, G6=LG1vLG2, G7=LG4vLG5, G8=WG6vLG3
+  // G9=WG5vWG4, G10=WG3vWG2, G11=WG7vLG9, G12=WG8vLG10
+  // G13=WG9vWG10(WB final), G14=WG11vWG12, G15=LG13vWG14, G16=WG13vWG15(champ)
+  const DE9_GAMES = {
+    G1:['S8','S9'], G2:['S2','S7'], G3:['S3','S6'], G4:['S4','S5'],
+    G5:['S1','WG1'], G6:['LG1','LG2'], G7:['LG4','LG5'], G8:['WG6','LG3'],
+    G9:['WG5','WG4'], G10:['WG3','WG2'], G11:['WG7','LG9'], G12:['WG8','LG10'],
+    G13:['WG9','WG10'], G14:['WG11','WG12'], G15:['LG13','WG14'], G16:['WG13','WG15'],
+  };
+
+  // Resolve a "WGn"/"LGn"/"Sn" token to a team name given results
+  function resolveToken(token, results) {
+    const sw = token.match(/^S(\d+)$/);
+    if (sw) return {seed: parseInt(sw[1])};
+    const wm = token.match(/^WG(\d+)$/);
+    if (wm) {
+      const r = results['G'+wm[1]];
+      if (r) return {name: r.s1 > r.s2 ? r.t1 : r.t2};
+      return {label: 'W G'+wm[1]};
+    }
+    const lm = token.match(/^LG(\d+)$/);
+    if (lm) {
+      const r = results['G'+lm[1]];
+      if (r) return {name: r.s1 < r.s2 ? r.t1 : r.t2};
+      return {label: 'L G'+lm[1]};
+    }
+    return {label: token};
+  }
+
+  function tokenToName(token, results, seedMap) {
+    const resolved = resolveToken(token, results);
+    if (resolved.name) return resolved.name;
+    if (resolved.seed && seedMap) {
+      const t = seedMap.find(s => s.seed === resolved.seed);
+      return t ? t.name : `Seed ${resolved.seed}`;
+    }
+    if (resolved.label) return resolved.label;
+    return token;
+  }
+
+  function getMatchup(age, tier, gk, results) {
+    // Pick game map and seed array
+    let gameMap, seedArr;
+
+    if (age === '6U') {
+      const tierResults = (results || {})[tier] || {};
+      if (tier === 'gold') { gameMap = DE9_GAMES; seedArr = seeds6.gold || []; }
+      else if (tier === 'silver') { gameMap = SE9_GAMES; seedArr = seeds6.silver || []; }
+      else if (tier === 'bronze') { gameMap = SE9_GAMES; seedArr = seeds6.bronze || []; }
+      else if (tier === 'copper') { gameMap = SE10_GAMES; seedArr = seeds6.copper || []; }
+    } else if (age === '7U') {
+      const tierResults = (results || {})[tier] || {};
+      const SEEDS7 = {
+        gold:   [{seed:1,name:'Lightning'},{seed:2,name:'Aliens'},{seed:3,name:'Sliders'},{seed:4,name:'Cyclones'},{seed:5,name:'Thunder'},{seed:6,name:'Comets'}],
+        silver: [{seed:1,name:'Frogs'},{seed:2,name:'Wildcats'},{seed:3,name:'Panthers'},{seed:4,name:'Typhoon'},{seed:5,name:'Storm'},{seed:6,name:'Dragons'},{seed:7,name:'Force'},{seed:8,name:'Hurricanes'}],
+        bronze: [{seed:1,name:'Oilers'},{seed:2,name:'Venom'},{seed:3,name:'Tornadoes'},{seed:4,name:'Crush'},{seed:5,name:'Diamonds'},{seed:6,name:'Angels'},{seed:7,name:'Space Cowgirls'},{seed:8,name:'Land Sharks'}],
+      };
+      if (tier === 'gold') { gameMap = DE6_GAMES; seedArr = SEEDS7.gold; }
+      else { gameMap = SE8_GAMES; seedArr = SEEDS7[tier] || []; }
+    } else if (age === '8U') {
+      const SEEDS8 = {
+        gold:   [{seed:1,name:'Diamonds'},{seed:2,name:'Thunder'},{seed:3,name:'Space Cowgirls'},{seed:4,name:'Typhoon'},{seed:5,name:'Aggies'},{seed:6,name:'Magic'}],
+        silver: [{seed:1,name:'Hurricanes'},{seed:2,name:'Sliders'},{seed:3,name:'Blaze'},{seed:4,name:'Storm'},{seed:5,name:'Lightning'},{seed:6,name:'Sparks'},{seed:7,name:'Angels'},{seed:8,name:'Panthers'}],
+        bronze: [{seed:1,name:'Bombers'},{seed:2,name:'Firecrackers'},{seed:3,name:'Voodoo'},{seed:4,name:'Land Sharks'},{seed:5,name:'Cobras'},{seed:6,name:'Spring Spirit'},{seed:7,name:'Chargers'},{seed:8,name:'Venom'}],
+      };
+      if (tier === 'gold') { gameMap = DE6_GAMES; seedArr = SEEDS8.gold; }
+      else { gameMap = SE8_GAMES; seedArr = SEEDS8[tier] || []; }
+    }
+
+    if (!gameMap || !gameMap[gk]) return null;
+    const tierResults = (results || {})[tier] || {};
+    const [tok1, tok2] = gameMap[gk];
+    return {
+      t1: tokenToName(tok1, tierResults, seedArr),
+      t2: tokenToName(tok2, tierResults, seedArr),
+    };
+  }
+
+  // Collect playoff results
+  function collectPlayoffResults(results, schedules, ageLabel) {
+    const rows = [];
+    Object.keys(results).forEach(tier => {
+      Object.keys(results[tier]).forEach(gk => {
+        const r = results[tier][gk];
+        if (!r) return;
+        const sched = schedules[tier]?.[gk] || {};
+        rows.push({ age: ageLabel, bracket: tier, gk, date: sched.date||'',
+          t1: r.t1, s1: r.s1, t2: r.t2, s2: r.s2,
+          sortKey: parseDate(sched.date) });
+      });
+    });
+    return rows;
+  }
+
+  // Collect upcoming playoff games within the 2-day window
+  function collectPlayoffUpcoming(results, schedules, ageLabel) {
+    const rows = [];
+    Object.keys(schedules).forEach(tier => {
+      Object.keys(schedules[tier]).forEach(gk => {
+        if (results[tier]?.[gk]) return;
+        const sched = schedules[tier][gk];
+        if (!inWindow(sched.date)) return;
+        const matchup = getMatchup(ageLabel, tier, gk, results);
+        rows.push({ age: ageLabel, bracket: tier, gk,
+          date: sched.date||'', time: sched.time||'',
+          loc: sched.loc||'', url: sched.url||'',
+          t1: matchup?.t1, t2: matchup?.t2,
+          sortKey: parseDate(sched.date)*10000 + (parseInt((sched.time||'').replace(/\D/g,'').padEnd(4,'0').slice(0,4))||0) });
+      });
+    });
+    return rows;
+  }
+
+  let playoffPlayed = [];
+  if (r6 && s6) playoffPlayed = playoffPlayed.concat(collectPlayoffResults(r6, s6, '6U'));
+  if (r7 && s7) playoffPlayed = playoffPlayed.concat(collectPlayoffResults(r7, s7, '7U'));
+  if (r8 && s8) playoffPlayed = playoffPlayed.concat(collectPlayoffResults(r8, s8, '8U'));
+  playoffPlayed.sort((a,b) => a.sortKey - b.sortKey);
+
+  let playoffUp = [];
+  if (r6 && s6) playoffUp = playoffUp.concat(collectPlayoffUpcoming(r6, s6, '6U'));
+  if (r7 && s7) playoffUp = playoffUp.concat(collectPlayoffUpcoming(r7, s7, '7U'));
+  if (r8 && s8) playoffUp = playoffUp.concat(collectPlayoffUpcoming(r8, s8, '8U'));
+  playoffUp.sort((a,b) => a.sortKey - b.sortKey);
+
+  const AGE_COLORS = { '6U': 'var(--coral)', '7U': '#a78bfa', '8U': 'var(--sky)' };
+  function ageBadge(age) {
+    return `<span style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:.1em;padding:2px 5px;border-radius:3px;background:${AGE_COLORS[age]}22;color:${AGE_COLORS[age]};flex-shrink:0">${age}</span>`;
+  }
+
+  let html = '';
+
+  // ── Upcoming Playoffs ────────────────────────────────────────────────
+  html += '<div class="summary-section"><div class="summary-section-title">📅 Upcoming Playoffs</div>';
+  if (playoffUp.length === 0) {
+    html += '<div class="summary-empty">No playoff games in the next 2 days.</div>';
+  } else {
+    const byDate = {};
+    playoffUp.forEach(r => { (byDate[r.date] = byDate[r.date]||[]).push(r); });
+    Object.keys(byDate).sort((a,b) => parseDate(a)-parseDate(b)).forEach(date => {
+      html += `<div style="font-size:11px;color:var(--muted);font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${date}</div>`;
+      byDate[date].forEach(r => {
+        const teams = (r.t1 && r.t2) ? `${r.t1} <span style="color:var(--muted)">vs</span> ${r.t2}` : r.gk;
+        html += `<div class="summary-game-row upcoming">
+          ${ageBadge(r.age)}${chip(r.bracket)}
+          <span class="summary-teams">${teams}</span>
+          <span class="summary-time">${r.time}${r.loc?' · '+r.loc:''}</span>
+        </div>`;
+      });
+    });
+  }
+  html += '</div>';
+
+  // ── Playoff Results (at bottom) ──────────────────────────────────────
+  html += '<div class="summary-section"><div class="summary-section-title">🏆 Playoff Results</div>';
+  if (playoffPlayed.length === 0) {
+    html += '<div class="summary-empty">No playoff games played yet.</div>';
+  } else {
+    playoffPlayed.slice().reverse().forEach(r => {
+      const w1 = r.s1 > r.s2, w2 = r.s2 > r.s1;
+      html += `<div class="summary-game-row">
+        ${ageBadge(r.age)}${chip(r.bracket)}
+        <span class="summary-teams">
+          <span style="${w1?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t1}</span>
+          <span style="color:var(--muted);margin:0 4px">vs</span>
+          <span style="${w2?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t2}</span>
+        </span>
+        <span class="summary-score ${w1?'W':w2?'L':'T'}">${r.s1}–${r.s2}</span>
+      </div>`;
+    });
+  }
+  html += '</div>';
+
+  root.innerHTML = html;
+}
+
+
 </script>
 </body>
 </html>
