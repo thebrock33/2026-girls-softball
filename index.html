@@ -6074,7 +6074,7 @@ function renderSummary() {
   if (r8 && s8) playoffUp = playoffUp.concat(collectPlayoffUpcoming(r8, s8, '8U'));
   playoffUp.sort((a,b) => a.sortKey - b.sortKey);
 
-  const AGE_COLORS = { '6U': 'var(--coral)', '7U': '#a78bfa', '8U': 'var(--sky)' };
+  const AGE_COLORS = { '6U': '#ff5e6c', '7U': '#a78bfa', '8U': '#4fc3d8' };
   function ageBadge(age) {
     return `<span style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:.1em;padding:2px 5px;border-radius:3px;background:${AGE_COLORS[age]}22;color:${AGE_COLORS[age]};flex-shrink:0">${age}</span>`;
   }
@@ -6180,11 +6180,13 @@ function renderSummary() {
         html += `<div class="summary-game-row">
           ${chip(r.bracket)}
           <span class="summary-teams">
-            <span style="${w1?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t1}</span>
-            <span style="color:var(--muted);margin:0 4px">vs</span>
-            <span style="${w2?'font-weight:700;color:var(--text)':'color:var(--muted)'}">${r.t2}</span>
+            <span style="font-weight:${w1?'700':'400'}">${r.t1}</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:${w1?'#4ade80':'var(--coral)'}">${r.s1}</span>
+            <span style="color:var(--muted);font-size:11px">–</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:${w2?'#4ade80':'var(--coral)'}">${r.s2}</span>
+            <span style="font-weight:${w2?'700':'400'}">${r.t2}</span>
           </span>
-          <span class="summary-score ${w1?'W':w2?'L':'T'}">${r.s1}–${r.s2}</span>
+          <span class="summary-time">${r.date}</span>
         </div>`;
       });
     });
