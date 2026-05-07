@@ -2339,7 +2339,6 @@ function openTeamCard(teamName, divKey) {
   const bracket  = _bracketLookup[teamName] || 'copper';
   const bColors  = {gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941', copper:'#b07040'};
   const bColor   = bColors[bracket];
-  const pct      = standing.pct.toFixed(3);
   const initials = teamName.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 
   // Gather all games for this team from the schedule
@@ -2395,6 +2394,15 @@ function openTeamCard(teamName, divKey) {
   let rsFor = 0, rsAgainst = 0;
   played.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
 
+  // Include playoff record and runs
+  const poRec = getPlayoffRecord(teamName);
+  const poGames = getPlayoffGames(teamName).filter(g => g.res !== null);
+  poGames.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
+  const totalW  = standing.w + poRec.w;
+  const totalL  = standing.l + poRec.l;
+  const totalGP = standing.gp + poRec.w + poRec.l;
+  const pct     = totalGP > 0 ? ((totalW + standing.t * 0.5) / totalGP).toFixed(3) : standing.pct.toFixed(3);
+
   document.getElementById('s6-modalLogo').style.background = divColor + '22';
   document.getElementById('s6-modalLogo').style.color      = divColor;
   document.getElementById('s6-modalLogo').style.border     = `1px solid ${divColor}44`;
@@ -2407,8 +2415,8 @@ function openTeamCard(teamName, divKey) {
     ${standing.coach && standing.coach !== 'TBD' ? `<span>Coach ${standing.coach}</span>` : ''}
   `;
   document.getElementById('s6-modalStats').innerHTML = `
-    <div class="modal-stat"><div class="v" style="color:#4ade80">${standing.w}</div><div class="l">Wins</div></div>
-    <div class="modal-stat"><div class="v" style="color:var(--coral)">${standing.l}</div><div class="l">Losses</div></div>
+    <div class="modal-stat"><div class="v" style="color:#4ade80">${totalW}</div><div class="l">Wins</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--coral)">${totalL}</div><div class="l">Losses</div></div>
     <div class="modal-stat"><div class="v" style="color:var(--peach)">${standing.t}</div><div class="l">Ties</div></div>
     <div class="modal-stat"><div class="v">${pct}</div><div class="l">PCT</div></div>
     <div class="modal-stat"><div class="v" style="color:#4ade80">${rsFor}</div><div class="l">Runs For</div></div>
@@ -2487,6 +2495,14 @@ function openTeamCard(teamName, divKey) {
       wk.games.forEach(g => {
         if (g.hs !== null && g.hs !== undefined) { games++; runs+=g.hs+g.as; lastDate=g.date; }
       });
+    });
+  });
+  // Add playoff games to stats
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      games++; runs += r.s1 + r.s2; lastDate = PLAYOFF_SCHEDULES[tier]?.[gk]?.date || lastDate;
     });
   });
   document.getElementById('s6-statGames').textContent = games;
@@ -3669,6 +3685,14 @@ function toggleSchedule(div){
   ['div1','div2'].forEach(div=>DATA[div].schedule.forEach(wk=>wk.games.forEach(g=>{
     if(g.hs!==null){games++;runs+=g.hs+g.as;lastDate=g.date;}
   })));
+  // Add playoff games to stats
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      games++; runs+=r.s1+r.s2; lastDate=PLAYOFF_SCHEDULES[tier]?.[gk]?.date||lastDate;
+    });
+  });
   document.getElementById('s7-statGames').textContent=games;
   document.getElementById('s7-statRuns').textContent=runs.toLocaleString();
   document.getElementById('s7-statThrough').textContent=lastDate||'—';
@@ -3734,7 +3758,6 @@ function openTeamCard(teamName, divKey) {
   const bColors   = {gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941'};
   const bLabels   = {gold:'🥇 Gold', silver:'🥈 Silver', bronze:'🥉 Bronze'};
   const bColor    = bColors[bracket];
-  const pct       = standing.pct.toFixed(3);
   const initials  = teamName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 
   const played = [], upcoming = [];
@@ -3785,6 +3808,15 @@ function openTeamCard(teamName, divKey) {
   let rsFor = 0, rsAgainst = 0;
   played.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
 
+  // Include playoff record and runs
+  const poRec = getPlayoffRecord(teamName);
+  const poGames = getPlayoffGames(teamName).filter(g => g.res !== null);
+  poGames.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
+  const totalW  = standing.w + poRec.w;
+  const totalL  = standing.l + poRec.l;
+  const totalGP = standing.gp + poRec.w + poRec.l;
+  const pct     = totalGP > 0 ? ((totalW + standing.t * 0.5) / totalGP).toFixed(3) : standing.pct.toFixed(3);
+
   document.getElementById('s7-modalLogo').style.background = divColor + '22';
   document.getElementById('s7-modalLogo').style.color      = divColor;
   document.getElementById('s7-modalLogo').style.border     = `1px solid ${divColor}44`;
@@ -3797,8 +3829,8 @@ function openTeamCard(teamName, divKey) {
     ${standing.coach && standing.coach !== 'TBD' ? `<span>Coach ${standing.coach}</span>` : ''}
   `;
   document.getElementById('s7-modalStats').innerHTML = `
-    <div class="modal-stat"><div class="v" style="color:#4ade80">${standing.w}</div><div class="l">Wins</div></div>
-    <div class="modal-stat"><div class="v" style="color:var(--coral)">${standing.l}</div><div class="l">Losses</div></div>
+    <div class="modal-stat"><div class="v" style="color:#4ade80">${totalW}</div><div class="l">Wins</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--coral)">${totalL}</div><div class="l">Losses</div></div>
     <div class="modal-stat"><div class="v" style="color:var(--peach)">${standing.t}</div><div class="l">Ties</div></div>
     <div class="modal-stat"><div class="v">${pct}</div><div class="l">PCT</div></div>
     <div class="modal-stat"><div class="v" style="color:#4ade80">${rsFor}</div><div class="l">Runs For</div></div>
@@ -5437,6 +5469,14 @@ function toggleSchedule(div){
   ['finch','osterman'].forEach(div=>DATA[div].schedule.forEach(wk=>wk.games.forEach(g=>{
     if(g.hs!==null){games++;runs+=g.hs+g.as;lastDate=g.date;}
   })));
+  // Add playoff games to stats
+  Object.keys(PLAYOFF_RESULTS).forEach(tier => {
+    Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
+      const r = PLAYOFF_RESULTS[tier][gk];
+      if (!r) return;
+      games++; runs+=r.s1+r.s2; lastDate=PLAYOFF_SCHEDULES[tier]?.[gk]?.date||lastDate;
+    });
+  });
   document.getElementById('s8-statGames').textContent=games;
   document.getElementById('s8-statRuns').textContent=runs.toLocaleString();
   document.getElementById('s8-statThrough').textContent=lastDate||'—';
@@ -5502,7 +5542,6 @@ function openTeamCard(teamName, divKey) {
   const bColors   = {gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941'};
   const bLabels   = {gold:'🥇 Gold', silver:'🥈 Silver', bronze:'🥉 Bronze'};
   const bColor    = bColors[bracket];
-  const pct       = standing.pct.toFixed(3);
   const initials  = teamName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 
   // Gather all games for this team from the schedule
@@ -5564,6 +5603,15 @@ function openTeamCard(teamName, divKey) {
   let rsFor = 0, rsAgainst = 0;
   played.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
 
+  // Include playoff record and runs
+  const poRec = getPlayoffRecord(teamName);
+  const poGames = getPlayoffGames(teamName).filter(g => g.res !== null);
+  poGames.forEach(g => { rsFor += g.myS; rsAgainst += g.oppS; });
+  const totalW  = standing.w + poRec.w;
+  const totalL  = standing.l + poRec.l;
+  const totalGP = standing.gp + poRec.w + poRec.l;
+  const pct     = totalGP > 0 ? ((totalW + standing.t * 0.5) / totalGP).toFixed(3) : standing.pct.toFixed(3);
+
   // Build modal content
   document.getElementById('s8-modalLogo').style.background = divColor + '22';
   document.getElementById('s8-modalLogo').style.color      = divColor;
@@ -5579,8 +5627,8 @@ function openTeamCard(teamName, divKey) {
   `;
 
   document.getElementById('s8-modalStats').innerHTML = `
-    <div class="modal-stat"><div class="v" style="color:#4ade80">${standing.w}</div><div class="l">Wins</div></div>
-    <div class="modal-stat"><div class="v" style="color:var(--coral)">${standing.l}</div><div class="l">Losses</div></div>
+    <div class="modal-stat"><div class="v" style="color:#4ade80">${totalW}</div><div class="l">Wins</div></div>
+    <div class="modal-stat"><div class="v" style="color:var(--coral)">${totalL}</div><div class="l">Losses</div></div>
     <div class="modal-stat"><div class="v" style="color:var(--peach)">${standing.t}</div><div class="l">Ties</div></div>
     <div class="modal-stat"><div class="v">${pct}</div><div class="l">PCT</div></div>
     <div class="modal-stat"><div class="v" style="color:#4ade80">${rsFor}</div><div class="l">Runs For</div></div>
