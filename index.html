@@ -14,10 +14,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(255,94,108,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(79,195,216,.10) 0%,transparent 60%);pointer-events:none;z-index:0;}
 body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;}
 .wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
-header{padding:12px 0 8px;text-align:center;}
+header{padding:8px 0 4px;text-align:center;}
 .league-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;padding:6px 18px;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
 .league-badge .dot{width:6px;height:6px;background:var(--coral);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,86px);line-height:.9;letter-spacing:.02em;margin-bottom:12px;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,86px);line-height:.9;letter-spacing:.02em;margin-bottom:4px;}
 h1 .line1{color:var(--text);}
 #age-pane-6u h1 .line2{background:linear-gradient(90deg,#ff5e6c,#ff8a80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 #age-pane-7u h1 .line2{background:linear-gradient(90deg,#a78bfa,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -27,7 +27,7 @@ h1 .line1{color:var(--text);}
 .stat-strip span{white-space:nowrap;}
 .stat-strip span span{color:var(--text);}
 .stat-sep{color:rgba(255,255,255,.15);}
-.tabs{display:flex;gap:6px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;margin-top:24px;}
+.tabs{display:flex;gap:6px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
 .tab{cursor:pointer;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border:2px solid transparent;transition:all .2s;background:var(--card);color:var(--muted);}
 .tab[data-div="all"].active,.tab[data-div="all"]:hover{border-color:var(--peach);color:var(--peach);}
 .tab[data-div="alo"].active,.tab[data-div="alo"]:hover{border-color:var(--alo);color:var(--alo);}
@@ -413,12 +413,11 @@ footer a:hover{text-decoration:underline;}
 
 <header>
   <h1><div class="line1">6U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 6U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
-  <span>3 Divisions</span><span class="stat-sep">·</span>
-  <span>37 Teams</span><span class="stat-sep">·</span>
+  <span><span>3</span> Divisions</span><span class="stat-sep">·</span>
+  <span><span>37</span> Teams</span><span class="stat-sep">·</span>
   <span><span id="s6-statGames">—</span> Games Played</span><span class="stat-sep">·</span>
   <span><span id="s6-statRuns">—</span> Runs Scored</span><span class="stat-sep">·</span>
   <span>Through <span id="s6-statThrough">—</span></span>
@@ -508,11 +507,10 @@ footer a:hover{text-decoration:underline;}
 </div>
 
 <footer>
-  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a> &nbsp;•&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674695/6U-Alo" target="_blank">6U Alo</a> &nbsp;|&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674696/6U-Finch" target="_blank">6U Finch</a> &nbsp;|&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674697/6U-Chamberlain" target="_blank">6U Chamberlain</a><br>
-  Last updated: May 4, 2026 &nbsp;•&nbsp; Go Softball! 🥎
+  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674695/6U-Alo" target="_blank">6U Alo</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674696/6U-Finch" target="_blank">6U Finch</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674697/6U-Chamberlain" target="_blank">6U Chamberlain</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674698/6U-Gold" target="_blank">6U Gold</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674699/6U-Silver" target="_blank">6U Silver</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674700/6U-Bronze" target="_blank">6U Bronze</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/713797/6U-Copper" target="_blank">6U Copper</a><br>
+  Last updated: May 7, 2026 &nbsp;•&nbsp; Go Softball! 🥎
 </footer>
 </div>
 
@@ -534,12 +532,11 @@ footer a:hover{text-decoration:underline;}
 
 <header>
   <h1><div class="line1">7U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 7U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
-  <span>2 Divisions</span><span class="stat-sep">·</span>
-  <span>22 Teams</span><span class="stat-sep">·</span>
+  <span><span>2</span> Divisions</span><span class="stat-sep">·</span>
+  <span><span>22</span> Teams</span><span class="stat-sep">·</span>
   <span><span id="s7-statGames">—</span> Games Played</span><span class="stat-sep">·</span>
   <span><span id="s7-statRuns">—</span> Runs Scored</span><span class="stat-sep">·</span>
   <span>Through <span id="s7-statThrough">—</span></span>
@@ -668,10 +665,10 @@ footer a:hover{text-decoration:underline;}
 </div>
 
 <footer>
-  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a> &nbsp;•&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674701/7U-Abbott" target="_blank">7U Abbott</a> &nbsp;|&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674702/7U-Fernandez" target="_blank">7U Fernandez</a><br>
-  Last updated: May 5, 2026 (Week 10 complete · Playoffs underway) &nbsp;•&nbsp; Go Softball! 🥎
+  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674701/7U-Abbott" target="_blank">7U Abbott</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674702/7U-Fernandez" target="_blank">7U Fernandez</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674703/7U-Gold" target="_blank">7U Gold</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674704/7U-Silver" target="_blank">7U Silver</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674705/7U-Bronze" target="_blank">7U Bronze</a><br>
+  Last updated: May 7, 2026 &nbsp;•&nbsp; Go Softball! 🥎
 </footer>
 </div>
 
@@ -694,12 +691,11 @@ footer a:hover{text-decoration:underline;}
 
 <header>
   <h1><div class="line1">8U Girls</div><div class="line2">Softball</div></h1>
-  <p class="subtitle">SBMSA &nbsp;•&nbsp; Spring '26 &nbsp;•&nbsp; 8U Girls Softball</p>
 </header>
 
 <div class="stat-strip">
-  <span>2 Divisions</span><span class="stat-sep">·</span>
-  <span>22 Teams</span><span class="stat-sep">·</span>
+  <span><span>2</span> Divisions</span><span class="stat-sep">·</span>
+  <span><span>22</span> Teams</span><span class="stat-sep">·</span>
   <span><span id="s8-statGames">—</span> Games Played</span><span class="stat-sep">·</span>
   <span><span id="s8-statRuns">—</span> Runs Scored</span><span class="stat-sep">·</span>
   <span>Through <span id="s8-statThrough">—</span></span>
@@ -834,10 +830,10 @@ footer a:hover{text-decoration:underline;}
 </div>
 
 <footer>
-  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a> &nbsp;•&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674707/8U-Finch" target="_blank">8U Finch</a> &nbsp;|&nbsp;
-  <a href="https://sbmsa.net/sites/sbmsa/schedule/674706/8U-Osterman" target="_blank">8U Osterman</a><br>
-  Last updated: April 29, 2026 &nbsp;•&nbsp; Go Softball! 🥎
+  Data sourced from <a href="https://sbmsa.net/schedules" target="_blank">sbmsa.net</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674707/8U-Finch" target="_blank">8U Finch</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674706/8U-Osterman" target="_blank">8U Osterman</a><br>
+  <a href="https://sbmsa.net/sites/sbmsa/schedule/674708/8U-Gold" target="_blank">8U Gold</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674709/8U-Silver" target="_blank">8U Silver</a> &nbsp;|&nbsp; <a href="https://sbmsa.net/sites/sbmsa/schedule/674710/8U-Bronze" target="_blank">8U Bronze</a><br>
+  Last updated: May 7, 2026 &nbsp;•&nbsp; Go Softball! 🥎
 </footer>
 </div>
 
@@ -2197,10 +2193,10 @@ function renderPlayoffs() {
 
   // ── Render each bracket ─────────────────────────────────────────────
   var tiers = [
-    {key:"gold",   medal:"🥇",title:"Gold Bracket",   sub:"9 teams · Double Elimination", color:"var(--gold)",   hex:"#f5c842", cssKey:"gold"},
-    {key:"silver", medal:"🥈",title:"Silver Bracket", sub:"9 teams · Single Elimination", color:"var(--silver)", hex:"#b0bec5", cssKey:"silver"},
-    {key:"bronze", medal:"🥉",title:"Bronze Bracket", sub:"9 teams · Single Elimination", color:"var(--bronze)", hex:"#c87941", cssKey:"bronze"},
-    {key:"copper", medal:"🟤",title:"Copper Bracket", sub:"10 teams · Single Elimination",color:"var(--copper)", hex:"#b87333", cssKey:"copper"},
+    {key:"gold",   medal:"🥇",title:"Gold Bracket",   sub:"Div. places 1–3 · 9 teams · Double Elimination", color:"var(--gold)",   hex:"#f5c842", cssKey:"gold"},
+    {key:"silver", medal:"🥈",title:"Silver Bracket", sub:"Div. places 4–6 · 9 teams · Single Elimination", color:"var(--silver)", hex:"#b0bec5", cssKey:"silver"},
+    {key:"bronze", medal:"🥉",title:"Bronze Bracket", sub:"Div. places 7–9 · 9 teams · Single Elimination", color:"var(--bronze)", hex:"#c87941", cssKey:"bronze"},
+    {key:"copper", medal:"🟤",title:"Copper Bracket", sub:"Div. places 10–13 · 10 teams · Single Elimination",color:"var(--copper)", hex:"#b87333", cssKey:"copper"},
   ];
 
   tiers.forEach(function(tier) {
@@ -6243,15 +6239,17 @@ function renderSummary() {
       if (!ageGames.length) return;
       html += `<div style="font-size:11px;color:${AGE_COLORS[age]};font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${age}</div>`;
       ageGames.slice().reverse().forEach(r => {
-        const w1 = r.s1 > r.s2, w2 = r.s2 > r.s1;
+        const w1 = r.s1 > r.s2;
+        const winner = w1 ? r.t1 : r.t2, ws = w1 ? r.s1 : r.s2;
+        const loser  = w1 ? r.t2 : r.t1, ls = w1 ? r.s2 : r.s1;
         html += `<div class="summary-game-row">
           ${chip(r.bracket)}
           <span class="summary-teams">
-            <span style="font-weight:${w1?'700':'400'}">${r.t1}</span>
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:${w1?'#4ade80':'var(--coral)'}">${r.s1}</span>
+            <span style="font-weight:700">${winner}</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:#4ade80">${ws}</span>
             <span style="color:var(--muted);font-size:11px">–</span>
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:${w2?'#4ade80':'var(--coral)'}">${r.s2}</span>
-            <span style="font-weight:${w2?'700':'400'}">${r.t2}</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;margin:0 5px;color:var(--coral)">${ls}</span>
+            <span style="color:var(--muted)">${loser}</span>
           </span>
           <span class="summary-time">${r.date}</span>
         </div>`;
