@@ -2500,11 +2500,14 @@ function openTeamCard(teamName, divKey) {
     });
   });
   // Add playoff games to stats
+  const _pd = s => { const m=s&&s.match(/(\d+)\/(\d+)/); return m?parseInt(m[1])*100+parseInt(m[2]):0; };
   Object.keys(PLAYOFF_RESULTS).forEach(tier => {
     Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
       const r = PLAYOFF_RESULTS[tier][gk];
       if (!r) return;
-      games++; runs += r.s1 + r.s2; lastDate = PLAYOFF_SCHEDULES[tier]?.[gk]?.date || lastDate;
+      games++; runs += r.s1 + r.s2;
+      const d = PLAYOFF_SCHEDULES[tier]?.[gk]?.date;
+      if (d && _pd(d) >= _pd(lastDate)) lastDate = d;
     });
   });
   document.getElementById('s6-statGames').textContent = games;
@@ -3691,11 +3694,14 @@ function toggleSchedule(div){
     if(g.hs!==null){games++;runs+=g.hs+g.as;lastDate=g.date;}
   })));
   // Add playoff games to stats
+  const _pd = s => { const m=s&&s.match(/(\d+)\/(\d+)/); return m?parseInt(m[1])*100+parseInt(m[2]):0; };
   Object.keys(PLAYOFF_RESULTS).forEach(tier => {
     Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
       const r = PLAYOFF_RESULTS[tier][gk];
       if (!r) return;
-      games++; runs+=r.s1+r.s2; lastDate=PLAYOFF_SCHEDULES[tier]?.[gk]?.date||lastDate;
+      games++; runs+=r.s1+r.s2;
+      const d = PLAYOFF_SCHEDULES[tier]?.[gk]?.date;
+      if (d && _pd(d) >= _pd(lastDate)) lastDate = d;
     });
   });
   document.getElementById('s7-statGames').textContent=games;
@@ -5481,11 +5487,14 @@ function toggleSchedule(div){
     if(g.hs!==null){games++;runs+=g.hs+g.as;lastDate=g.date;}
   })));
   // Add playoff games to stats
+  const _pd = s => { const m=s&&s.match(/(\d+)\/(\d+)/); return m?parseInt(m[1])*100+parseInt(m[2]):0; };
   Object.keys(PLAYOFF_RESULTS).forEach(tier => {
     Object.keys(PLAYOFF_RESULTS[tier]).forEach(gk => {
       const r = PLAYOFF_RESULTS[tier][gk];
       if (!r) return;
-      games++; runs+=r.s1+r.s2; lastDate=PLAYOFF_SCHEDULES[tier]?.[gk]?.date||lastDate;
+      games++; runs+=r.s1+r.s2;
+      const d = PLAYOFF_SCHEDULES[tier]?.[gk]?.date;
+      if (d && _pd(d) >= _pd(lastDate)) lastDate = d;
     });
   });
   document.getElementById('s8-statGames').textContent=games;
@@ -6217,12 +6226,25 @@ function renderSummary() {
     playoffUp.forEach(r => { (byDate[r.date] = byDate[r.date]||[]).push(r); });
     Object.keys(byDate).sort((a,b) => parseDate(a)-parseDate(b)).forEach(date => {
       html += `<div style="font-size:11px;color:var(--muted);font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${date}</div>`;
-      byDate[date].forEach(r => {
+      byDate[date].slice().sort((a,b) => {
+        // Primary: parse time, Secondary: field name
+        const parseTime = t => {
+          const m = t && t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+          if (!m) return 9999;
+          let h = parseInt(m[1]), min = parseInt(m[2]);
+          if (m[3].toUpperCase()==='PM' && h!==12) h+=12;
+          if (m[3].toUpperCase()==='AM' && h===12) h=0;
+          return h*60+min;
+        };
+        const td = parseTime(a.time) - parseTime(b.time);
+        if (td !== 0) return td;
+        return (a.loc||'').localeCompare(b.loc||'');
+      }).forEach(r => {
         const teams = (r.t1 && r.t2) ? `${r.t1} <span style="color:var(--muted)">vs</span> ${r.t2}` : r.gk;
         html += `<div class="summary-game-row upcoming">
           ${ageBadge(r.age)}${chip(r.bracket)}
           <span class="summary-teams">${teams}</span>
-          <span class="summary-time">${r.time}${r.loc?' · '+r.loc:''}</span>
+          <span class="summary-time">${r.loc?r.loc+' · ':''}${r.time}</span>
         </div>`;
       });
     });
