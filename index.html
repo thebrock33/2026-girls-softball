@@ -3503,8 +3503,9 @@ function renderPlayoffs() {
 
     els += mLbl(cx[2], g7y, 'G7  WB Final');
     els += slot(cx[2], g7y,    byS(1), hex, true, '');  // Lightning — Winner G3
-    els += slot(cx[2], g7y+TH, null, hex, false, 'Winner G4');
+    els += slot(cx[2], g7y+TH, byS(2), hex, false, '');  // Aliens — Winner G4
     els += gameInfo(cx[2], g7y+2*TH+2, tierKey, 'G7');
+    els += projected(cx[2], g7y+2*TH+22, byS(1), byS(2), hex, tierKey, 'G7');
 
     els += mLbl(cx[0], g5y, 'G5');
     els += slot(cx[0], g5y,    byS(6), hex, false, '');   // Comets — Loser G2
@@ -3516,6 +3517,7 @@ function renderPlayoffs() {
     els += slot(cx[0], g6y,    byS(5), hex, false, '');   // Thunder — Loser G1
     els += slot(cx[0], g6y+TH, byS(3), hex, false, '');  // Sliders — Loser G4
     els += gameInfo(cx[0], g6y+2*TH+2, tierKey, 'G6');
+    els += projected(cx[0], g6y+2*TH+22, byS(5), byS(3), hex, tierKey, 'G6');
 
     els += mLbl(cx[1], g8y, 'G8');
     els += slot(cx[1], g8y,    null, hex, false, 'Winner G5');
