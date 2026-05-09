@@ -1223,11 +1223,13 @@ var PLAYOFF_SEEDS = {
 // t1/t2 = top/bottom slot team names, s1/s2 = their scores
 var PLAYOFF_RESULTS = {
   gold: {
-    G1: {t1:"Bombers",  s1:15, t2:"Fury",      s2:8},
+    G1: {t1:"Bombers",  s1:15, t2:"Fury",       s2:8},
     G2: {t1:"Sliders",  s1:12, t2:"Typhoons",   s2:15},
     G3: {t1:"Diamonds", s1:15, t2:"Hurricanes", s2:7},
     G4: {t1:"Frogs",    s1:14, t2:"Comets",     s2:8},
     G5: {t1:"Aggies",   s1:7,  t2:"Bombers",    s2:15},
+    G6: {t1:"Fury",     s1:9,  t2:"Sliders",    s2:15},
+    G7: {t1:"Aggies",   s1:11, t2:"Comets",     s2:12},
   },
   silver: {
     G1: {t1:"Dragons",       s1:11, t2:"Angels",        s2:17},
@@ -2758,6 +2760,7 @@ const PLAYOFF_RESULTS = {
     G2: {t1:'Sliders',    s1:16, t2:'Comets',      s2:11},
     G3: {t1:'Lightning',  s1:19, t2:'Cyclones',    s2:8},
     G4: {t1:'Aliens',     s1:16, t2:'Sliders',     s2:15},
+    G7: {t1:'Lightning',  s1:20, t2:'Aliens',      s2:19},
   },
   silver: {
     G1: {t1:'Frogs',      s1:8,  t2:'Hurricanes',  s2:12},
@@ -3514,8 +3517,8 @@ function renderPlayoffs() {
     els += projected(cx[1], g4y+2*TH+22, byS(2), byS(3), hex, tierKey, 'G4');
 
     els += mLbl(cx[2], g7y, 'G7  WB Final');
-    els += slot(cx[2], g7y,    byS(1), hex, true, '');  // Lightning — Winner G3
-    els += slot(cx[2], g7y+TH, byS(2), hex, false, '');  // Aliens — Winner G4
+    els += slot(cx[2], g7y,    byS(1), hex, true,  '', 20);  // Lightning 20 — advanced
+    els += slot(cx[2], g7y+TH, byS(2), hex, false, '', 19);  // Aliens 19
     els += gameInfo(cx[2], g7y+2*TH+2, tierKey, 'G7');
     els += projected(cx[2], g7y+2*TH+22, byS(1), byS(2), hex, tierKey, 'G7');
 
@@ -3537,13 +3540,13 @@ function renderPlayoffs() {
     els += gameInfo(cx[1], g8y+2*TH+2, tierKey, 'G8');
 
     els += mLbl(cx[2], g9y, 'G9');
-    els += slot(cx[2], g9y,    null, hex, false, 'Loser G7');
-    els += slot(cx[2], g9y+TH, null, hex, false, 'Winner G8');
+    els += slot(cx[2], g9y,    byS(2), hex, false, '');  // Aliens — Loser G7
+    els += slot(cx[2], g9y+TH, null,   hex, false, 'Winner G8');
     els += gameInfo(cx[2], g9y+2*TH+2, tierKey, 'G9');
 
     els += mLbl(cx[3], g10y, 'G10  🏆 Championship');
-    els += slot(cx[3], g10y,    null, hex, false, 'Winner G7');
-    els += slot(cx[3], g10y+TH, null, hex, false, 'Winner G9');
+    els += slot(cx[3], g10y,    byS(1), hex, true, '');  // Lightning — Winner G7
+    els += slot(cx[3], g10y+TH, null,   hex, false, 'Winner G9');
     els += gameInfo(cx[3], g10y+2*TH+2, tierKey, 'G10');
 
     svg += line(cx[0]+CW, g1y+TH, cx[1], g3y+TH+TH/2, LC, LW);
@@ -4337,6 +4340,8 @@ const PLAYOFF_RESULTS = {
     G4: {t1:'Thunder',        s1:10, t2:'Magic',          s2:9},
     G5: {t1:'Space Cowgirls', s1:14, t2:'Aggies',         s2:5},
     G6: {t1:'Typhoon',        s1:4,  t2:'Magic',          s2:15},
+    G7: {t1:'Diamonds',       s1:14, t2:'Thunder',        s2:8},
+    G8: {t1:'Space Cowgirls', s1:5,  t2:'Magic',          s2:8},
   },
   silver: {
     G1: {t1:'Hurricanes', s1:17, t2:'Panthers',  s2:6},
@@ -4802,8 +4807,8 @@ const PLAYOFF_SCHEDULES = {
   bronze: {
     G1: { date:'Fri 5/8',  time:'7:30 PM',  loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd,Houston,TX+77080' },
     G2: { date:'Thu 5/7',  time:'7:30 PM',  loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd,Houston,TX+77080' },
-    G3: { date:'Sat 5/9',  time:'8:00 AM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
-    G4: { date:'Sat 5/9',  time:'9:30 AM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
+    G3: { date:'Sat 5/9',  time:'9:30 AM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
+    G4: { date:'Sat 5/9',  time:'8:00 AM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
     G5: { date:'Sat 5/9',  time:'12:30 PM', loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
     G6: { date:'Sat 5/9',  time:'11:00 AM', loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
     G7: { date:'Mon 5/11', time:'7:30 PM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
@@ -5106,10 +5111,10 @@ function renderPlayoffs() {
 
     // R1 slots — G1:1v8, G2:4v5, G3:3v6, G4:2v7
     const r1 = [
-      [byS(1), byS(8)],  // G1
-      [byS(4), byS(5)],  // G2
-      [byS(3), byS(6)],  // G3
-      [byS(2), byS(7)],  // G4
+      [byS(1), byS(8)],  // G1: Bombers vs Venom
+      [byS(4), byS(5)],  // G2: Land Sharks vs Cobras
+      [byS(2), byS(7)],  // G3: Firecrackers vs Chargers
+      [byS(3), byS(6)],  // G4: Voodoo vs Spring Spirit
     ];
     const r1GameNums = [1, 2, 3, 4];
     r1.forEach(([top, bot], i) => {
@@ -5289,8 +5294,8 @@ function renderPlayoffs() {
 
     // ── WB Final ──────────────────────────────────────────────────────
     els += mLbl(cx[2], g7y, 'G7  WB Final');
-    els += slot(cx[2], g7y,    byS(1),   hex, true,  '');  // Diamonds — WB Final top
-    els += slot(cx[2], g7y+TH, byS(2),   hex, false, '');  // Thunder — Winner G4
+    els += slot(cx[2], g7y,    byS(1), hex, true,  '', 14);  // Diamonds 14 — advanced
+    els += slot(cx[2], g7y+TH, byS(2), hex, false, '',  8);  // Thunder 8
     els += gameInfo(cx[2], g7y+2*TH+2, tierKey, 'G7');
     els += projected(cx[2], g7y+2*TH+22, byS(1), byS(2), hex, tierKey, 'G7');
 
@@ -5311,24 +5316,24 @@ function renderPlayoffs() {
     // ── LB R2 ─────────────────────────────────────────────────────────
     // G8: W(G5) vs W(G6) — col 1
     els += mLbl(cx[1], g8y, 'G8');
-    els += slot(cx[1], g8y,    byS(3), hex, false, '');  // Space Cowgirls — Winner G5
-    els += slot(cx[1], g8y+TH, byS(6), hex, false, '');  // Magic — Winner G6
+    els += slot(cx[1], g8y,    byS(3), hex, false, '',  5);  // Space Cowgirls 5
+    els += slot(cx[1], g8y+TH, byS(6), hex, true,  '',  8);  // Magic 8 — advanced
     els += gameInfo(cx[1], g8y+2*TH+2, tierKey, 'G8');
     els += projected(cx[1], g8y+2*TH+22, byS(3), byS(6), hex, tierKey, 'G8');
 
     // ── LB Final ──────────────────────────────────────────────────────
     // G9: L(G7) vs W(G8) — col 2
     els += mLbl(cx[2], g9y, 'G9');
-    els += slot(cx[2], g9y,    null, hex, false, 'Loser G7');
-    els += slot(cx[2], g9y+TH, null, hex, false, 'Winner G8');
+    els += slot(cx[2], g9y,    byS(2), hex, false, '');  // Thunder — Loser G7
+    els += slot(cx[2], g9y+TH, byS(6), hex, true,  '');  // Magic — Winner G8
     els += gameInfo(cx[2], g9y+2*TH+2, tierKey, 'G9');
-    els += projected(cx[2], g9y+2*TH+22, null, null, hex, tierKey, 'G9');
+    els += projected(cx[2], g9y+2*TH+22, byS(2), byS(6), hex, tierKey, 'G9');
 
     // ── Championship ──────────────────────────────────────────────────
     // G10: W(G7) vs W(G9) — col 3
     els += mLbl(cx[3], g10y, 'G10  🏆 Championship');
-    els += slot(cx[3], g10y,    null, hex, false, 'Winner G7');
-    els += slot(cx[3], g10y+TH, null, hex, false, 'Winner G9');
+    els += slot(cx[3], g10y,    byS(1), hex, true, '');  // Diamonds — Winner G7
+    els += slot(cx[3], g10y+TH, null,   hex, false, 'Winner G9');
     els += gameInfo(cx[3], g10y+2*TH+2, tierKey, 'G10');
 
     // ════════════════════════════════════════════════════════════════
