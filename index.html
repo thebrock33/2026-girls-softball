@@ -1226,15 +1226,18 @@ var PLAYOFF_RESULTS = {
     G1: {t1:"Bombers",  s1:15, t2:"Fury",      s2:8},
     G2: {t1:"Sliders",  s1:12, t2:"Typhoons",   s2:15},
     G3: {t1:"Diamonds", s1:15, t2:"Hurricanes", s2:7},
+    G4: {t1:"Frogs",    s1:14, t2:"Comets",     s2:8},
     G5: {t1:"Aggies",   s1:7,  t2:"Bombers",    s2:15},
   },
   silver: {
     G1: {t1:"Dragons",       s1:11, t2:"Angels",        s2:17},
+    G2: {t1:"Chargers",      s1:12, t2:"Lightning",     s2:11},
     G3: {t1:"Monarchs",      s1:9,  t2:"Oilers",        s2:1},
     G4: {t1:"Venom",         s1:13, t2:"Space Cowgirls", s2:12},
   },
   bronze: {
     G1: {t1:"Wildcats",  s1:15, t2:"Firecrackers", s2:10},
+    G3: {t1:"Magic",     s1:14, t2:"Longhorns",    s2:9},
     G4: {t1:"Starz",     s1:4,  t2:"Force",         s2:15},
   },
   copper: {
@@ -1946,7 +1949,7 @@ function renderPlayoffs() {
     els += mLbl(cx[1],r_g5,"G3"); els += slotR(cx[1],r_g5,byS(4),hex,false,null,tierKey,"G3","t1"); els += slotR(cx[1],r_g5+TH,byS(5),hex,false,null,tierKey,"G3","t2"); els += gameInfo(cx[1],r_g5+2*TH+2,tierKey,"G3"); els += projected(cx[1],r_g5+2*TH+22,byS(4),byS(5),hex,tierKey,"G3");
     els += mLbl(cx[1],r_g4,"G4"); els += slotR(cx[1],r_g4,byS(3),hex,false,null,tierKey,"G4","t1"); els += slotR(cx[1],r_g4+TH,byS(6),hex,false,null,tierKey,"G4","t2"); els += gameInfo(cx[1],r_g4+2*TH+2,tierKey,"G4"); els += projected(cx[1],r_g4+2*TH+22,byS(3),byS(6),hex,tierKey,"G4");
     els += mLbl(cx[1],r_g6,"G6"); els += slot(cx[1],r_g6,byS(2),hex,true); els += slotResolved(cx[1],r_g6+TH,hex,"Winner G2",tierKey,"G6","t2"); els += gameInfo(cx[1],r_g6+2*TH+2,tierKey,"G6"); els += projected(cx[1],r_g6+2*TH+22,byS(2),resolveTeam(tierKey,"Winner G2"),hex);
-    els += mLbl(cx[2],s0,"G7"); els += slotResolved(cx[2],s0,hex,"Winner G3",tierKey,"G7","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G5",tierKey,"G7","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G7"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G3"),resolveTeam(tierKey,"Winner G5"),hex);
+    els += mLbl(cx[2],s0,"G7"); els += slotResolved(cx[2],s0,hex,"Winner G5",tierKey,"G7","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G3",tierKey,"G7","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G7"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G5"),resolveTeam(tierKey,"Winner G3"),hex);
     els += mLbl(cx[2],s1,"G8"); els += slotResolved(cx[2],s1,hex,"Winner G4",tierKey,"G8","t1"); els += slotResolved(cx[2],s1+TH,hex,"Winner G6",tierKey,"G8","t2"); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G8"); els += projected(cx[2],s1+2*TH+22,resolveTeam(tierKey,"Winner G4"),resolveTeam(tierKey,"Winner G6"),hex);
     els += mLbl(cx[3],f0,"G9"); els += slotResolved(cx[3],f0,hex,"Winner G7",tierKey,"G9","t1"); els += slotResolved(cx[3],f0+TH,hex,"Winner G8",tierKey,"G9","t2"); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G9"); els += projected(cx[3],f0+2*TH+22,resolveTeam(tierKey,"Winner G7"),resolveTeam(tierKey,"Winner G8"),hex);
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g1y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (r_g3+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>"; // G1→G5 (now at r_g3)
@@ -2124,10 +2127,10 @@ function renderPlayoffs() {
 
     // ── LB R2: G7=L(G4)vL(G5) top,  G8=W(G6)vL(G3) bottom — col 1 ──
     els += mLbl(lb_cx[1], lb_g7, "G7");
-    els += slotResolved(lb_cx[1],lb_g7,hex,"Loser G4",tierKey,"G7","t1");
-    els += slotResolved(lb_cx[1],lb_g7+TH,hex,"Loser G5",tierKey,"G7","t2");
+    els += slotResolved(lb_cx[1],lb_g7,hex,"Loser G5",tierKey,"G7","t1");
+    els += slotResolved(lb_cx[1],lb_g7+TH,hex,"Loser G4",tierKey,"G7","t2");
     els += gameInfo(lb_cx[1], lb_g7+2*TH+2, tierKey, "G7");
-    els += projected(lb_cx[1], lb_g7+2*TH+22, resolveTeam(tierKey,"Loser G4"), resolveTeam(tierKey,"Loser G5"), hex, tierKey, "G7");
+    els += projected(lb_cx[1], lb_g7+2*TH+22, resolveTeam(tierKey,"Loser G5"), resolveTeam(tierKey,"Loser G4"), hex, tierKey, "G7");
 
     els += mLbl(lb_cx[1], lb_g8, "G8");
     els += slotResolved(lb_cx[1],lb_g8,hex,"Winner G6",tierKey,"G8","t1");
@@ -3217,6 +3220,14 @@ function renderPlayoffs() {
   }
 
   // Resolve "Winner Gn" label to actual team object (if game played) or show label
+
+  // Resolve winner team object for a played game (for projected() calls)
+  function winnerOf(gameKey, tierKey, teams) {
+    const res = getResult(tierKey, gameKey);
+    if (!res) return null;
+    return (teams || []).find(t => t.name === res.winner) || null;
+  }
+
   function winnerSlot(x, y, hex, srcGameKey, destTierKey, destGameKey, destSlotPos, teams) {
     const src = getResult(destTierKey, srcGameKey);
     if (src) {
@@ -3393,10 +3404,12 @@ function renderPlayoffs() {
     });
 
     [[5,1,2],[6,3,4]].forEach(([gn,a,b], i) => {
+      const tA = winnerOf(`G${a}`, tierKey, teams), tB = winnerOf(`G${b}`, tierKey, teams);
       els += mLbl(cx[1], s[i], `G${gn}`);
       els += winnerSlot(cx[1], s[i],    hex, `G${a}`, tierKey, `G${gn}`, 't1', teams);
       els += winnerSlot(cx[1], s[i]+TH, hex, `G${b}`, tierKey, `G${gn}`, 't2', teams);
       els += gameInfo(cx[1], s[i]+2*TH+2, tierKey, `G${gn}`);
+      els += projected(cx[1], s[i]+2*TH+22, tA, tB, hex, tierKey, `G${gn}`);
     });
 
     els += mLbl(cx[2], f0, `G7  🏆 Final`);
@@ -4326,10 +4339,12 @@ const PLAYOFF_RESULTS = {
     G6: {t1:'Typhoon',        s1:4,  t2:'Magic',          s2:15},
   },
   silver: {
-    G1: {t1:'Hurricanes', s1:17, t2:'Panthers', s2:6},
+    G1: {t1:'Hurricanes', s1:17, t2:'Panthers',  s2:6},
+    G2: {t1:'Storm',      s1:9,  t2:'Lightning', s2:6},
   },
   bronze: {
-    G2: {t1:'Land Sharks', s1:11, t2:'Cobras', s2:5},
+    G1: {t1:'Bombers',    s1:15, t2:'Venom',     s2:8},
+    G2: {t1:'Land Sharks',s1:11, t2:'Cobras',    s2:5},
   },
 };
 
@@ -4859,6 +4874,14 @@ function renderPlayoffs() {
     return slot(x, y, team, hex, advanced || won, label || '', score);
   }
 
+
+  // Resolve winner team object for a played game (for projected() calls)
+  function winnerOf(gameKey, tierKey, teams) {
+    const res = getResult(tierKey, gameKey);
+    if (!res) return null;
+    return (teams || []).find(t => t.name === res.winner) || null;
+  }
+
   function winnerSlot(x, y, hex, srcGameKey, destTierKey, destGameKey, destSlotPos, teams) {
     const src = getResult(destTierKey, srcGameKey);
     if (src) {
@@ -5100,10 +5123,12 @@ function renderPlayoffs() {
 
     // Semi slots — G5: W(G1) vs W(G2), G6: W(G3) vs W(G4)
     [[5,1,2],[6,3,4]].forEach(([gn,a,b], i) => {
+      const tA = winnerOf(`G${a}`, tierKey, teams), tB = winnerOf(`G${b}`, tierKey, teams);
       els += mLbl(cx[1], s[i], `G${gn}`);
       els += winnerSlot(cx[1], s[i],    hex, `G${a}`, tierKey, `G${gn}`, 't1', teams);
       els += winnerSlot(cx[1], s[i]+TH, hex, `G${b}`, tierKey, `G${gn}`, 't2', teams);
       els += gameInfo(cx[1], s[i]+2*TH+2, tierKey, `G${gn}`);
+      els += projected(cx[1], s[i]+2*TH+22, tA, tB, hex, tierKey, `G${gn}`);
     });
 
     // Final slots — G7
@@ -6224,8 +6249,26 @@ function renderSummary() {
   } else {
     const byDate = {};
     playoffUp.forEach(r => { (byDate[r.date] = byDate[r.date]||[]).push(r); });
+    // Count ALL games in window (played + unplayed) per date for the header
+    const byDateTotal = {}, byDateScored = {};
+    [[r6,s6],[r7,s7],[r8,s8]].forEach(([res,sched]) => {
+      if (!res||!sched) return;
+      Object.keys(sched).forEach(tier => {
+        Object.keys(sched[tier]).forEach(gk => {
+          const d = sched[tier][gk]?.date;
+          if (!d || !inWindow(d)) return;
+          byDateTotal[d] = (byDateTotal[d]||0) + 1;
+          if (res[tier]?.[gk]) byDateScored[d] = (byDateScored[d]||0) + 1;
+        });
+      });
+    });
     Object.keys(byDate).sort((a,b) => parseDate(a)-parseDate(b)).forEach(date => {
-      html += `<div style="font-size:11px;color:var(--muted);font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${date}</div>`;
+      const dayTotal = byDateTotal[date] || byDate[date].length;
+      const dayScored = byDateScored[date] || 0;
+      const dayLabel = dayScored > 0
+        ? ` <span style="opacity:.55;font-weight:400;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0">${dayScored}/${dayTotal} scored</span>`
+        : ` <span style="opacity:.55;font-weight:400;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0">${dayTotal} game${dayTotal!==1?'s':''}</span>`;
+      html += `<div style="font-size:11px;color:var(--muted);font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin:10px 0 4px">${date}${dayLabel}</div>`;
       byDate[date].slice().sort((a,b) => {
         // Primary: parse time, Secondary: field name
         const parseTime = t => {
