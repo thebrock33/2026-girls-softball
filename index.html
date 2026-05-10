@@ -6292,7 +6292,169 @@ function renderSummary() {
 
   html += '</div></div>';
 
-  // ── Upcoming Playoffs ────────────────────────────────────────────────
+  // ── Regular Season Champions ─────────────────────────────────────────
+  html += '<div class="summary-section"><div class="summary-section-title">🥇 Regular Season Champions</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+
+  // Flatten all scored games for a division
+  function flatGames(divData) {
+    const games = [];
+    (divData?.schedule || []).forEach(wk =>
+      (wk.games || []).forEach(g => { if (g.hs != null && g.as != null) games.push(g); })
+    );
+    return games;
+  }
+  // Head-to-head record of a vs b
+  function h2h(games, a, b) {
+    let w=0, l=0, t=0;
+    games.forEach(g => {
+      const aHome = g.home===a && g.away===b, aAway = g.away===a && g.home===b;
+      if (!aHome && !aAway) return;
+      const as_ = aHome ? g.hs : g.as, bs = aHome ? g.as : g.hs;
+      if (as_ > bs) w++; else if (as_ < bs) l++; else t++;
+    });
+    return { w, l, t, pct: (w + t*0.5) / Math.max(w+l+t, 1) };
+  }
+  // Win pct vs a set of common opponents
+  function commonOppPct(games, team, opponents) {
+    let w=0, l=0, t=0;
+    games.forEach(g => {
+      const isHome = g.home===team, isAway = g.away===team;
+      if (!isHome && !isAway) return;
+      const opp = isHome ? g.away : g.home;
+      if (!opponents.has(opp)) return;
+      const ts = isHome ? g.hs : g.as, os = isHome ? g.as : g.hs;
+      if (ts > os) w++; else if (ts < os) l++; else t++;
+    });
+    return (w + t*0.5) / Math.max(w+l+t, 1);
+  }
+  // Best win: best-ranked (lowest place#) opponent beaten — lower return = better
+  function bestWin(games, team, standings) {
+    const rankOf = name => { const t = standings.find(s => s.name===name); return t ? t.place : 999; };
+    let best = 999;
+    games.forEach(g => {
+      const isHome = g.home===team, isAway = g.away===team;
+      if (!isHome && !isAway) return;
+      const ts = isHome ? g.hs : g.as, os = isHome ? g.as : g.hs;
+      if (ts > os) best = Math.min(best, rankOf(isHome ? g.away : g.home));
+    });
+    return best;
+  }
+  // Worst loss: worst-ranked (highest place#) opponent lost to — lower return = better
+  function worstLoss(games, team, standings) {
+    const rankOf = name => { const t = standings.find(s => s.name===name); return t ? t.place : 0; };
+    let worst = 0;
+    games.forEach(g => {
+      const isHome = g.home===team, isAway = g.away===team;
+      if (!isHome && !isAway) return;
+      const ts = isHome ? g.hs : g.as, os = isHome ? g.as : g.hs;
+      if (ts < os) worst = Math.max(worst, rankOf(isHome ? g.away : g.home));
+    });
+    return worst;
+  }
+  function opponentsOf(games, team) {
+    const s = new Set();
+    games.forEach(g => { if (g.home===team) s.add(g.away); if (g.away===team) s.add(g.home); });
+    return s;
+  }
+  // Pairwise tiebreaker: <0 = a wins, >0 = b wins, 0 = true tie
+  function breakTie(games, standings, a, b) {
+    // TB2: head-to-head
+    const hh = h2h(games, a, b);
+    if (hh.w + hh.l + hh.t > 0) {
+      if (hh.w > hh.l) return -1;
+      if (hh.l > hh.w) return 1;
+    }
+    // TB3: common opponents
+    const aOpps = opponentsOf(games, a), bOpps = opponentsOf(games, b);
+    const common = new Set([...aOpps].filter(x => bOpps.has(x) && x !== a && x !== b));
+    if (common.size > 0) {
+      const diff = commonOppPct(games, a, common) - commonOppPct(games, b, common);
+      if (Math.abs(diff) > 1e-9) return diff > 0 ? -1 : 1;
+    }
+    // TB4: best win — lowest place# beaten (smaller = better team beaten)
+    const bwA = bestWin(games, a, standings), bwB = bestWin(games, b, standings);
+    if (bwA !== bwB) return bwA < bwB ? -1 : 1;
+    // TB5: worst loss — lowest place# lost to (smaller = lost to better team = better)
+    const wlA = worstLoss(games, a, standings), wlB = worstLoss(games, b, standings);
+    if (wlA !== 0 && wlB !== 0 && wlA !== wlB) return wlA < wlB ? -1 : 1;
+    // TB6: coin toss → true tie
+    return 0;
+  }
+  // Resolve tied teams into sorted groups; first group = actual leaders
+  function resolveTies(games, standings, tied) {
+    if (tied.length <= 1) return [tied];
+    const sorted = [...tied].sort((a, b) => breakTie(games, standings, a.name, b.name));
+    const groups = [];
+    let i = 0;
+    while (i < sorted.length) {
+      let j = i + 1;
+      while (j < sorted.length && breakTie(games, standings, sorted[i].name, sorted[j].name) === 0) j++;
+      groups.push(sorted.slice(i, j));
+      i = j;
+    }
+    return groups;
+  }
+
+  const RS_DIVS = {
+    '6U': { data: window._6u_DATA, divs: [
+      { key:'alo',         label:'Alo' },
+      { key:'finch',       label:'Finch' },
+      { key:'chamberlain', label:'Chamberlain' },
+    ]},
+    '7U': { data: window._7u_DATA, divs: [
+      { key:'div1', label:'Abbott' },
+      { key:'div2', label:'Fernandez' },
+    ]},
+    '8U': { data: window._8u_DATA, divs: [
+      { key:'finch',    label:'Finch' },
+      { key:'osterman', label:'Osterman' },
+    ]},
+  };
+
+  ['6U','7U','8U'].forEach(age => {
+    const { data, divs } = RS_DIVS[age];
+    if (!data) return;
+    html += `<div style="background:var(--card);border-radius:8px;overflow:hidden;">`;
+    html += `<div style="padding:6px 12px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.14em;color:${AGE_COLORS[age]};border-bottom:1px solid rgba(255,255,255,.06)">${age}</div>`;
+    html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
+
+    divs.forEach(({ key, label }) => {
+      const divData = data[key];
+      const standings = divData?.standings || [];
+      if (!standings.length) return;
+      const games = flatGames(divData);
+      const topPct = standings.reduce((best, t) => Math.max(best, t.pct), 0);
+      const pctLeaders = standings.filter(t => t.pct === topPct);
+      const recStr = t => `${t.w}-${t.l}${t.t ? `-${t.t}` : ''}`;
+
+      const groups = resolveTies(games, standings, pctLeaders);
+      const leaders = groups[0];
+
+      let innerHTML;
+      if (leaders.length === 1) {
+        const t = leaders[0];
+        innerHTML = `<span style="font-weight:700;color:var(--text)">${t.name}</span>`+
+          `<span style="font-size:10px;color:var(--muted);margin-left:3px">${recStr(t)}</span>`+
+          `<span style="font-size:10px;color:var(--gold);margin-left:3px">🥇</span>`;
+      } else {
+        innerHTML = leaders.map(t =>
+          `<span style="font-weight:700;color:var(--text)">${t.name}</span>`+
+          `<span style="font-size:10px;color:var(--muted);margin-left:3px">${recStr(t)}</span>`
+        ).join('<span style="font-size:10px;color:var(--muted);margin:0 4px">·</span>') +
+        `<span style="font-size:10px;color:var(--gold);margin-left:3px">🤝 Tied</span>`;
+      }
+      html += `<div style="flex:1;min-width:100px;padding:10px 12px;border-right:1px solid rgba(255,255,255,.06);">
+        <div style="font-size:10px;color:var(--muted);font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;margin-bottom:4px">${label}</div>
+        <div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap">${innerHTML}</div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  html += '</div></div>';
+
   html += '<div class="summary-section"><div class="summary-section-title">📅 Upcoming Playoffs</div>';
   if (playoffUp.length === 0) {
     html += '<div class="summary-empty">No playoff games in the next 2 days.</div>';
