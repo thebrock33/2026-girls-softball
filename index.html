@@ -1242,13 +1242,18 @@ var PLAYOFF_RESULTS = {
   },
   bronze: {
     G1: {t1:"Wildcats",  s1:15, t2:"Firecrackers", s2:10},
+    G2: {t1:"Voodoo",    s1:4,  t2:"Cobras",        s2:10},
     G3: {t1:"Magic",     s1:14, t2:"Longhorns",    s2:9},
     G4: {t1:"Starz",     s1:4,  t2:"Force",         s2:15},
+    G5: {t1:"Tigers",    s1:17, t2:"Wildcats",      s2:15},
   },
   copper: {
     G1: {t1:"Eagles",     s1:16, t2:"Tornados",  s2:15},
     G2: {t1:"Blaze",      s1:5,  t2:"Aces",       s2:12},
     G3: {t1:"Landsharks", s1:15, t2:"Thunder",    s2:4},
+    G4: {t1:"Cowgirls",   s1:17, t2:"Bears",      s2:20},
+    G5: {t1:"Panthers",   s1:10, t2:"Eagles",     s2:5},
+    G6: {t1:"Storm",      s1:13, t2:"Aces",       s2:9},
   },
 };
 
@@ -1910,13 +1915,13 @@ function renderPlayoffs() {
     els += colHdr(cx[2],0,"Semifinals",hex);
     els += colHdr(cx[3],0,"🏆 Final",hex);
     els += mLbl(cx[0],g1y,"G1"); els += slotR(cx[0],g1y,byS(8),hex,false,null,tierKey,"G1","t1"); els += slotR(cx[0],g1y+TH,byS(9),hex,false,null,tierKey,"G1","t2"); els += gameInfo(cx[0],g1y+2*TH+2,tierKey,"G1"); els += projected(cx[0],g1y+2*TH+22,byS(8),byS(9),hex,tierKey,"G1");
-    els += mLbl(cx[1],m0,"G5"); els += slot(cx[1],m0,byS(1),hex,true); els += slotResolved(cx[1],m0+TH,hex,"Winner G1",tierKey,"G5","t2"); els += gameInfo(cx[1],m0+2*TH+2,tierKey,"G5"); els += projected(cx[1],m0+2*TH+22,byS(1),resolveTeam(tierKey,"Winner G1"),hex);
+    els += mLbl(cx[1],m0,"G5"); els += slotR(cx[1],m0,byS(1),hex,true,null,tierKey,"G5","t1"); els += slotResolved(cx[1],m0+TH,hex,"Winner G1",tierKey,"G5","t2"); els += gameInfo(cx[1],m0+2*TH+2,tierKey,"G5"); els += projected(cx[1],m0+2*TH+22,byS(1),resolveTeam(tierKey,"Winner G1"),hex,tierKey,"G5");
     els += mLbl(cx[1],m1,"G2"); els += slotR(cx[1],m1,byS(4),hex,false,null,tierKey,"G2","t1"); els += slotR(cx[1],m1+TH,byS(5),hex,false,null,tierKey,"G2","t2"); els += gameInfo(cx[1],m1+2*TH+2,tierKey,"G2"); els += projected(cx[1],m1+2*TH+22,byS(4),byS(5),hex,tierKey,"G2");
     els += mLbl(cx[1],m2,"G3"); els += slotR(cx[1],m2,byS(2),hex,false,null,tierKey,"G3","t1"); els += slotR(cx[1],m2+TH,byS(7),hex,false,null,tierKey,"G3","t2"); els += gameInfo(cx[1],m2+2*TH+2,tierKey,"G3"); els += projected(cx[1],m2+2*TH+22,byS(2),byS(7),hex,tierKey,"G3");
     els += mLbl(cx[1],m3,"G4"); els += slotR(cx[1],m3,byS(3),hex,false,null,tierKey,"G4","t1"); els += slotR(cx[1],m3+TH,byS(6),hex,false,null,tierKey,"G4","t2"); els += gameInfo(cx[1],m3+2*TH+2,tierKey,"G4"); els += projected(cx[1],m3+2*TH+22,byS(3),byS(6),hex,tierKey,"G4");
-    els += mLbl(cx[2],s0,"G6"); els += slotResolved(cx[2],s0,hex,"Winner G5",tierKey,"G6","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G2",tierKey,"G6","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G6"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G5"),resolveTeam(tierKey,"Winner G2"),hex);
-    els += mLbl(cx[2],s1,"G7"); els += slotResolved(cx[2],s1,hex,"Winner G3",tierKey,"G7","t1"); els += slotResolved(cx[2],s1+TH,hex,"Winner G4",tierKey,"G7","t2"); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G7"); els += projected(cx[2],s1+2*TH+22,resolveTeam(tierKey,"Winner G3"),resolveTeam(tierKey,"Winner G4"),hex);
-    els += mLbl(cx[3],f0,"G8"); els += slotResolved(cx[3],f0,hex,"Winner G6",tierKey,"G8","t1"); els += slotResolved(cx[3],f0+TH,hex,"Winner G7",tierKey,"G8","t2"); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G8"); els += projected(cx[3],f0+2*TH+22,resolveTeam(tierKey,"Winner G6"),resolveTeam(tierKey,"Winner G7"),hex);
+    els += mLbl(cx[2],s0,"G6"); els += slotResolved(cx[2],s0,hex,"Winner G5",tierKey,"G6","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G2",tierKey,"G6","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G6"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G5"),resolveTeam(tierKey,"Winner G2"),hex,tierKey,"G6");
+    els += mLbl(cx[2],s1,"G7"); els += slotResolved(cx[2],s1,hex,"Winner G3",tierKey,"G7","t1"); els += slotResolved(cx[2],s1+TH,hex,"Winner G4",tierKey,"G7","t2"); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G7"); els += projected(cx[2],s1+2*TH+22,resolveTeam(tierKey,"Winner G3"),resolveTeam(tierKey,"Winner G4"),hex,tierKey,"G7");
+    els += mLbl(cx[3],f0,"G8"); els += slotResolved(cx[3],f0,hex,"Winner G6",tierKey,"G8","t1"); els += slotResolved(cx[3],f0+TH,hex,"Winner G7",tierKey,"G8","t2"); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G8"); els += projected(cx[3],f0+2*TH+22,resolveTeam(tierKey,"Winner G6"),resolveTeam(tierKey,"Winner G7"),hex,tierKey,"G8");
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g1y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (m0+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>"; // horizontal
     svg += bcon(cx[1]+CW,m0+TH,m1+TH,cx[2],s0,LC);
     svg += bcon(cx[1]+CW,m2+TH,m3+TH,cx[2],s1,LC);
@@ -1950,13 +1955,13 @@ function renderPlayoffs() {
     els += colHdr(cx[3], 0, "\uD83C\uDFC6 Final", hex);
     els += mLbl(cx[0],g1y,"G1"); els += slotR(cx[0],g1y,byS(7),hex,false,null,tierKey,"G1","t1"); els += slotR(cx[0],g1y+TH,byS(10),hex,false,null,tierKey,"G1","t2"); els += gameInfo(cx[0],g1y+2*TH+2,tierKey,"G1"); els += projected(cx[0],g1y+2*TH+22,byS(7),byS(10),hex,tierKey,"G1");
     els += mLbl(cx[0],g2y,"G2"); els += slotR(cx[0],g2y,byS(8),hex,false,null,tierKey,"G2","t1"); els += slotR(cx[0],g2y+TH,byS(9),hex,false,null,tierKey,"G2","t2"); els += gameInfo(cx[0],g2y+2*TH+2,tierKey,"G2"); els += projected(cx[0],g2y+2*TH+22,byS(8),byS(9),hex,tierKey,"G2");
-    els += mLbl(cx[1],r_g3,"G5"); els += slot(cx[1],r_g3,byS(1),hex,true); els += slotResolved(cx[1],r_g3+TH,hex,"Winner G1",tierKey,"G5","t2"); els += gameInfo(cx[1],r_g3+2*TH+2,tierKey,"G5"); els += projected(cx[1],r_g3+2*TH+22,byS(1),resolveTeam(tierKey,"Winner G1"),hex);
+    els += mLbl(cx[1],r_g3,"G5"); els += slotR(cx[1],r_g3,byS(1),hex,true,null,tierKey,"G5","t1"); els += slotResolved(cx[1],r_g3+TH,hex,"Winner G1",tierKey,"G5","t2"); els += gameInfo(cx[1],r_g3+2*TH+2,tierKey,"G5"); els += projected(cx[1],r_g3+2*TH+22,byS(1),resolveTeam(tierKey,"Winner G1"),hex,tierKey,"G5");
     els += mLbl(cx[1],r_g5,"G3"); els += slotR(cx[1],r_g5,byS(4),hex,false,null,tierKey,"G3","t1"); els += slotR(cx[1],r_g5+TH,byS(5),hex,false,null,tierKey,"G3","t2"); els += gameInfo(cx[1],r_g5+2*TH+2,tierKey,"G3"); els += projected(cx[1],r_g5+2*TH+22,byS(4),byS(5),hex,tierKey,"G3");
     els += mLbl(cx[1],r_g4,"G4"); els += slotR(cx[1],r_g4,byS(3),hex,false,null,tierKey,"G4","t1"); els += slotR(cx[1],r_g4+TH,byS(6),hex,false,null,tierKey,"G4","t2"); els += gameInfo(cx[1],r_g4+2*TH+2,tierKey,"G4"); els += projected(cx[1],r_g4+2*TH+22,byS(3),byS(6),hex,tierKey,"G4");
-    els += mLbl(cx[1],r_g6,"G6"); els += slot(cx[1],r_g6,byS(2),hex,true); els += slotResolved(cx[1],r_g6+TH,hex,"Winner G2",tierKey,"G6","t2"); els += gameInfo(cx[1],r_g6+2*TH+2,tierKey,"G6"); els += projected(cx[1],r_g6+2*TH+22,byS(2),resolveTeam(tierKey,"Winner G2"),hex);
-    els += mLbl(cx[2],s0,"G7"); els += slotResolved(cx[2],s0,hex,"Winner G5",tierKey,"G7","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G3",tierKey,"G7","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G7"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G5"),resolveTeam(tierKey,"Winner G3"),hex);
-    els += mLbl(cx[2],s1,"G8"); els += slotResolved(cx[2],s1,hex,"Winner G4",tierKey,"G8","t1"); els += slotResolved(cx[2],s1+TH,hex,"Winner G6",tierKey,"G8","t2"); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G8"); els += projected(cx[2],s1+2*TH+22,resolveTeam(tierKey,"Winner G4"),resolveTeam(tierKey,"Winner G6"),hex);
-    els += mLbl(cx[3],f0,"G9"); els += slotResolved(cx[3],f0,hex,"Winner G7",tierKey,"G9","t1"); els += slotResolved(cx[3],f0+TH,hex,"Winner G8",tierKey,"G9","t2"); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G9"); els += projected(cx[3],f0+2*TH+22,resolveTeam(tierKey,"Winner G7"),resolveTeam(tierKey,"Winner G8"),hex);
+    els += mLbl(cx[1],r_g6,"G6"); els += slotR(cx[1],r_g6,byS(2),hex,true,null,tierKey,"G6","t1"); els += slotResolved(cx[1],r_g6+TH,hex,"Winner G2",tierKey,"G6","t2"); els += gameInfo(cx[1],r_g6+2*TH+2,tierKey,"G6"); els += projected(cx[1],r_g6+2*TH+22,byS(2),resolveTeam(tierKey,"Winner G2"),hex,tierKey,"G6");
+    els += mLbl(cx[2],s0,"G7"); els += slotResolved(cx[2],s0,hex,"Winner G5",tierKey,"G7","t1"); els += slotResolved(cx[2],s0+TH,hex,"Winner G3",tierKey,"G7","t2"); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G7"); els += projected(cx[2],s0+2*TH+22,resolveTeam(tierKey,"Winner G5"),resolveTeam(tierKey,"Winner G3"),hex,tierKey,"G7");
+    els += mLbl(cx[2],s1,"G8"); els += slotResolved(cx[2],s1,hex,"Winner G4",tierKey,"G8","t1"); els += slotResolved(cx[2],s1+TH,hex,"Winner G6",tierKey,"G8","t2"); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G8"); els += projected(cx[2],s1+2*TH+22,resolveTeam(tierKey,"Winner G4"),resolveTeam(tierKey,"Winner G6"),hex,tierKey,"G8");
+    els += mLbl(cx[3],f0,"G9"); els += slotResolved(cx[3],f0,hex,"Winner G7",tierKey,"G9","t1"); els += slotResolved(cx[3],f0+TH,hex,"Winner G8",tierKey,"G9","t2"); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G9"); els += projected(cx[3],f0+2*TH+22,resolveTeam(tierKey,"Winner G7"),resolveTeam(tierKey,"Winner G8"),hex,tierKey,"G9");
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g1y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (r_g3+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>"; // G1→G5 (now at r_g3)
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g2y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (r_g6+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>";
     svg += bcon(cx[1]+CW, r_g3+TH, r_g5+TH, cx[2], s0, LC);
@@ -2763,15 +2768,21 @@ const PLAYOFF_RESULTS = {
     G2: {t1:'Sliders',    s1:16, t2:'Comets',      s2:11},
     G3: {t1:'Lightning',  s1:19, t2:'Cyclones',    s2:8},
     G4: {t1:'Aliens',     s1:16, t2:'Sliders',     s2:15},
+    G5: {t1:'Comets',     s1:19, t2:'Cyclones',    s2:14},
+    G6: {t1:'Thunder',    s1:12, t2:'Sliders',     s2:17},
     G7: {t1:'Lightning',  s1:20, t2:'Aliens',      s2:19},
   },
   silver: {
     G1: {t1:'Frogs',      s1:8,  t2:'Hurricanes',  s2:12},
     G2: {t1:'Typhoon',    s1:19, t2:'Storm',        s2:7},
+    G3: {t1:'Wildcats',   s1:12, t2:'Force',        s2:18},
+    G4: {t1:'Panthers',   s1:9,  t2:'Dragons',      s2:17},
   },
   bronze: {
-    G1: {t1:'Oilers',     s1:15, t2:'Land Sharks',   s2:13},
-    G3: {t1:'Venom',      s1:15, t2:'Space Cowgirls', s2:7},
+    G1: {t1:'Oilers',       s1:15, t2:'Land Sharks',    s2:13},
+    G2: {t1:'Crush',        s1:12, t2:'Diamonds',        s2:11},
+    G3: {t1:'Venom',        s1:15, t2:'Space Cowgirls',  s2:7},
+    G4: {t1:'Angels',       s1:16, t2:'Tornadoes',       s2:10},
   },
 };
 
@@ -3528,31 +3539,34 @@ function renderPlayoffs() {
     els += projected(cx[2], g7y+2*TH+22, byS(1), byS(2), hex, tierKey, 'G7');
 
     els += mLbl(cx[0], g5y, 'G5');
-    els += slot(cx[0], g5y,    byS(6), hex, false, '');   // Comets — Loser G2
-    els += slot(cx[0], g5y+TH, byS(4), hex, false, '');  // Cyclones — Loser G3
+    els += slotR(cx[0], g5y,    byS(6), hex, false, null, tierKey, 'G5', 't1');   // Comets — Loser G2
+    els += slotR(cx[0], g5y+TH, byS(4), hex, false, null, tierKey, 'G5', 't2');  // Cyclones — Loser G3
     els += gameInfo(cx[0], g5y+2*TH+2, tierKey, 'G5');
     els += projected(cx[0], g5y+2*TH+22, byS(6), byS(4), hex, tierKey, 'G5');
 
     els += mLbl(cx[0], g6y, 'G6');
-    els += slot(cx[0], g6y,    byS(5), hex, false, '');   // Thunder — Loser G1
-    els += slot(cx[0], g6y+TH, byS(3), hex, false, '');  // Sliders — Loser G4
+    els += slotR(cx[0], g6y,    byS(5), hex, false, null, tierKey, 'G6', 't1');   // Thunder — Loser G1
+    els += slotR(cx[0], g6y+TH, byS(3), hex, false, null, tierKey, 'G6', 't2');  // Sliders — Loser G4
     els += gameInfo(cx[0], g6y+2*TH+2, tierKey, 'G6');
     els += projected(cx[0], g6y+2*TH+22, byS(5), byS(3), hex, tierKey, 'G6');
 
     els += mLbl(cx[1], g8y, 'G8');
-    els += slot(cx[1], g8y,    null, hex, false, 'Winner G5');
-    els += slot(cx[1], g8y+TH, null, hex, false, 'Winner G6');
+    els += winnerSlot(cx[1], g8y,    hex, 'G5', tierKey, 'G8', 't1', teams);
+    els += winnerSlot(cx[1], g8y+TH, hex, 'G6', tierKey, 'G8', 't2', teams);
     els += gameInfo(cx[1], g8y+2*TH+2, tierKey, 'G8');
+    els += projected(cx[1], g8y+2*TH+22, winnerOf('G5', tierKey, teams), winnerOf('G6', tierKey, teams), hex, tierKey, 'G8');
 
     els += mLbl(cx[2], g9y, 'G9');
-    els += slot(cx[2], g9y,    byS(2), hex, false, '');  // Aliens — Loser G7
-    els += slot(cx[2], g9y+TH, null,   hex, false, 'Winner G8');
+    els += slotR(cx[2], g9y,    byS(2), hex, false, '', tierKey, 'G9', 't1');  // Aliens — Loser G7
+    els += winnerSlot(cx[2], g9y+TH, hex, 'G8', tierKey, 'G9', 't2', teams);
     els += gameInfo(cx[2], g9y+2*TH+2, tierKey, 'G9');
+    els += projected(cx[2], g9y+2*TH+22, byS(2), winnerOf('G8', tierKey, teams), hex, tierKey, 'G9');
 
     els += mLbl(cx[3], g10y, 'G10  🏆 Championship');
-    els += slot(cx[3], g10y,    byS(1), hex, true, '');  // Lightning — Winner G7
-    els += slot(cx[3], g10y+TH, null,   hex, false, 'Winner G9');
+    els += slotR(cx[3], g10y,    byS(1), hex, true, '', tierKey, 'G10', 't1');  // Lightning — Winner G7
+    els += winnerSlot(cx[3], g10y+TH, hex, 'G9', tierKey, 'G10', 't2', teams);
     els += gameInfo(cx[3], g10y+2*TH+2, tierKey, 'G10');
+    els += projected(cx[3], g10y+2*TH+22, byS(1), winnerOf('G9', tierKey, teams), hex, tierKey, 'G10');
 
     svg += line(cx[0]+CW, g1y+TH, cx[1], g3y+TH+TH/2, LC, LW);
     svg += line(cx[0]+CW, g2y+TH, cx[1], g4y+TH+TH/2, LC, LW);
@@ -4351,12 +4365,17 @@ const PLAYOFF_RESULTS = {
   silver: {
     G1: {t1:'Hurricanes', s1:17, t2:'Panthers',  s2:6},
     G2: {t1:'Storm',      s1:9,  t2:'Lightning', s2:6},
+    G3: {t1:'Sliders',    s1:8,  t2:'Angels',    s2:13},
+    G4: {t1:'Blaze',      s1:8,  t2:'Sparks',    s2:6},
+    G6: {t1:'Angels',     s1:8,  t2:'Blaze',     s2:2},
   },
   bronze: {
-    G1: {t1:'Bombers',    s1:15, t2:'Venom',        s2:8},
-    G2: {t1:'Land Sharks',s1:11, t2:'Cobras',       s2:5},
-    G4: {t1:'Voodoo',     s1:6,  t2:'Spring Spirit', s2:5},
-    G5: {t1:'Bombers',    s1:3,  t2:'Land Sharks',  s2:9},
+    G1: {t1:'Bombers',       s1:15, t2:'Venom',         s2:8},
+    G2: {t1:'Land Sharks',   s1:11, t2:'Cobras',         s2:5},
+    G3: {t1:'Firecrackers',  s1:12, t2:'Chargers',       s2:5},
+    G4: {t1:'Voodoo',        s1:6,  t2:'Spring Spirit',  s2:5},
+    G5: {t1:'Bombers',       s1:3,  t2:'Land Sharks',    s2:9},
+    G6: {t1:'Voodoo',        s1:6,  t2:'Firecrackers',   s2:5},
   },
 };
 
