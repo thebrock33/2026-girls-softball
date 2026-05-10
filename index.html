@@ -1314,7 +1314,7 @@ var PLAYOFF_SCHEDULES = {
     G4:{date:"Thu 5/7", time:"6:00 PM",loc:"SBE Field 2",url:"https://www.google.com/maps/dir//29.8007824,-95.514877"},
     G5:{date:"Sat 5/9", time:"3:30 PM",loc:"SWMS Field 2",url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd"},
     G6:{date:"Tue 5/12",time:"5:45 PM",loc:"SWMS Field 3",url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd"},
-    G7:{date:"Sat 5/9", time:"6:30 PM",loc:"SWMS Field 2",url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd"},
+    G7:{date:"Mon 5/11",time:"6:00 PM",loc:"SWMS Field 1",url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd"},
     G8:{date:"Wed 5/13",time:"5:45 PM",loc:"SWMS Field 3",url:"http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd"},
   },
   copper:{
@@ -2753,7 +2753,7 @@ const PLAYOFF_SCHEDULES = {
     G5:  { date:'Sat 5/9',  time:'3:30 PM', loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
     G6:  { date:'Sat 5/9',  time:'5:00 PM', loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
     G7:  { date:'Sat 5/9',  time:'9:30 AM', loc:'SWMS Field 1', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd' },
-    G8:  { date:'Sat 5/9',  time:'6:30 PM', loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
+    G8:  { date:'Sat 5/10', time:'3:30 PM', loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
     G9:  { date:'Wed 5/13', time:'7:30 PM', loc:'SWMS Field 1', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd' },
     G10: { date:'Thu 5/14', time:'6:00 PM', loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
   },
@@ -2787,6 +2787,7 @@ const PLAYOFF_RESULTS = {
     G5: {t1:'Comets',     s1:19, t2:'Cyclones',    s2:14},
     G6: {t1:'Thunder',    s1:12, t2:'Sliders',     s2:17},
     G7: {t1:'Lightning',  s1:20, t2:'Aliens',      s2:19},
+    G8: {t1:'Comets',     s1:10, t2:'Sliders',     s2:17},
   },
   silver: {
     G1: {t1:'Frogs',      s1:8,  t2:'Hurricanes',  s2:12},
@@ -4843,9 +4844,9 @@ const PLAYOFF_SCHEDULES = {
     G2: { date:'Fri 5/8',  time:'7:30 PM', loc:'SBE Field 2', url:'https://www.google.com/maps/dir//29.8007824,-95.514877' },
     G3: { date:'Sat 5/9',  time:'2:00 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
     G4: { date:'Sat 5/9',  time:'3:30 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
-    G5: { date:'Sat 5/9',  time:'6:30 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
+    G5: { date:'Thu 5/14', time:'7:30 PM', loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd,Houston,TX+77080' },
     G6: { date:'Sat 5/9',  time:'5:00 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
-    G7: { date:'Mon 5/11', time:'6:00 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
+    G7: { date:'Fri 5/15', time:'7:30 PM', loc:'SBE Field 1', url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
   },
   bronze: {
     G1: { date:'Fri 5/8',  time:'7:30 PM',  loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd,Houston,TX+77080' },
@@ -5184,13 +5185,7 @@ function renderPlayoffs() {
     els += winnerSlot(cx[2], f0,    hex, 'G5', tierKey, 'G7', 't1', teams);
     els += winnerSlot(cx[2], f0+TH, hex, 'G6', tierKey, 'G7', 't2', teams);
     els += gameInfo(cx[2], f0+2*TH+2, tierKey, 'G7');
-
-    // ── Connector lines ──
-    // winner exit = matchup_y + TH  (between top & bottom team)
-    // entry into semi = semi_y + TH  (the mid-underline of the semi matchup)
-    // We draw two elbows meeting at mid-x:
-    //   m0 exit → semi0 entry
-    //   m1 exit → semi0 entry   (bracket pair)
+    els += projected(cx[2], f0+2*TH+22, winnerOf('G5', tierKey, teams), winnerOf('G6', tierKey, teams), hex, tierKey, 'G7');
     //   m2 exit → semi1 entry
     //   m3 exit → semi1 entry
 
