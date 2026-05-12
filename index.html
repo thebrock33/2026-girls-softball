@@ -1824,6 +1824,27 @@ function renderPlayoffs() {
     return slot(x, y, null, hex, false, `Winner ${srcGameKey}`);
   }
 
+  function champSlot(x, y, hex, srcGameKey, tierKey, teams) {
+    const res = getResult(tierKey, srcGameKey);
+    const team = res ? _seedsForTier(tierKey)[res.winner] || null : null;
+    const lbl = `<div style="position:absolute;left:${x}px;top:${y-16}px;width:${CW}px;text-align:center;font-size:11px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:${hex}">🏆 Champion</div>`;
+    if (team) {
+      const pr = getPlayoffRecord(team.name);
+      const pw = team.w + pr.w, pl = team.l + pr.l;
+      const rec = pw + '-' + pl + (team.t ? '-' + team.t : '');
+      return lbl + `<div class="tb-team advanced" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px solid ${hex};border-radius:4px;box-shadow:0 0 12px ${hex}44;">` +
+        `<span class="tb-seed" style="background:${hex};color:#0d1b2a">${team.seed}</span>` +
+        `<span class="tb-name" style="font-weight:700">${team.name}</span>` +
+        `<span class="tb-badge ${team.div}">${{alo:'Alo',finch:'Fin',chamberlain:'Cha'}[team.div]||team.div}</span>` +
+        `<span class="tb-rec">${rec}</span>` +
+        `</div>`;
+    }
+    return lbl + `<div class="tb-team tbd" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px dashed ${hex}66;border-radius:4px;">` +
+      `<span class="tb-seed" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.3)">?</span>` +
+      `<span class="tb-name" style="color:rgba(255,255,255,.4);font-size:10px;font-style:italic;">TBD</span>` +
+      `</div>`;
+  }
+
   // Slot with result lookup: use for seeded team slots in games with results
   function slotR(x,y,team,hex,advanced,label,tierKey,gameKey,slotPos) {
     var res = getResult(tierKey, gameKey);
@@ -1940,12 +1961,16 @@ function renderPlayoffs() {
     els += mLbl(cx[1],m3,"G4"); els += slotR(cx[1],m3,byS(3),hex,false,null,tierKey,"G4","t1"); els += slotR(cx[1],m3+TH,byS(6),hex,false,null,tierKey,"G4","t2"); els += gameInfo(cx[1],m3+2*TH+2,tierKey,"G4"); els += projected(cx[1],m3+2*TH+22,byS(3),byS(6),hex,tierKey,"G4");
     els += mLbl(cx[2],s0,"G6"); els += winnerSlot(cx[2],s0,hex,"G5",tierKey,"G6","t1",teams); els += winnerSlot(cx[2],s0+TH,hex,"G2",tierKey,"G6","t2",teams); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G6"); els += projected(cx[2],s0+2*TH+22,winnerOf("G5",tierKey,teams),winnerOf("G2",tierKey,teams),hex,tierKey,"G6");
     els += mLbl(cx[2],s1,"G7"); els += winnerSlot(cx[2],s1,hex,"G3",tierKey,"G7","t1",teams); els += winnerSlot(cx[2],s1+TH,hex,"G4",tierKey,"G7","t2",teams); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G7"); els += projected(cx[2],s1+2*TH+22,winnerOf("G3",tierKey,teams),winnerOf("G4",tierKey,teams),hex,tierKey,"G7");
+    var cx4 = 4*STEP;
+    var TOTAL_W_CH = TOTAL_W + STEP + GW;
     els += mLbl(cx[3],f0,"G8"); els += winnerSlot(cx[3],f0,hex,"G6",tierKey,"G8","t1",teams); els += winnerSlot(cx[3],f0+TH,hex,"G7",tierKey,"G8","t2",teams); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G8"); els += projected(cx[3],f0+2*TH+22,winnerOf("G6",tierKey,teams),winnerOf("G7",tierKey,teams),hex,tierKey,"G8");
+    els += champSlot(cx4, f0+TH/2, hex, "G8", tierKey, teams);
     svg += `<line x1="${cx[0]+CW}" y1="${g1y+TH}" x2="${cx[1]}" y2="${m0+TH+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
     svg += bracketConnector(cx[1]+CW,m0+TH,m1+TH,cx[2],s0,LC);
     svg += bracketConnector(cx[1]+CW,m2+TH,m3+TH,cx[2],s1,LC);
     svg += bracketConnector(cx[2]+CW,s0+TH,s1+TH,cx[3],f0,LC);
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;"><svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>${els}</div></div>`;
+    svg += `<line x1="${cx[3]+CW}" y1="${f0+TH}" x2="${cx4}" y2="${f0+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_CH}px;height:${TOTAL_H}px;"><svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_CH}" height="${TOTAL_H}">${svg}</svg>${els}</div></div>`;
   }
 
   // ── 10-team Single Elimination (Copper) ──────────────────────────────
@@ -1980,13 +2005,17 @@ function renderPlayoffs() {
     els += mLbl(cx[1],r_g6,"G6"); els += slotR(cx[1],r_g6,byS(2),hex,true,null,tierKey,"G6","t1"); els += winnerSlot(cx[1],r_g6+TH,hex,"G2",tierKey,"G6","t2",teams); els += gameInfo(cx[1],r_g6+2*TH+2,tierKey,"G6"); els += projected(cx[1],r_g6+2*TH+22,byS(2),winnerOf("G2",tierKey,teams),hex,tierKey,"G6");
     els += mLbl(cx[2],s0,"G7"); els += winnerSlot(cx[2],s0,hex,"G5",tierKey,"G7","t1",teams); els += winnerSlot(cx[2],s0+TH,hex,"G3",tierKey,"G7","t2",teams); els += gameInfo(cx[2],s0+2*TH+2,tierKey,"G7"); els += projected(cx[2],s0+2*TH+22,winnerOf("G5",tierKey,teams),winnerOf("G3",tierKey,teams),hex,tierKey,"G7");
     els += mLbl(cx[2],s1,"G8"); els += winnerSlot(cx[2],s1,hex,"G4",tierKey,"G8","t1",teams); els += winnerSlot(cx[2],s1+TH,hex,"G6",tierKey,"G8","t2",teams); els += gameInfo(cx[2],s1+2*TH+2,tierKey,"G8"); els += projected(cx[2],s1+2*TH+22,winnerOf("G4",tierKey,teams),winnerOf("G6",tierKey,teams),hex,tierKey,"G8");
+    var cx4 = 4*STEP;
+    var TOTAL_W_CH = TOTAL_W + STEP + GW;
     els += mLbl(cx[3],f0,"G9"); els += winnerSlot(cx[3],f0,hex,"G7",tierKey,"G9","t1",teams); els += winnerSlot(cx[3],f0+TH,hex,"G8",tierKey,"G9","t2",teams); els += gameInfo(cx[3],f0+2*TH+2,tierKey,"G9"); els += projected(cx[3],f0+2*TH+22,winnerOf("G7",tierKey,teams),winnerOf("G8",tierKey,teams),hex,tierKey,"G9");
+    els += champSlot(cx4, f0+TH/2, hex, "G9", tierKey, teams);
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g1y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (r_g3+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>"; // G1→G5 (now at r_g3)
     svg += "<line x1=\"" + (cx[0]+CW) + "\" y1=\"" + (g2y+TH) + "\" x2=\"" + cx[1] + "\" y2=\"" + (r_g6+TH+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>";
     svg += bracketConnector(cx[1]+CW, r_g3+TH, r_g5+TH, cx[2], s0, LC);
     svg += bracketConnector(cx[1]+CW, r_g4+TH, r_g6+TH, cx[2], s1, LC);
     svg += bracketConnector(cx[2]+CW, s0+TH, s1+TH, cx[3], f0, LC);
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;"><svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>${els}</div></div>`;
+    svg += `<line x1="${cx[3]+CW}" y1="${f0+TH}" x2="${cx4}" y2="${f0+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_CH}px;height:${TOTAL_H}px;"><svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_CH}" height="${TOTAL_H}">${svg}</svg>${els}</div></div>`;
   }
 
   // ── 9-team Double Elimination (Gold) ─────────────────────────────────
@@ -2066,7 +2095,8 @@ function renderPlayoffs() {
     var champ_y = (wbf_g13 + lb_g15) / 2;
 
     var TOTAL_H = Math.max(WB_BOTTOM, lb_g12+2*TH+20, champ_y+2*TH+20) + 24;
-    var TOTAL_W = cx_ch + CW + 10;
+    var cx_champ = cx_ch + STEP;   // Champion display column
+    var TOTAL_W = cx_champ + CW + 10;
 
     var els = "", svg = "";
 
@@ -2137,6 +2167,7 @@ function renderPlayoffs() {
     els += winnerSlot(cx_ch,champ_y+TH,hex,"G15",tierKey,"G16","t2",teams);
     els += gameInfo(cx_ch, champ_y+2*TH+2, tierKey, "G16");
     els += projected(cx_ch, champ_y+2*TH+22, winnerOf("G13",tierKey,teams), winnerOf("G15",tierKey,teams), hex, tierKey, "G16");
+    els += champSlot(cx_champ, champ_y+TH/2, hex, "G16", tierKey, teams);
 
     // ── LB banner & headers ───────────────────────────────────────────
     els += banner(0, LB_TOP + 2, "Losers Bracket", "banner-lb");
@@ -2204,6 +2235,8 @@ function renderPlayoffs() {
     svg += bracketConnector(cx_r2+CW, r2_g9+TH, r2_g10+TH, cx_wbf, wbf_g13, LC);
     // WB Final → Championship top slot
     svg += winConnector(cx_wbf+CW, wbf_g13+TH, cx_ch, champ_y+TH/2, LC);
+    // Championship → Champion display
+    svg += "<line x1=\"" + (cx_ch+CW) + "\" y1=\"" + (champ_y+TH) + "\" x2=\"" + cx_champ + "\" y2=\"" + (champ_y+TH/2+TH/2) + "\" stroke=\"" + LC + "\" stroke-width=\"" + LW + "\"/>";
     // G6 (LB R1) → G8 top slot (LB R2 bottom game)
     svg += winConnector(lb_cx[0]+CW, lb_g6+TH, lb_cx[1], lb_g8+TH/2, LC);
     // G7 (LB R2 top) → G11 top slot (LB R3 top game)
@@ -3404,6 +3437,28 @@ function renderPlayoffs() {
            `<path d="M${x1},${yBot} H${mx} V${yBotEntry} H${x2}" fill="none" stroke="${clr}" stroke-width="${LW}"/>`;
   }
 
+
+  function champSlot(x, y, hex, srcGameKey, tierKey, teams) {
+    const res = getResult(tierKey, srcGameKey);
+    const team = res ? (teams || []).find(t => t.name === res.winner) || null : null;
+    const lbl = `<div style="position:absolute;left:${x}px;top:${y-16}px;width:${CW}px;text-align:center;font-size:11px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:${hex}">🏆 Champion</div>`;
+    if (team) {
+      const pr = getPlayoffRecord(team.name);
+      const pw = team.w + pr.w, pl = team.l + pr.l;
+      const rec = `${pw}-${pl}${team.t ? '-'+team.t : ''}`;
+      const dlabels = { div1: 'D1', div2: 'D2', finch: 'Fin', osterman: 'Ost' };
+      return lbl + `<div class="tb-team advanced" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px solid ${hex};border-radius:4px;box-shadow:0 0 12px ${hex}44;">` +
+        `<span class="tb-seed" style="background:${hex};color:#0d1b2a">${team.seed}</span>` +
+        `<span class="tb-name" style="font-weight:700">${team.name}</span>` +
+        `<span class="tb-badge ${team.div}">${dlabels[team.div]||team.div}</span>` +
+        `<span class="tb-rec">${rec} <span style="opacity:.55;font-size:9px">PO</span></span>` +
+        `</div>`;
+    }
+    return lbl + `<div class="tb-team tbd" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px dashed ${hex}66;border-radius:4px;">` +
+      `<span class="tb-seed" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.3)">?</span>` +
+      `<span class="tb-name" style="color:rgba(255,255,255,.4);font-size:10px;font-style:italic;">TBD</span>` +
+      `</div>`;
+  }
   function buildSEBracket(teams, hex, tierKey) {
     const byS = s => teams.find(t => t.seed === s);
     const halfGap = 40;
@@ -3453,11 +3508,14 @@ function renderPlayoffs() {
       els += projected(cx[1], s[i]+2*TH+22, tA, tB, hex, tierKey, `G${gn}`);
     });
 
+    const cx3_se = 3*(CW+GW);
+    const TOTAL_W_CH = TOTAL_W + 2*(CW+GW) - CW;
     els += mLbl(cx[2], f0, `G7  🏆 Final`);
     els += winnerSlot(cx[2], f0,    hex, 'G5', tierKey, 'G7', 't1', teams);
     els += winnerSlot(cx[2], f0+TH, hex, 'G6', tierKey, 'G7', 't2', teams);
     els += gameInfo(cx[2], f0+2*TH+2, tierKey, 'G7');
     els += projected(cx[2], f0+2*TH+22, winnerOf('G5', tierKey, teams), winnerOf('G6', tierKey, teams), hex, tierKey, 'G7');
+    els += champSlot(cx3_se, f0+TH/2, hex, 'G7', tierKey, teams);
 
     const x1r = cx[0] + CW;
     const x2s = cx[1];
@@ -3466,9 +3524,10 @@ function renderPlayoffs() {
     const x1s = cx[1] + CW;
     const x2f = cx[2];
     svg += bracketConnector(x1s, s[0]+TH, s[1]+TH, x2f, f0, LC);
+    svg += `<line x1="${cx[2]+CW}" y1="${f0+TH}" x2="${cx3_se}" y2="${f0+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
 
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;">
-      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_CH}px;height:${TOTAL_H}px;">
+      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_CH}" height="${TOTAL_H}">${svg}</svg>
       ${els}
     </div></div>`;
   }
@@ -3590,6 +3649,8 @@ function renderPlayoffs() {
     els += winnerSlot(cx[3], g10y+TH, hex, 'G9', tierKey, 'G10', 't2', teams);
     els += gameInfo(cx[3], g10y+2*TH+2, tierKey, 'G10');
     els += projected(cx[3], g10y+2*TH+22, byS(1), winnerOf('G9', tierKey, teams), hex, tierKey, 'G10');
+    const cx4DE = cx[3] + STEP;
+    els += champSlot(cx4DE, g10y+TH/2, hex, 'G10', tierKey, teams);
 
     svg += line(cx[0]+CW, g1y+TH, cx[1], g3y+TH+TH/2, LC, LW);
     svg += line(cx[0]+CW, g2y+TH, cx[1], g4y+TH+TH/2, LC, LW);
@@ -3598,9 +3659,11 @@ function renderPlayoffs() {
     svg += bracketConnector(cx[0]+CW, g5y+TH, g6y+TH, cx[1], g8y, LC);
     svg += line(cx[1]+CW, g8y+TH, cx[2], g9y+TH+TH/2, LC, LW);
     svg += winConnector(cx[2]+CW, g9y+TH, cx[3], g10y+TH+TH/2, LC);
+    svg += `<line x1="${cx[3]+CW}" y1="${g10y+TH}" x2="${cx4DE}" y2="${g10y+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
 
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;">
-      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>
+    const TOTAL_W_DE = TOTAL_W + STEP;
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_DE}px;height:${TOTAL_H}px;">
+      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_DE}" height="${TOTAL_H}">${svg}</svg>
       ${els}
     </div></div>`;
   }
@@ -5188,13 +5251,14 @@ function renderPlayoffs() {
     });
 
     // Final slots — G7
+    const cx3_8u = 3*(CW+GW);
+    const TOTAL_W_CH_8u = TOTAL_W + 2*(CW+GW) - CW;
     els += mLbl(cx[2], f0, `G7  🏆 Final`);
     els += winnerSlot(cx[2], f0,    hex, 'G5', tierKey, 'G7', 't1', teams);
     els += winnerSlot(cx[2], f0+TH, hex, 'G6', tierKey, 'G7', 't2', teams);
     els += gameInfo(cx[2], f0+2*TH+2, tierKey, 'G7');
     els += projected(cx[2], f0+2*TH+22, winnerOf('G5', tierKey, teams), winnerOf('G6', tierKey, teams), hex, tierKey, 'G7');
-    //   m2 exit → semi1 entry
-    //   m3 exit → semi1 entry
+    els += champSlot(cx3_8u, f0+TH/2, hex, 'G7', tierKey, teams);
 
     const x1r = cx[0] + CW;   // right edge of R1 column
     const x2s = cx[1];         // left edge of Semis column
@@ -5208,13 +5272,36 @@ function renderPlayoffs() {
     const x1s = cx[1] + CW;
     const x2f = cx[2];
     svg += bracketConnector(x1s, s[0]+TH, s[1]+TH, x2f, f0, LC);
+    svg += `<line x1="${cx[2]+CW}" y1="${f0+TH}" x2="${cx3_8u}" y2="${f0+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
 
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;">
-      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_CH_8u}px;height:${TOTAL_H}px;">
+      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_CH_8u}" height="${TOTAL_H}">${svg}</svg>
       ${els}
     </div></div>`;
   }
 
+
+  function champSlot(x, y, hex, srcGameKey, tierKey, teams) {
+    const res = getResult(tierKey, srcGameKey);
+    const team = res ? (teams || []).find(t => t.name === res.winner) || null : null;
+    const lbl = `<div style="position:absolute;left:${x}px;top:${y-16}px;width:${CW}px;text-align:center;font-size:11px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:${hex}">🏆 Champion</div>`;
+    if (team) {
+      const pr = getPlayoffRecord(team.name);
+      const pw = team.w + pr.w, pl = team.l + pr.l;
+      const rec = `${pw}-${pl}${team.t ? '-'+team.t : ''}`;
+      const dlabels = { finch: 'Fin', osterman: 'Ost', finch: 'Fin', osterman: 'Ost' };
+      return lbl + `<div class="tb-team advanced" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px solid ${hex};border-radius:4px;box-shadow:0 0 12px ${hex}44;">` +
+        `<span class="tb-seed" style="background:${hex};color:#0d1b2a">${team.seed}</span>` +
+        `<span class="tb-name" style="font-weight:700">${team.name}</span>` +
+        `<span class="tb-badge ${team.div}">${dlabels[team.div]||team.div}</span>` +
+        `<span class="tb-rec">${rec} <span style="opacity:.55;font-size:9px">PO</span></span>` +
+        `</div>`;
+    }
+    return lbl + `<div class="tb-team tbd" style="position:absolute;left:${x}px;top:${y}px;width:${CW}px;outline:2px dashed ${hex}66;border-radius:4px;">` +
+      `<span class="tb-seed" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.3)">?</span>` +
+      `<span class="tb-name" style="color:rgba(255,255,255,.4);font-size:10px;font-style:italic;">TBD</span>` +
+      `</div>`;
+  }
   // ═══════════════════════════════════════════════════════════════════
   // DOUBLE-ELIMINATION BRACKET — matches standard 6-team DE image
   //
@@ -5379,6 +5466,8 @@ function renderPlayoffs() {
     els += winnerSlot(cx[3], g10y+TH, hex, 'G9', tierKey, 'G10', 't2', teams);
     els += gameInfo(cx[3], g10y+2*TH+2, tierKey, 'G10');
     els += projected(cx[3], g10y+2*TH+22, winnerOf('G7', tierKey, teams), winnerOf('G9', tierKey, teams), hex, tierKey, 'G10');
+    const cx4_8u = cx[3] + STEP;
+    els += champSlot(cx4_8u, g10y+TH/2, hex, 'G10', tierKey, teams);
 
     // ════════════════════════════════════════════════════════════════
     // SVG LINES
@@ -5404,10 +5493,11 @@ function renderPlayoffs() {
 
     // ── LB Final → Championship bottom slot ──────────────────────────
     svg += winConnector(cx[2]+CW, g9y+TH, cx[3], g10y+TH+TH/2, LC);
+    svg += `<line x1="${cx[3]+CW}" y1="${g10y+TH}" x2="${cx4_8u}" y2="${g10y+TH/2+TH/2}" stroke="${LC}" stroke-width="${LW}"/>`;
 
-
-    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W}px;height:${TOTAL_H}px;">
-      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W}" height="${TOTAL_H}">${svg}</svg>
+    const TOTAL_W_8u_DE = TOTAL_W + STEP;
+    return `<div class="bracket-scroll"><div style="position:relative;display:inline-block;width:${TOTAL_W_8u_DE}px;height:${TOTAL_H}px;">
+      <svg style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;" width="${TOTAL_W_8u_DE}" height="${TOTAL_H}">${svg}</svg>
       ${els}
     </div></div>`;
   }
