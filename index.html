@@ -6367,6 +6367,25 @@ function renderSummary() {
         statusHTML = champ
           ? `<span style="font-weight:700;color:var(--text)">${champ.name}</span> <span style="font-size:10px;color:var(--gold)">🏆 Champion</span>`
           : `<span style="color:var(--text)">Champion</span>`;
+      } else if (remaining === 2) {
+        const seeds = (age === '6U' && window._6u_SEEDS) ? window._6u_SEEDS[tier] || [] :
+                      (age === '7U') ? ({
+                        gold:   [{name:'Lightning'},{name:'Aliens'},{name:'Sliders'},{name:'Cyclones'},{name:'Thunder'},{name:'Comets'}],
+                        silver: [{name:'Frogs'},{name:'Wildcats'},{name:'Panthers'},{name:'Typhoon'},{name:'Storm'},{name:'Dragons'},{name:'Force'},{name:'Hurricanes'}],
+                        bronze: [{name:'Oilers'},{name:'Venom'},{name:'Tornadoes'},{name:'Crush'},{name:'Diamonds'},{name:'Angels'},{name:'Space Cowgirls'},{name:'Land Sharks'}],
+                      }[tier] || []) :
+                      ({
+                        gold:   [{name:'Diamonds'},{name:'Thunder'},{name:'Space Cowgirls'},{name:'Typhoon'},{name:'Aggies'},{name:'Magic'}],
+                        silver: [{name:'Hurricanes'},{name:'Sliders'},{name:'Blaze'},{name:'Storm'},{name:'Lightning'},{name:'Sparks'},{name:'Angels'},{name:'Panthers'}],
+                        bronze: [{name:'Bombers'},{name:'Firecrackers'},{name:'Voodoo'},{name:'Land Sharks'},{name:'Cobras'},{name:'Spring Spirit'},{name:'Chargers'},{name:'Venom'}],
+                      }[tier] || []);
+        const finalists = seeds.filter(s => !eliminated[s.name]);
+        statusHTML = finalists.length === 2
+          ? `<span style="font-size:10px;color:var(--muted);font-style:italic;width:100%;margin-bottom:2px">Championship</span>` +
+            `<span style="font-weight:700;color:var(--text)">${finalists[0].name}</span>` +
+            `<span style="font-size:10px;color:var(--muted);margin:0 4px">vs</span>` +
+            `<span style="font-weight:700;color:var(--text)">${finalists[1].name}</span>`
+          : `<span style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--text)">2</span><span style="font-size:10px;color:var(--muted);margin-left:3px">remaining</span>`;
       } else if (remaining === 0) {
         statusHTML = `<span style="color:var(--muted);font-size:11px">Complete</span>`;
       } else {
