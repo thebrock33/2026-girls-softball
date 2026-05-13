@@ -173,6 +173,185 @@ footer a:hover{text-decoration:underline;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @media(max-width:640px){.game-row{grid-template-columns:70px 1fr;}.game-time{display:none;}td,th{padding:9px 10px;font-size:12px;}}
 
+/* ===== GAME OF THE DAY ===== */
+.gotd-outer {
+  margin-bottom: 28px;
+}
+.gotd-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: .12em;
+  color: #4fc3d8;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(79,195,216,.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gotd-card {
+  width: 100%;
+  aspect-ratio: 780 / 340;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 0 60px rgba(0,0,0,.6);
+  font-family: 'Bebas Neue', sans-serif;
+}
+.gotd-bg { position: absolute; inset: 0; background: #0d1117; }
+.gotd-field-lines {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 60px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 60px);
+}
+.gotd-left-bg {
+  position: absolute; top: 0; left: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(135deg, #1c0900 0%, #2e1400 55%, #1a2800 100%);
+  clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%);
+}
+.gotd-left-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255,130,0,.2) 0%, rgba(80,200,0,.1) 55%, transparent 80%);
+}
+.gotd-right-bg {
+  position: absolute; top: 0; right: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(225deg, #04051c 0%, #090b30 55%, #110924 100%);
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 8% 100%, 0 50%);
+}
+.gotd-right-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(255,70,160,.2) 0%, transparent 70%);
+}
+.gotd-center-glow {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px; height: 100%;
+  background: linear-gradient(to bottom, transparent, #fff 30%, #fff 70%, transparent);
+  opacity: .12;
+}
+.gotd-center-glow::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 70%);
+}
+.gotd-corner { position: absolute; width: 32px; height: 32px; opacity: .2; }
+.gotd-corner-tl { top: 12px; left: 12px; border-top: 2px solid #fff; border-left: 2px solid #fff; }
+.gotd-corner-tr { top: 12px; right: 12px; border-top: 2px solid #fff; border-right: 2px solid #fff; }
+.gotd-corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid #fff; border-left: 2px solid #fff; }
+.gotd-corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+.gotd-scanlines {
+  position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 4px);
+}
+.gotd-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.5) 100%);
+}
+.gotd-layout {
+  position: relative; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  padding: 4% 3% 3%;
+}
+.gotd-title {
+  font-size: clamp(16px, 3.5vw, 30px);
+  letter-spacing: clamp(2px, .6vw, 5px);
+  text-align: center; line-height: 1;
+  background: linear-gradient(135deg, #4db8ff 0%, #a0d8ff 40%, #e8f4ff 65%, #fff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(80,180,255,.6));
+  animation: gotd-title-glow 3.5s ease-in-out infinite;
+}
+@keyframes gotd-title-glow {
+  0%,100% { filter: drop-shadow(0 0 8px rgba(80,180,255,.5)); }
+  50%      { filter: drop-shadow(0 0 18px rgba(80,180,255,.9)); }
+}
+.gotd-banner {
+  font-size: clamp(8px, 1.4vw, 11px);
+  letter-spacing: 5px; color: rgba(255,255,255,.45); text-transform: uppercase;
+}
+.gotd-matchup-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; flex: 1; padding: 0 1%; margin-top: -1%;
+}
+.gotd-team {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(3px, .8vw, 8px); width: 36%;
+}
+.gotd-team-name {
+  font-size: clamp(22px, 5.5vw, 46px);
+  line-height: 1; letter-spacing: clamp(1px, .3vw, 3px);
+  text-align: center; white-space: nowrap;
+}
+.gotd-aliens .gotd-team-name {
+  color: #ff8c00;
+  text-shadow: 0 0 20px rgba(255,140,0,.7), 0 0 45px rgba(255,140,0,.35), 0 2px 2px rgba(100,220,0,.3);
+  animation: gotd-alien-pulse 3s ease-in-out infinite;
+}
+@keyframes gotd-alien-pulse {
+  0%,100% { text-shadow: 0 0 15px rgba(255,140,0,.5), 0 0 35px rgba(255,140,0,.25); }
+  50%      { text-shadow: 0 0 32px rgba(255,140,0,.95), 0 0 60px rgba(255,140,0,.5), 0 2px 4px rgba(100,220,0,.45); }
+}
+.gotd-sliders .gotd-team-name {
+  color: #ff4faa;
+  text-shadow: 0 0 20px rgba(255,60,160,.7), 0 0 45px rgba(255,60,160,.35);
+  animation: gotd-sliders-pulse 2.6s ease-in-out infinite;
+}
+@keyframes gotd-sliders-pulse {
+  0%,100% { text-shadow: 0 0 15px rgba(255,60,160,.5), 0 0 35px rgba(255,60,160,.25); }
+  50%      { text-shadow: 0 0 32px rgba(255,60,160,.95), 0 0 65px rgba(255,60,160,.5); }
+}
+.gotd-mascot {
+  font-size: clamp(32px, 7vw, 64px); line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+  animation: gotd-float 4s ease-in-out infinite;
+}
+.gotd-sliders .gotd-mascot { animation-delay: -1.5s; animation-duration: 3.2s; }
+@keyframes gotd-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+.gotd-record {
+  font-size: clamp(9px, 1.6vw, 13px); font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,.4);
+  font-family: 'DM Sans', sans-serif;
+}
+.gotd-vs-block { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.gotd-vs-ring {
+  width: clamp(42px, 7.5vw, 68px); height: clamp(42px, 7.5vw, 68px);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  box-shadow: 0 0 24px rgba(0,0,0,.5), inset 0 0 16px rgba(255,255,255,.04);
+}
+.gotd-vs-ring::before, .gotd-vs-ring::after {
+  content: ''; position: absolute; inset: -5px;
+  border-radius: 50%; border: 1px solid transparent;
+  animation: gotd-spin-ring 6s linear infinite;
+}
+.gotd-vs-ring::before { border-top-color: rgba(255,140,0,.5); border-right-color: rgba(255,140,0,.15); }
+.gotd-vs-ring::after  { border-bottom-color: rgba(255,60,160,.5); border-left-color: rgba(255,60,160,.15); animation-direction:reverse; animation-duration:4s; inset:-10px; }
+@keyframes gotd-spin-ring { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.gotd-vs-text {
+  font-size: clamp(18px, 3.5vw, 30px);
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.6) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 2px;
+}
+.gotd-ball { font-size: clamp(12px, 2vw, 17px); margin-top: 2px; animation: gotd-spin-ball 4s linear infinite; }
+@keyframes gotd-spin-ball { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.gotd-info-strip {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(6px, 2.5vw, 24px); width: 100%; padding-top: 2%;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.gotd-info-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.gotd-info-label { font-size: clamp(6px, 1vw, 9px); letter-spacing: 3px; color: rgba(255,255,255,.32); text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+.gotd-info-value { font-size: clamp(11px, 2vw, 17px); letter-spacing: 2px; color: rgba(255,255,255,.82); white-space: nowrap; }
+.gotd-dot-sep { color: rgba(255,255,255,.18); font-size: clamp(10px, 1.8vw, 16px); margin-top: 5px; }
+
 /* ===== AGE TAB SWITCHER ===== */
 .age-nav {
   position: sticky;
@@ -6335,6 +6514,60 @@ function renderSummary() {
   const BRACKET_LABELS_DISP = { gold:'🥇 Gold', silver:'🥈 Silver', bronze:'🥉 Bronze', copper:'🟤 Copper' };
   const elim6 = window._6u_elim, elim7 = window._7u_elim, elim8 = window._8u_elim;
   const elimFns = { '6U': elim6, '7U': elim7, '8U': elim8 };
+
+  // ── Game of the Day ──────────────────────────────────────────────────
+  html += `<div class="gotd-outer summary-section">
+    <div class="summary-section-title gotd-label">🎯 Game of the Day</div>
+    <div class="gotd-card">
+      <div class="gotd-bg"></div>
+      <div class="gotd-field-lines"></div>
+      <div class="gotd-left-bg"></div>
+      <div class="gotd-right-bg"></div>
+      <div class="gotd-center-glow"></div>
+      <div class="gotd-corner gotd-corner-tl"></div>
+      <div class="gotd-corner gotd-corner-tr"></div>
+      <div class="gotd-corner gotd-corner-bl"></div>
+      <div class="gotd-corner gotd-corner-br"></div>
+      <div class="gotd-layout">
+        <div class="gotd-title">NHE's Only Hope!</div>
+        <div class="gotd-banner">⚾ Softball Showdown</div>
+        <div class="gotd-matchup-row">
+          <div class="gotd-team gotd-aliens">
+            <div class="gotd-mascot">👽</div>
+            <div class="gotd-team-name">ALIENS</div>
+            <div class="gotd-record">9 – 3</div>
+          </div>
+          <div class="gotd-vs-block">
+            <div class="gotd-vs-ring"><span class="gotd-vs-text">VS</span></div>
+            <div class="gotd-ball">🥎</div>
+          </div>
+          <div class="gotd-team gotd-sliders">
+            <div class="gotd-mascot">🌊</div>
+            <div class="gotd-team-name">SLIDERS</div>
+            <div class="gotd-record">12 – 2</div>
+          </div>
+        </div>
+        <div class="gotd-info-strip">
+          <div class="gotd-info-item">
+            <div class="gotd-info-label">Date</div>
+            <div class="gotd-info-value">WED · MAY 13</div>
+          </div>
+          <div class="gotd-dot-sep">·</div>
+          <div class="gotd-info-item">
+            <div class="gotd-info-label">Time</div>
+            <div class="gotd-info-value">7:30 PM</div>
+          </div>
+          <div class="gotd-dot-sep">·</div>
+          <div class="gotd-info-item">
+            <div class="gotd-info-label">Location</div>
+            <div class="gotd-info-value">SWMS FIELD 1</div>
+          </div>
+        </div>
+      </div>
+      <div class="gotd-scanlines"></div>
+      <div class="gotd-vignette"></div>
+    </div>
+  </div>`;
 
   html += '<div class="summary-section"><div class="summary-section-title">🏆 Bracket Champions</div>';
   html += '<div style="display:flex;flex-direction:column;gap:8px;">';
