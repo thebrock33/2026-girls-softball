@@ -6573,6 +6573,33 @@ function renderSummary() {
   html += '</div></div>';
 
   html += '<div class="summary-section"><div class="summary-section-title">📅 Upcoming Playoffs</div>';
+
+  // Count total remaining (unscored) playoff games per age across all dates
+  const remainingByAge = { '6U': 0, '7U': 0, '8U': 0 };
+  [[r6, s6, '6U'], [r7, s7, '7U'], [r8, s8, '8U']].forEach(([res, sched, age]) => {
+    if (!res || !sched) return;
+    Object.keys(sched).forEach(tier => {
+      Object.keys(sched[tier]).forEach(gk => {
+        if (!res[tier]?.[gk]) remainingByAge[age]++;
+      });
+    });
+  });
+
+  const totalRemaining = Object.values(remainingByAge).reduce((a,b) => a+b, 0);
+  if (totalRemaining > 0) {
+    html += `<div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">`;
+    ['6U','7U','8U'].forEach(age => {
+      const n = remainingByAge[age];
+      if (!n) return;
+      html += `<div style="display:flex;align-items:center;gap:6px;background:var(--card);border-radius:6px;padding:6px 12px;flex:1;min-width:60px;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.1em;color:${AGE_COLORS[age]}">${age}</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--text);line-height:1">${n}</span>
+        <span style="font-size:10px;color:var(--muted)">game${n!==1?'s':''}<br>left</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
   if (playoffUp.length === 0) {
     html += '<div class="summary-empty">No playoff games in the next 2 days.</div>';
   } else {
