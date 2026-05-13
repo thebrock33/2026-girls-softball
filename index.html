@@ -2805,7 +2805,7 @@ const PLAYOFF_SCHEDULES = {
     G4: { date:'Sat 5/9',  time:'2:00 PM',  loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
     G5: { date:'Mon 5/11', time:'6:00 PM',  loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd' },
     G6: { date:'Mon 5/11', time:'7:30 PM',  loc:'SWMS Field 2', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd' },
-    G7: { date:'Tue 5/12', time:'7:30 PM',  loc:'SWMS Field 1', url:'http://maps.google.com/maps?li=rwp&q=9810+Neuens+Rd' },
+    G7: { date:'Wed 5/13', time:'7:30 PM',  loc:'SBE Field 1',  url:'https://www.google.com/maps/dir//29.8007513,-95.5158885' },
   },
   bronze: {
     G1: { date:'Wed 5/6',  time:'6:00 PM',  loc:'SBE Field 3',  url:'https://www.google.com/maps/dir//29.8010095,-95.5144337' },
@@ -4453,6 +4453,7 @@ const PLAYOFF_RESULTS = {
     G7: {t1:'Diamonds',       s1:14, t2:'Thunder',        s2:8},
     G8: {t1:'Space Cowgirls', s1:5,  t2:'Magic',          s2:8},
     G9: {t1:'Thunder',        s1:12, t2:'Magic',          s2:9},
+    G10:{t1:'Diamonds',       s1:12, t2:'Thunder',        s2:8},
   },
   silver: {
     G1: {t1:'Hurricanes', s1:17, t2:'Panthers',  s2:6},
@@ -4943,8 +4944,8 @@ function getEliminated(tierKey) {
   const eliminated = {};
   if (tierKey === 'gold') {
     // 6-team DE: LB losers are out; WB losers drop to LB (not yet out)
-    // LB elimination games: G5, G6, G8, G9
-    ['G5','G6','G8','G9'].forEach(gk => {
+    // LB elimination games: G5, G6, G8, G9; G10 = championship (loser eliminated)
+    ['G5','G6','G8','G9','G10'].forEach(gk => {
       const r = results[gk];
       if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
     });
