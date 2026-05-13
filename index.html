@@ -1235,6 +1235,7 @@ var PLAYOFF_RESULTS = {
     G7: {t1:"Aggies",   s1:11, t2:"Comets",     s2:12},
     G8: {t1:"Sliders",  s1:14, t2:"Hurricanes", s2:8},
     G9: {t1:"Bombers",  s1:14, t2:"Frogs",      s2:15},
+    G12:{t1:"Sliders",  s1:15, t2:"Bombers",    s2:12},
     G10:{t1:"Diamonds", s1:12, t2:"Typhoons",   s2:7},
   },
   silver: {
@@ -1251,7 +1252,8 @@ var PLAYOFF_RESULTS = {
     G3: {t1:"Magic",     s1:14, t2:"Longhorns",    s2:9},
     G4: {t1:"Starz",     s1:4,  t2:"Force",         s2:15},
     G5: {t1:"Tigers",    s1:17, t2:"Wildcats",      s2:15},
-    G7: {t1:"Magic",     s1:8,  t2:"Force",         s2:14},
+    G6: {t1:"Tigers",    s1:11, t2:"Cobras",         s2:14},
+    G7: {t1:"Magic",     s1:8,  t2:"Force",          s2:14},
   },
   copper: {
     G1: {t1:"Eagles",     s1:16, t2:"Tornados",  s2:15},
@@ -2032,7 +2034,7 @@ function renderPlayoffs() {
     // LB:
     //   LB R1 (col 0) : G6 only  = L(G1)vL(G2)
     //   LB R2 (col 1) : G7=L(G4)vL(G5),  G8=W(G6)vL(G3)
-    //   LB R3 (col 2) : G11=W(G7)vL(G9), G12=W(G8)vL(G10)
+    //   LB R3 (col 2) : G11=W(G7)vL(G10), G12=W(G8)vL(G9)
     //   LB R4 (col 3) : G14=W(G11)vW(G12)
     //   LB Final(col4): G15=W(G14)vL(G13)
     // Championship    : G16=W(G13)vW(G15)
@@ -2201,18 +2203,18 @@ function renderPlayoffs() {
     els += gameInfo(lb_cx[1], lb_g8+2*TH+2, tierKey, "G8");
     els += projected(lb_cx[1], lb_g8+2*TH+22, winnerOf("G6",tierKey,teams), resolveTeam(tierKey,"Loser G3"), hex, tierKey, "G8");
 
-    // ── LB R3: G11=W(G7)vL(G9) top,  G12=W(G8)vL(G10) bottom — col 2
+    // ── LB R3: G11=W(G7)vL(G10) top,  G12=W(G8)vL(G9) bottom — col 2
     els += mLbl(lb_cx[2], lb_g11, "G11");
     els += winnerSlot(lb_cx[2],lb_g11,hex,"G7",tierKey,"G11","t1",teams);
-    els += slotResolved(lb_cx[2],lb_g11+TH,hex,"Loser G9",tierKey,"G11","t2");
+    els += slotResolved(lb_cx[2],lb_g11+TH,hex,"Loser G10",tierKey,"G11","t2");
     els += gameInfo(lb_cx[2], lb_g11+2*TH+2, tierKey, "G11");
-    els += projected(lb_cx[2], lb_g11+2*TH+22, winnerOf("G7",tierKey,teams), resolveTeam(tierKey,"Loser G9"), hex, tierKey, "G11");
+    els += projected(lb_cx[2], lb_g11+2*TH+22, winnerOf("G7",tierKey,teams), resolveTeam(tierKey,"Loser G10"), hex, tierKey, "G11");
 
     els += mLbl(lb_cx[2], lb_g12, "G12");
     els += winnerSlot(lb_cx[2],lb_g12,hex,"G8",tierKey,"G12","t1",teams);
-    els += slotResolved(lb_cx[2],lb_g12+TH,hex,"Loser G10",tierKey,"G12","t2");
+    els += slotResolved(lb_cx[2],lb_g12+TH,hex,"Loser G9",tierKey,"G12","t2");
     els += gameInfo(lb_cx[2], lb_g12+2*TH+2, tierKey, "G12");
-    els += projected(lb_cx[2], lb_g12+2*TH+22, winnerOf("G8",tierKey,teams), resolveTeam(tierKey,"Loser G10"), hex, tierKey, "G12");
+    els += projected(lb_cx[2], lb_g12+2*TH+22, winnerOf("G8",tierKey,teams), resolveTeam(tierKey,"Loser G9"), hex, tierKey, "G12");
 
     // ── LB R4: G14=W(G11)vW(G12) — col 3, one game ──────────────────
     els += mLbl(lb_cx[3], lb_g14, "G14");
@@ -6194,7 +6196,7 @@ function renderSummary() {
   const DE9_GAMES = {
     G1:['S8','S9'], G2:['S2','S7'], G3:['S3','S6'], G4:['S4','S5'],
     G5:['S1','WG1'], G6:['LG1','LG2'], G7:['LG4','LG5'], G8:['WG6','LG3'],
-    G9:['WG5','WG4'], G10:['WG3','WG2'], G11:['WG7','LG9'], G12:['WG8','LG10'],
+    G9:['WG5','WG4'], G10:['WG3','WG2'], G11:['WG7','LG10'], G12:['WG8','LG9'],
     G13:['WG9','WG10'], G14:['WG11','WG12'], G15:['LG13','WG14'], G16:['WG13','WG15'],
   };
 
