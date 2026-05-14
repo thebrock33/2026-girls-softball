@@ -6911,6 +6911,12 @@ function renderSummary() {
     html += `<div style="padding:6px 12px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.14em;color:${AGE_COLORS[age]};border-bottom:1px solid rgba(255,255,255,.06)">${age}</div>`;
     html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
 
+    const RS_DIV_COLORS = {
+      alo:'var(--alo)', finch: age==='8U' ? '#ff5e6c' : 'var(--finch)',
+      chamberlain:'var(--chamberlain)', osterman:'var(--osterman)',
+      div1:'#a78bfa', div2:'#34d399'
+    };
+
     divs.forEach(({ key, label }) => {
       const divData = data[key];
       const standings = divData?.standings || [];
@@ -6919,6 +6925,7 @@ function renderSummary() {
       const topPct = standings.reduce((best, t) => Math.max(best, t.pct), 0);
       const pctLeaders = standings.filter(t => t.pct === topPct);
       const recStr = t => `${t.w}-${t.l}${t.t ? `-${t.t}` : ''}`;
+      const dColor = RS_DIV_COLORS[key] || 'var(--text)';
 
       const groups = resolveTies(games, standings, pctLeaders);
       const leaders = groups[0];
@@ -6926,12 +6933,12 @@ function renderSummary() {
       let innerHTML;
       if (leaders.length === 1) {
         const t = leaders[0];
-        innerHTML = `<span style="font-weight:700;color:var(--text)">${t.name}</span>`+
+        innerHTML = `<span style="font-weight:700;color:${dColor}">${t.name}</span>`+
           `<span style="font-size:10px;color:var(--muted);margin-left:3px">${recStr(t)}</span>`+
           `<span style="font-size:10px;color:var(--gold);margin-left:3px">🥇</span>`;
       } else {
         innerHTML = leaders.map(t =>
-          `<span style="font-weight:700;color:var(--text)">${t.name}</span>`+
+          `<span style="font-weight:700;color:${dColor}">${t.name}</span>`+
           `<span style="font-size:10px;color:var(--muted);margin-left:3px">${recStr(t)}</span>`
         ).join('<span style="font-size:10px;color:var(--muted);margin:0 4px">·</span>') +
         `<span style="font-size:10px;color:var(--gold);margin-left:3px">🤝 Tied</span>`;
