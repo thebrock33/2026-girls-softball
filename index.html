@@ -6719,7 +6719,7 @@ function renderSummary() {
                       }[tier] || []);
         const champ = seeds.find(s => !eliminated[s.name]);
         statusHTML = champ
-          ? `<span style="font-weight:700;color:var(--text)">${champ.name}</span> <span style="font-size:10px;color:var(--gold)">🏆 Champion</span>`
+          ? `<span style="font-weight:700;color:${bColor}">${champ.name}</span> <span style="font-size:10px;color:var(--gold)">🏆 Champion</span>`
           : `<span style="color:var(--text)">Champion</span>`;
       } else if (remaining === 2) {
         const seeds = (age === '6U' && window._6u_SEEDS) ? window._6u_SEEDS[tier] || [] :
