@@ -8,7 +8,7 @@
 <style>
 
 :root{--coral:#ff5e6c;--peach:#ffb347;--sky:#4fc3d8;--navy:#0d1b2a;--card:#1e3450;--border:rgba(255,255,255,0.08);--text:#e8f4f8;--muted:#7a9bb5;--alo:#ff5e6c;--finch:#4fc3d8;--chamberlain:#a78bfa;--gold:#f5c842;--silver:#b0bec5;--bronze:#c87941;--copper:#6b3d1e;--osterman:#4fc3d8;}
-/* 8U: finch=coral, osterman=teal (matches original per-age colors) */#age-pane-8u{--finch:#ff5e6c;--osterman:#4fc3d8;}
+/* 8U: finch=teal, osterman=coral (swapped) */#age-pane-8u{--finch:#4fc3d8;--osterman:#ff5e6c;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(255,94,108,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(79,195,216,.10) 0%,transparent 60%);pointer-events:none;z-index:0;}
@@ -5912,7 +5912,7 @@ function openTeamCard(teamName, divKey) {
   const standing = divData.standings.find(t => t.name === teamName);
   if (!standing) return;
 
-  const divColor  = divKey === 'finch' ? '#ff5e6c' : '#4fc3d8';
+  const divColor  = divKey === 'finch' ? '#4fc3d8' : '#ff5e6c';
   const divLabel  = divKey === 'finch' ? 'Finch'   : 'Osterman';
   const bracket   = bracketFor(standing.place);
   const bColors   = {gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941'};
@@ -6912,8 +6912,8 @@ function renderSummary() {
     html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
 
     const RS_DIV_COLORS = {
-      alo:'var(--alo)', finch: age==='8U' ? '#ff5e6c' : 'var(--finch)',
-      chamberlain:'var(--chamberlain)', osterman:'var(--osterman)',
+      alo:'var(--alo)', finch: age==='8U' ? '#4fc3d8' : 'var(--finch)',
+      chamberlain:'var(--chamberlain)', osterman: age==='8U' ? '#ff5e6c' : 'var(--osterman)',
       div1:'#a78bfa', div2:'#34d399'
     };
 
