@@ -223,7 +223,7 @@ footer a:hover{text-decoration:underline;}
 }
 .gotd-right-bg::after {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(255,70,160,.2) 0%, transparent 70%);
+  background: radial-gradient(ellipse at 70% 50%, rgba(255,224,51,.18) 0%, transparent 70%);
 }
 .gotd-center-glow {
   position: absolute; top: 50%; left: 50%;
@@ -296,21 +296,21 @@ footer a:hover{text-decoration:underline;}
   0%,100% { text-shadow: 0 0 15px rgba(255,140,0,.5), 0 0 35px rgba(255,140,0,.25); }
   50%      { text-shadow: 0 0 32px rgba(255,140,0,.95), 0 0 60px rgba(255,140,0,.5), 0 2px 4px rgba(100,220,0,.45); }
 }
-.gotd-sliders .gotd-team-name {
-  color: #ff4faa;
-  text-shadow: 0 0 20px rgba(255,60,160,.7), 0 0 45px rgba(255,60,160,.35);
-  animation: gotd-sliders-pulse 2.6s ease-in-out infinite;
+.gotd-lightning .gotd-team-name {
+  color: #ffe033;
+  text-shadow: 0 0 20px rgba(255,224,51,.7), 0 0 45px rgba(255,224,51,.35);
+  animation: gotd-lightning-pulse 2.6s ease-in-out infinite;
 }
-@keyframes gotd-sliders-pulse {
-  0%,100% { text-shadow: 0 0 15px rgba(255,60,160,.5), 0 0 35px rgba(255,60,160,.25); }
-  50%      { text-shadow: 0 0 32px rgba(255,60,160,.95), 0 0 65px rgba(255,60,160,.5); }
+@keyframes gotd-lightning-pulse {
+  0%,100% { text-shadow: 0 0 15px rgba(255,224,51,.5), 0 0 35px rgba(255,224,51,.25); }
+  50%      { text-shadow: 0 0 32px rgba(255,224,51,.95), 0 0 65px rgba(255,224,51,.5); }
 }
 .gotd-mascot {
   font-size: clamp(32px, 7vw, 64px); line-height: 1;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
   animation: gotd-float 4s ease-in-out infinite;
 }
-.gotd-sliders .gotd-mascot { animation-delay: -1.5s; animation-duration: 3.2s; }
+.gotd-lightning .gotd-mascot { animation-delay: -1.5s; animation-duration: 3.2s; }
 @keyframes gotd-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 .gotd-record {
   font-size: clamp(9px, 1.6vw, 13px); font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,.4);
@@ -1445,6 +1445,7 @@ var PLAYOFF_RESULTS = {
     G4: {t1:"Cowgirls",   s1:17, t2:"Bears",      s2:20},
     G5: {t1:"Panthers",   s1:10, t2:"Eagles",     s2:5},
     G6: {t1:"Storm",      s1:13, t2:"Aces",       s2:9},
+    G8: {t1:"Storm",      s1:16, t2:"Bears",      s2:15},
   },
 };
 
@@ -3012,6 +3013,7 @@ const PLAYOFF_RESULTS = {
     G6: {t1:'Thunder',    s1:12, t2:'Sliders',     s2:17},
     G7: {t1:'Lightning',  s1:20, t2:'Aliens',      s2:19},
     G8: {t1:'Comets',     s1:10, t2:'Sliders',     s2:17},
+    G9: {t1:'Aliens',     s1:14, t2:'Sliders',     s2:12},
   },
   silver: {
     G1: {t1:'Frogs',      s1:8,  t2:'Hurricanes',  s2:12},
@@ -3020,6 +3022,7 @@ const PLAYOFF_RESULTS = {
     G4: {t1:'Panthers',   s1:9,  t2:'Dragons',      s2:17},
     G5: {t1:'Hurricanes', s1:11, t2:'Typhoon',      s2:15},
     G6: {t1:'Force',      s1:8,  t2:'Dragons',      s2:10},
+    G7: {t1:'Dragons',    s1:21, t2:'Typhoon',      s2:12},
   },
   bronze: {
     G1: {t1:'Oilers',       s1:15, t2:'Land Sharks',    s2:13},
@@ -6534,37 +6537,37 @@ function renderSummary() {
       <div class="gotd-corner gotd-corner-br"></div>
       <div class="gotd-layout">
         <div class="gotd-title">NHE's Only Hope!</div>
-        <div class="gotd-banner">⚾ Softball Showdown</div>
+        <div class="gotd-banner">🥇 7U Gold Championship</div>
         <div class="gotd-matchup-row">
           <div class="gotd-team gotd-aliens">
             <div class="gotd-mascot">👽</div>
             <div class="gotd-team-name">ALIENS</div>
-            <div class="gotd-record">9 – 3</div>
+            <div class="gotd-record">10 – 3</div>
           </div>
           <div class="gotd-vs-block">
             <div class="gotd-vs-ring"><span class="gotd-vs-text">VS</span></div>
             <div class="gotd-ball">🥎</div>
           </div>
-          <div class="gotd-team gotd-sliders">
-            <div class="gotd-mascot">🌊</div>
-            <div class="gotd-team-name">SLIDERS</div>
-            <div class="gotd-record">12 – 2</div>
+          <div class="gotd-team gotd-lightning">
+            <div class="gotd-mascot">⚡</div>
+            <div class="gotd-team-name">LIGHTNING</div>
+            <div class="gotd-record">12 – 0</div>
           </div>
         </div>
         <div class="gotd-info-strip">
           <div class="gotd-info-item">
             <div class="gotd-info-label">Date</div>
-            <div class="gotd-info-value">WED · MAY 13</div>
+            <div class="gotd-info-value">THU · MAY 14</div>
           </div>
           <div class="gotd-dot-sep">·</div>
           <div class="gotd-info-item">
             <div class="gotd-info-label">Time</div>
-            <div class="gotd-info-value">7:30 PM</div>
+            <div class="gotd-info-value">6:00 PM</div>
           </div>
           <div class="gotd-dot-sep">·</div>
           <div class="gotd-info-item">
             <div class="gotd-info-label">Location</div>
-            <div class="gotd-info-value">SWMS FIELD 1</div>
+            <div class="gotd-info-value">SBE FIELD 1</div>
           </div>
         </div>
       </div>
@@ -6597,9 +6600,9 @@ function renderSummary() {
         if (!schedEntry) return;
         const d = parseDate(schedEntry.date);
         if (d !== todayKey) return;           // only today
-        if (res[tier]?.[gk]) return;          // already played — skip
+        const result = res[tier]?.[gk] || null;
         const matchup = getMatchup(age, tier, gk, res);
-        champGames.push({ age, tier, gk, sched: schedEntry, matchup });
+        champGames.push({ age, tier, gk, sched: schedEntry, matchup, result });
       });
     });
 
@@ -6613,10 +6616,8 @@ function renderSummary() {
     html += `<div class="summary-section-title" style="background:linear-gradient(90deg,rgba(255,215,0,.12),transparent);padding:10px 16px;margin:0 0 10px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:#ffd700;font-size:clamp(13px,2.4vw,18px);">🏆 Championships Today</div>`;
     html += `<div style="display:flex;flex-direction:column;gap:10px;padding:0 14px;">`;
 
-    champGames.forEach(({age, tier, sched, matchup}) => {
+    champGames.forEach(({age, tier, sched, matchup, result}) => {
       const ac = AGE_C[age] || '#fff';
-      const t1 = matchup?.t1 || '?';
-      const t2 = matchup?.t2 || '?';
       const timeStr = sched.time || '';
       const locStr  = sched.loc  || '';
       const urlStr  = sched.url  || '';
@@ -6628,14 +6629,36 @@ function renderSummary() {
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">`;
       html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:3px;background:${ac}22;color:${ac}">${age}</span>`;
       html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.08em;color:#ffd700">${tierIcon} ${tierLabel} Championship</span>`;
-      html += `<span style="margin-left:auto;font-size:10px;letter-spacing:.05em;color:rgba(255,215,0,.55);font-family:'DM Sans',sans-serif;">FINAL</span>`;
+      if (result) {
+        html += `<span style="margin-left:auto;font-size:10px;letter-spacing:.05em;color:rgba(255,215,0,.55);font-family:'DM Sans',sans-serif;">FINAL</span>`;
+      }
       html += `</div>`;
-      // Matchup row
-      html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
-      html += `<div style="flex:1;text-align:right;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t1}</div>`;
-      html += `<div style="flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,215,0,.7);letter-spacing:.08em;padding:0 4px;">VS</div>`;
-      html += `<div style="flex:1;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t2}</div>`;
-      html += `</div>`;
+
+      if (result) {
+        // Show winner
+        const winner = result.s1 >= result.s2 ? result.t1 : result.t2;
+        const winScore = result.s1 >= result.s2 ? result.s1 : result.s2;
+        const loseScore = result.s1 >= result.s2 ? result.s2 : result.s1;
+        const loser = result.s1 >= result.s2 ? result.t2 : result.t1;
+        html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
+        html += `<div style="font-size:18px;flex-shrink:0;">🏆</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,3.5vw,24px);letter-spacing:.06em;color:#ffd700;white-space:nowrap;">${winner}</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,2.5vw,20px);color:#4ade80;letter-spacing:.04em;">${winScore}</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,255,255,.3);">–</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,2.5vw,20px);color:var(--coral);letter-spacing:.04em;">${loseScore}</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,2.5vw,18px);letter-spacing:.06em;color:rgba(255,255,255,.45);white-space:nowrap;">${loser}</div>`;
+        html += `</div>`;
+      } else {
+        // Show upcoming matchup
+        const t1 = matchup?.t1 || '?';
+        const t2 = matchup?.t2 || '?';
+        html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
+        html += `<div style="flex:1;text-align:right;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t1}</div>`;
+        html += `<div style="flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,215,0,.7);letter-spacing:.08em;padding:0 4px;">VS</div>`;
+        html += `<div style="flex:1;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t2}</div>`;
+        html += `</div>`;
+      }
+
       // Info strip
       html += `<div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">`;
       if (timeStr) {
