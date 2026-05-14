@@ -1416,6 +1416,8 @@ var PLAYOFF_RESULTS = {
     G9: {t1:"Bombers",  s1:14, t2:"Frogs",      s2:15},
     G12:{t1:"Sliders",  s1:15, t2:"Bombers",    s2:12},
     G10:{t1:"Diamonds", s1:12, t2:"Typhoons",   s2:7},
+    G11:{t1:"Typhoons", s1:15, t2:"Comets",     s2:9},
+    G13:{t1:"Diamonds", s1:14, t2:"Frogs",      s2:9},
   },
   silver: {
     G1: {t1:"Dragons",       s1:11, t2:"Angels",        s2:17},
@@ -1423,6 +1425,7 @@ var PLAYOFF_RESULTS = {
     G3: {t1:"Monarchs",      s1:9,  t2:"Oilers",        s2:1},
     G4: {t1:"Venom",         s1:13, t2:"Space Cowgirls", s2:12},
     G5: {t1:"Crush",         s1:10, t2:"Angels",        s2:15},
+    G6: {t1:"Chargers",      s1:13, t2:"Angels",        s2:9},
     G7: {t1:"Monarchs",      s1:14, t2:"Venom",         s2:10},
   },
   bronze: {
@@ -1433,6 +1436,7 @@ var PLAYOFF_RESULTS = {
     G5: {t1:"Tigers",    s1:17, t2:"Wildcats",      s2:15},
     G6: {t1:"Tigers",    s1:11, t2:"Cobras",         s2:14},
     G7: {t1:"Magic",     s1:8,  t2:"Force",          s2:14},
+    G8: {t1:"Cobras",   s1:15, t2:"Force",           s2:9},
   },
   copper: {
     G1: {t1:"Eagles",     s1:16, t2:"Tornados",  s2:15},
@@ -6568,6 +6572,94 @@ function renderSummary() {
       <div class="gotd-vignette"></div>
     </div>
   </div>`;
+
+  // ── Championships Today ──────────────────────────────────────────────
+  (function() {
+    // Championship game key per age+tier
+    const CHAMP_KEY = {
+      '6U': { gold:'G16', silver:'G8', bronze:'G8', copper:'G9' },
+      '7U': { gold:'G10', silver:'G7', bronze:'G7' },
+      '8U': { gold:'G10', silver:'G7', bronze:'G7' },
+    };
+    const sources = [
+      { age:'6U', res:r6, sched:s6 },
+      { age:'7U', res:r7, sched:s7 },
+      { age:'8U', res:r8, sched:s8 },
+    ];
+    const champGames = [];
+    sources.forEach(({age, res, sched}) => {
+      if (!res || !sched) return;
+      const ckMap = CHAMP_KEY[age];
+      if (!ckMap) return;
+      Object.keys(ckMap).forEach(tier => {
+        const gk = ckMap[tier];
+        const schedEntry = sched[tier]?.[gk];
+        if (!schedEntry) return;
+        const d = parseDate(schedEntry.date);
+        if (d !== todayKey) return;           // only today
+        if (res[tier]?.[gk]) return;          // already played — skip
+        const matchup = getMatchup(age, tier, gk, res);
+        champGames.push({ age, tier, gk, sched: schedEntry, matchup });
+      });
+    });
+
+    if (champGames.length === 0) return;
+
+    const AGE_C = { '6U': '#ff5e6c', '7U': '#a78bfa', '8U': '#4fc3d8' };
+    const TIER_ICON = { gold:'🥇', silver:'🥈', bronze:'🥉', copper:'🟤' };
+    const TIER_LABEL = { gold:'Gold', silver:'Silver', bronze:'Bronze', copper:'Copper' };
+
+    html += `<div class="summary-section" style="background:linear-gradient(135deg,#1a1200 0%,#0d1117 60%);border:1px solid rgba(255,215,0,.18);border-radius:12px;overflow:hidden;padding:0 0 14px;">`;
+    html += `<div class="summary-section-title" style="background:linear-gradient(90deg,rgba(255,215,0,.12),transparent);padding:10px 16px;margin:0 0 10px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:#ffd700;font-size:clamp(13px,2.4vw,18px);">🏆 Championships Today</div>`;
+    html += `<div style="display:flex;flex-direction:column;gap:10px;padding:0 14px;">`;
+
+    champGames.forEach(({age, tier, sched, matchup}) => {
+      const ac = AGE_C[age] || '#fff';
+      const t1 = matchup?.t1 || '?';
+      const t2 = matchup?.t2 || '?';
+      const timeStr = sched.time || '';
+      const locStr  = sched.loc  || '';
+      const urlStr  = sched.url  || '';
+      const tierIcon  = TIER_ICON[tier]  || '';
+      const tierLabel = TIER_LABEL[tier] || tier;
+
+      html += `<div style="background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-radius:10px;padding:10px 14px;">`;
+      // Header: age badge + tier label
+      html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">`;
+      html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:3px;background:${ac}22;color:${ac}">${age}</span>`;
+      html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.08em;color:#ffd700">${tierIcon} ${tierLabel} Championship</span>`;
+      html += `<span style="margin-left:auto;font-size:10px;letter-spacing:.05em;color:rgba(255,215,0,.55);font-family:'DM Sans',sans-serif;">FINAL</span>`;
+      html += `</div>`;
+      // Matchup row
+      html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
+      html += `<div style="flex:1;text-align:right;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t1}</div>`;
+      html += `<div style="flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,215,0,.7);letter-spacing:.08em;padding:0 4px;">VS</div>`;
+      html += `<div style="flex:1;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t2}</div>`;
+      html += `</div>`;
+      // Info strip
+      html += `<div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">`;
+      if (timeStr) {
+        html += `<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">`;
+        html += `<div style="font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.32);text-transform:uppercase;font-family:'DM Sans',sans-serif;">Time</div>`;
+        html += `<div style="font-size:clamp(11px,2vw,14px);letter-spacing:2px;color:rgba(255,255,255,.82);">${timeStr}</div>`;
+        html += `</div>`;
+      }
+      if (locStr) {
+        html += `<div style="color:rgba(255,255,255,.2);font-size:12px;">·</div>`;
+        html += `<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">`;
+        html += `<div style="font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.32);text-transform:uppercase;font-family:'DM Sans',sans-serif;">Location</div>`;
+        const locDisplay = urlStr
+          ? `<a href="${urlStr}" target="_blank" style="font-size:clamp(11px,2vw,14px);letter-spacing:1px;color:rgba(255,255,255,.82);text-decoration:underline;text-decoration-color:rgba(255,215,0,.4);">${locStr}</a>`
+          : `<div style="font-size:clamp(11px,2vw,14px);letter-spacing:1px;color:rgba(255,255,255,.82);">${locStr}</div>`;
+        html += locDisplay;
+        html += `</div>`;
+      }
+      html += `</div>`;
+      html += `</div>`;
+    });
+
+    html += `</div></div>`;
+  })();
 
   html += '<div class="summary-section"><div class="summary-section-title">🏆 Bracket Champions</div>';
   html += '<div style="display:flex;flex-direction:column;gap:8px;">';
