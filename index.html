@@ -6718,9 +6718,36 @@ function renderSummary() {
                         bronze: [{name:'Bombers'},{name:'Firecrackers'},{name:'Voodoo'},{name:'Land Sharks'},{name:'Cobras'},{name:'Spring Spirit'},{name:'Chargers'},{name:'Venom'}],
                       }[tier] || []);
         const champ = seeds.find(s => !eliminated[s.name]);
-        statusHTML = champ
-          ? `<span style="font-weight:700;color:${bColor}">${champ.name}</span> <span style="font-size:10px;color:var(--gold)">🏆 Champion</span>`
-          : `<span style="color:var(--text)">Champion</span>`;
+        if (champ) {
+          // Look up regular season record across all divs for this age
+          const ageData = window[`_${age.toLowerCase()}_DATA`];
+          let rsW=0, rsL=0, rsT=0;
+          if (ageData) {
+            Object.keys(ageData).forEach(dk => {
+              const st = (ageData[dk].standings||[]).find(t => t.name===champ.name);
+              if (st) { rsW=st.w; rsL=st.l; rsT=st.t; }
+            });
+          }
+          // Playoff record
+          const agePR = window[`_${age.toLowerCase()}_PR`] || {};
+          let poW=0, poL=0;
+          Object.keys(agePR).forEach(t => {
+            Object.keys(agePR[t]).forEach(gk => {
+              const r = agePR[t][gk];
+              if (!r) return;
+              const winner = r.s1>r.s2 ? r.t1 : r.t2;
+              const loser  = r.s1>r.s2 ? r.t2 : r.t1;
+              if (winner===champ.name) poW++;
+              if (loser===champ.name)  poL++;
+            });
+          });
+          const totW=rsW+poW, totL=rsL+poL, totT=rsT;
+          const recStr = totT>0 ? `${totW}-${totL}-${totT}` : `${totW}-${totL}`;
+          statusHTML = `<span style="font-weight:700;color:${bColor}">${champ.name}</span>` +
+            `<span style="font-size:10px;color:var(--muted);margin-left:5px">(${recStr})</span>`;
+        } else {
+          statusHTML = `<span style="color:var(--text)">Champion</span>`;
+        }
       } else if (remaining === 2) {
         const seeds = (age === '6U' && window._6u_SEEDS) ? window._6u_SEEDS[tier] || [] :
                       (age === '7U') ? ({
