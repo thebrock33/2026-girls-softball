@@ -1418,6 +1418,7 @@ var PLAYOFF_RESULTS = {
     G10:{t1:"Diamonds", s1:12, t2:"Typhoons",   s2:7},
     G11:{t1:"Typhoons", s1:15, t2:"Comets",     s2:9},
     G13:{t1:"Diamonds", s1:14, t2:"Frogs",      s2:9},
+    G14:{t1:"Typhoons", s1:17, t2:"Sliders",    s2:16},
   },
   silver: {
     G1: {t1:"Dragons",       s1:11, t2:"Angels",        s2:17},
@@ -1427,6 +1428,7 @@ var PLAYOFF_RESULTS = {
     G5: {t1:"Crush",         s1:10, t2:"Angels",        s2:15},
     G6: {t1:"Chargers",      s1:13, t2:"Angels",        s2:9},
     G7: {t1:"Monarchs",      s1:14, t2:"Venom",         s2:10},
+    G8: {t1:"Chargers",     s1:12, t2:"Monarchs",      s2:6},
   },
   bronze: {
     G1: {t1:"Wildcats",  s1:15, t2:"Firecrackers", s2:10},
@@ -3014,6 +3016,7 @@ const PLAYOFF_RESULTS = {
     G7: {t1:'Lightning',  s1:20, t2:'Aliens',      s2:19},
     G8: {t1:'Comets',     s1:10, t2:'Sliders',     s2:17},
     G9: {t1:'Aliens',     s1:14, t2:'Sliders',     s2:12},
+    G10:{t1:'Lightning',  s1:19, t2:'Aliens',      s2:5},
   },
   silver: {
     G1: {t1:'Frogs',      s1:8,  t2:'Hurricanes',  s2:12},
@@ -3029,6 +3032,7 @@ const PLAYOFF_RESULTS = {
     G2: {t1:'Crush',        s1:12, t2:'Diamonds',        s2:11},
     G3: {t1:'Venom',        s1:15, t2:'Space Cowgirls',  s2:7},
     G4: {t1:'Tornadoes',     s1:10, t2:'Angels',         s2:16},
+    G5: {t1:'Crush',        s1:24, t2:'Oilers',          s2:18},
   },
 };
 
@@ -3433,8 +3437,8 @@ function getEliminated(tierKey) {
   const eliminated = {};
   if (tierKey === 'gold') {
     // 6-team DE: LB losers are out; WB losers drop to LB (not yet out)
-    // LB elimination games: G5, G6, G8, G9
-    ['G5','G6','G8','G9'].forEach(gk => {
+    // LB elimination games: G5, G6, G8, G9, G10 (championship)
+    ['G5','G6','G8','G9','G10'].forEach(gk => {
       const r = results[gk];
       if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
     });
@@ -6522,59 +6526,10 @@ function renderSummary() {
   const elim6 = window._6u_elim, elim7 = window._7u_elim, elim8 = window._8u_elim;
   const elimFns = { '6U': elim6, '7U': elim7, '8U': elim8 };
 
-  // ── Game of the Day ──────────────────────────────────────────────────
+  // ── Game Spotlight ──────────────────────────────────────────────────
   html += `<div class="gotd-outer summary-section">
-    <div class="summary-section-title gotd-label">🎯 Game of the Day</div>
-    <div class="gotd-card">
-      <div class="gotd-bg"></div>
-      <div class="gotd-field-lines"></div>
-      <div class="gotd-left-bg"></div>
-      <div class="gotd-right-bg"></div>
-      <div class="gotd-center-glow"></div>
-      <div class="gotd-corner gotd-corner-tl"></div>
-      <div class="gotd-corner gotd-corner-tr"></div>
-      <div class="gotd-corner gotd-corner-bl"></div>
-      <div class="gotd-corner gotd-corner-br"></div>
-      <div class="gotd-layout">
-        <div class="gotd-title">NHE's Only Hope!</div>
-        <div class="gotd-banner">🥇 7U Gold Championship</div>
-        <div class="gotd-matchup-row">
-          <div class="gotd-team gotd-aliens">
-            <div class="gotd-mascot">👽</div>
-            <div class="gotd-team-name">ALIENS</div>
-            <div class="gotd-record">10 – 3</div>
-          </div>
-          <div class="gotd-vs-block">
-            <div class="gotd-vs-ring"><span class="gotd-vs-text">VS</span></div>
-            <div class="gotd-ball">🥎</div>
-          </div>
-          <div class="gotd-team gotd-lightning">
-            <div class="gotd-mascot">⚡</div>
-            <div class="gotd-team-name">LIGHTNING</div>
-            <div class="gotd-record">12 – 0</div>
-          </div>
-        </div>
-        <div class="gotd-info-strip">
-          <div class="gotd-info-item">
-            <div class="gotd-info-label">Date</div>
-            <div class="gotd-info-value">THU · MAY 14</div>
-          </div>
-          <div class="gotd-dot-sep">·</div>
-          <div class="gotd-info-item">
-            <div class="gotd-info-label">Time</div>
-            <div class="gotd-info-value">6:00 PM</div>
-          </div>
-          <div class="gotd-dot-sep">·</div>
-          <div class="gotd-info-item">
-            <div class="gotd-info-label">Location</div>
-            <div class="gotd-info-value">SBE FIELD 1</div>
-          </div>
-        </div>
-      </div>
-      <div class="gotd-scanlines"></div>
-      <div class="gotd-vignette"></div>
-    </div>
-  </div>`;
+    <div class="summary-section-title gotd-label">🎯 Game Spotlight</div>
+  <div style="padding:4px 0 4px;">`;
 
   // ── Championships Today ──────────────────────────────────────────────
   (function() {
@@ -6609,28 +6564,28 @@ function renderSummary() {
     if (champGames.length === 0) return;
 
     const AGE_C = { '6U': '#ff5e6c', '7U': '#a78bfa', '8U': '#4fc3d8' };
+    const TIER_COLOR = { gold:'#f5c842', silver:'#b0bec5', bronze:'#c87941', copper:'#a0684a' };
     const TIER_ICON = { gold:'🥇', silver:'🥈', bronze:'🥉', copper:'🟤' };
     const TIER_LABEL = { gold:'Gold', silver:'Silver', bronze:'Bronze', copper:'Copper' };
 
-    html += `<div class="summary-section" style="background:linear-gradient(135deg,#1a1200 0%,#0d1117 60%);border:1px solid rgba(255,215,0,.18);border-radius:12px;overflow:hidden;padding:0 0 14px;">`;
-    html += `<div class="summary-section-title" style="background:linear-gradient(90deg,rgba(255,215,0,.12),transparent);padding:10px 16px;margin:0 0 10px;font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;color:#ffd700;font-size:clamp(13px,2.4vw,18px);">🏆 Championships Today</div>`;
-    html += `<div style="display:flex;flex-direction:column;gap:10px;padding:0 14px;">`;
+    html += `<div style="display:flex;flex-direction:column;gap:10px;">`;
 
     champGames.forEach(({age, tier, sched, matchup, result}) => {
       const ac = AGE_C[age] || '#fff';
+      const tc = TIER_COLOR[tier] || '#fff';
       const timeStr = sched.time || '';
       const locStr  = sched.loc  || '';
       const urlStr  = sched.url  || '';
       const tierIcon  = TIER_ICON[tier]  || '';
       const tierLabel = TIER_LABEL[tier] || tier;
 
-      html += `<div style="background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-radius:10px;padding:10px 14px;">`;
+      html += `<div style="background:rgba(255,255,255,.03);border:1px solid ${tc}28;border-radius:10px;padding:10px 14px;">`;
       // Header: age badge + tier label
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">`;
       html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:3px;background:${ac}22;color:${ac}">${age}</span>`;
-      html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.08em;color:#ffd700">${tierIcon} ${tierLabel} Championship</span>`;
+      html += `<span style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.08em;color:${tc}">${tierIcon} ${tierLabel} Championship</span>`;
       if (result) {
-        html += `<span style="margin-left:auto;font-size:10px;letter-spacing:.05em;color:rgba(255,215,0,.55);font-family:'DM Sans',sans-serif;">FINAL</span>`;
+        html += `<span style="margin-left:auto;font-size:10px;letter-spacing:.05em;color:${tc}99;font-family:'DM Sans',sans-serif;">FINAL</span>`;
       }
       html += `</div>`;
 
@@ -6642,7 +6597,7 @@ function renderSummary() {
         const loser = result.s1 >= result.s2 ? result.t2 : result.t1;
         html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
         html += `<div style="font-size:18px;flex-shrink:0;">🏆</div>`;
-        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,3.5vw,24px);letter-spacing:.06em;color:#ffd700;white-space:nowrap;">${winner}</div>`;
+        html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,3.5vw,24px);letter-spacing:.06em;color:${tc};white-space:nowrap;">${winner}</div>`;
         html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,2.5vw,20px);color:#4ade80;letter-spacing:.04em;">${winScore}</div>`;
         html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,255,255,.3);">–</div>`;
         html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,2.5vw,20px);color:var(--coral);letter-spacing:.04em;">${loseScore}</div>`;
@@ -6654,7 +6609,7 @@ function renderSummary() {
         const t2 = matchup?.t2 || '?';
         html += `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">`;
         html += `<div style="flex:1;text-align:right;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t1}</div>`;
-        html += `<div style="flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:rgba(255,215,0,.7);letter-spacing:.08em;padding:0 4px;">VS</div>`;
+        html += `<div style="flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(11px,2vw,15px);color:${tc}bb;letter-spacing:.08em;padding:0 4px;">VS</div>`;
         html += `<div style="flex:1;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,3vw,20px);letter-spacing:.06em;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t2}</div>`;
         html += `</div>`;
       }
@@ -6672,7 +6627,7 @@ function renderSummary() {
         html += `<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">`;
         html += `<div style="font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.32);text-transform:uppercase;font-family:'DM Sans',sans-serif;">Location</div>`;
         const locDisplay = urlStr
-          ? `<a href="${urlStr}" target="_blank" style="font-size:clamp(11px,2vw,14px);letter-spacing:1px;color:rgba(255,255,255,.82);text-decoration:underline;text-decoration-color:rgba(255,215,0,.4);">${locStr}</a>`
+          ? `<a href="${urlStr}" target="_blank" style="font-size:clamp(11px,2vw,14px);letter-spacing:1px;color:rgba(255,255,255,.82);text-decoration:underline;text-decoration-color:${tc}66;">${locStr}</a>`
           : `<div style="font-size:clamp(11px,2vw,14px);letter-spacing:1px;color:rgba(255,255,255,.82);">${locStr}</div>`;
         html += locDisplay;
         html += `</div>`;
@@ -6681,8 +6636,10 @@ function renderSummary() {
       html += `</div>`;
     });
 
-    html += `</div></div>`;
+    html += `</div>`;
   })();
+
+  html += `</div></div>`;
 
   html += '<div class="summary-section"><div class="summary-section-title">🏆 Bracket Champions</div>';
   html += '<div style="display:flex;flex-direction:column;gap:8px;">';
