@@ -6652,7 +6652,7 @@ function renderSummary() {
     const elimFn = elimFns[age];
     if (!elimFn || !totals) return;
 
-    html += `<div style="background:var(--card);border-radius:8px;overflow:hidden;">`;
+    html += `<div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;overflow:hidden;">`;
     html += `<div style="padding:6px 12px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.14em;color:${AGE_COLORS[age]};border-bottom:1px solid rgba(255,255,255,.06)">${age}</div>`;
     html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
 
@@ -6867,7 +6867,7 @@ function renderSummary() {
   ['6U','7U','8U'].forEach(age => {
     const { data, divs } = RS_DIVS[age];
     if (!data) return;
-    html += `<div style="background:var(--card);border-radius:8px;overflow:hidden;">`;
+    html += `<div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;overflow:hidden;">`;
     html += `<div style="padding:6px 12px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.14em;color:${AGE_COLORS[age]};border-bottom:1px solid rgba(255,255,255,.06)">${age}</div>`;
     html += `<div style="display:flex;flex-wrap:wrap;gap:0;">`;
 
