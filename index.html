@@ -1444,13 +1444,14 @@ var PLAYOFF_RESULTS = {
   },
   copper: {
     G1: {t1:"Eagles",     s1:16, t2:"Tornados",  s2:15},
-    G2: {t1:"Blaze",      s1:5,  t2:"Aces",       s2:12},
+    G2: {t1:"Blaze",      s1:8,  t2:"Aces",       s2:12},
     G3: {t1:"Landsharks", s1:15, t2:"Thunder",    s2:4},
     G4: {t1:"Cowgirls",   s1:17, t2:"Bears",      s2:20},
     G5: {t1:"Panthers",   s1:10, t2:"Eagles",     s2:5},
     G6: {t1:"Storm",      s1:13, t2:"Aces",       s2:9},
     G7: {t1:"Panthers",   s1:12, t2:"Landsharks", s2:11},
     G8: {t1:"Bears",      s1:15, t2:"Storm",      s2:16},
+    G9: {t1:"Storm",      s1:15, t2:"Panthers",   s2:8},
   },
 };
 
@@ -1460,8 +1461,8 @@ function getEliminated(tierKey) {
   const eliminated = {};
   if (tierKey === 'gold') {
     // 9-team DE: LB losers are out; WB losers drop to LB (not yet out)
-    // LB elimination games: G6, G7, G8, G11, G12, G14, G15
-    ['G6','G7','G8','G11','G12','G14','G15'].forEach(gk => {
+    // LB elimination games: G6, G7, G8, G11, G12, G14, G15; G16 = championship (loser eliminated)
+    ['G6','G7','G8','G11','G12','G14','G15','G16'].forEach(gk => {
       const r = results[gk];
       if (r) eliminated[r.s1 < r.s2 ? r.t1 : r.t2] = true;
     });
